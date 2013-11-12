@@ -1,0 +1,22 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot="false">
+    <item android:drawable="@drawable/unisport_spinner_05" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_06" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_07" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_08" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_09" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_10" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_11" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_12" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_13" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_14" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_15" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_16" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_17" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_18" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_19" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_20" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_01" android:duration="30"/>
+    <item android:drawable="@drawable/unisport_spinner_02" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_03" android:duration="30" />
+    <item android:drawable="@drawable/unisport_spinner_04" android:duration="30" />
+</animation-list>

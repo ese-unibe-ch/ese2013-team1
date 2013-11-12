@@ -1,0 +1,11 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot="false">
+    <item android:drawable="@drawable/ic_rating_2_checked_1" android:duration="30"/>
+    <item android:drawable="@drawable/ic_rating_2_checked_2" android:duration="30" />
+    <item android:drawable="@drawable/ic_rating_2_checked_3" android:duration="30" />
+    <item android:drawable="@drawable/ic_rating_2_checked_4" android:duration="30" />
+    <item android:drawable="@drawable/ic_rating_2_checked_5" android:duration="30" />
+    <item android:drawable="@drawable/ic_rating_2_checked_6" android:duration="30" />
+    <item android:drawable="@drawable/ic_rating_2_checked_7" android:duration="30" />
+    <item android:drawable="@drawable/ic_rating_2_checked_8" android:duration="30" />
+    <item android:drawable="@drawable/ic_rating_2_checked_9" android:duration="30" />
+</animation-list>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sport@Unibe</string>
+    <string name="activity_course_info_name">Sport@Unibe</string>
+    
+    <string name="menu_search_title">Поиск</string>
+    <string name="menu_favorite_title">Избранное</string>
+    <string name="menu_navigation_title">Навигация</string>
+    <string name="menu_favorites_list_title">Списком</string>
+    <string name="menu_favorites_grid_title">Таблицей</string>
+    <string name="menu_search_advanced_day_text">День:</string>
+    <string name="menu_search_advanced_day_all_text">Все</string>
+    <string name="menu_search_advanced_time_text">Время:</string>
+    <string name="menu_search_advanced_time_all_text">Все</string>
+    <string name="menu_search_advanced_time_8_10">8–10</string>
+    <string name="menu_search_advanced_time_10_12">10–12</string>
+    <string name="menu_search_advanced_time_12_14">12–14</string>
+    <string name="menu_search_advanced_time_14_16">14–16</string>
+    <string name="menu_search_advanced_time_16_18">16–18</string>
+    <string name="menu_search_advanced_time_18_20">18–20</string>
+    <string name="menu_search_advanced_time_20_22">20–22</string>
+    
+    <string name="menu_search_advanced_search_text">Найти</string>
+    <string name="menu_search_advanced_clear_text">Сбросить</string>
+    
+    <string name="dialog_button_ok_text">OK</string>
+    <string name="dialog_button_cancel_text">Отмена</string>
+    <string name="dialog_button_close_text">Закрыть</string>
+    
+    <string name="dialog_item_menu_change_color">Change color</string>
+    <string name="dialog_item_menu_remove_from_favorites">Remove from favorites</string>
+    <string name="dialog_item_menu_show_on_map">Show on map</string>
+    
+    <string name="dialog_raiting_title_select_rating">Выберите оценку:</string>
+    <string name="dialog_raiting_title_done">Готово! Ваш голос принят</string>
+    <string name="dialog_raiting_button_ok">Оценить!</string>   
+    <string name="dialog_raiting_error_not_attended">Вы не посещаете этот курс</string>
+    <string name="dialog_raiting_error_not_attended_details">только посещаемые курсы могут быть оценены</string>
+    <string name="dialog_raiting_error_already_rated">Вы уже оценили этот курс</string>
+    <string name="dialog_raiting_error_already_rated_details">простите, курс можно оценить только один раз</string>
+    
+    <string name="dialog_title_loading">Загрузка…</string>
+    <string name="dialog_title_error">Упс!</string>
+    <string name="dialog_error_no_connection">Проверьте ваше соединение</string>
+    <string name="dialog_error_no_connection_details">приложение не смогло подключиться к удаленному серверу</string>
+    <string name="dialog_error_unexpected_error">Упс, неопознанная ошибка</string>
+    <string name="dialog_error_unexpected_error_details">что-то пошло не так и мы пытаемся это починить</string>
+    <string name="dialog_error_parse_error">Проблема с сервером</string>
+    <string name="dialog_error_parse_error_details">что-то не так с нашим сервером, попробуйте позже</string>
+    <string name="dialog_error_sync_error">Ошибка синхронизации</string>
+    <string name="dialog_error_sync_error_details">пользовательские данные устарели и мы не согли их обновить</string>
+
+    
+	<string name="list_add_button_add_text">Добавить</string>
+	<string name="list_add_button_save_text">Сохранить</string>
+
+    <string name="course_info_directions">Показать на карте</string>
+    <string name="course_info_more">Доп.инфо</string>
+    <string name="course_info_more_site">http://sport.unibe.ch</string>
+    <string name="course_info_course">Платный курс</string>
+    <string name="course_info_online">Необходима он-лайн регистрация</string>
+    <string name="course_info_weather">Погодозависимое предложение</string>
+    <string name="course_info_info">Информация</string>
+    <string name="course_info_subscription">Подписаться</string>
+    <string name="course_info_attend">Посещать</string>
+    <string name="course_info_already_attended">Вы посещаете этот курс</string>
+    <string name="course_info_rate">Оценить</string>
+    <string name="course_info_already_rated">Вы уже оценили этот курс</string>
+    <string name="course_rating_stars">звезды</string>
+    <string name="course_rating_review_header">Оценка</string>
+    <string name="course_rating_overview">Обзор</string>
+    <string name="course_rating_review_header_sub">как оценили другие пользователи</string>
+    
+    <string name="monday_short">По</string>
+    <string name="tuesday_short">Вт</string>
+    <string name="wednesday_short">Ср</string>
+    <string name="thursday_short">Чт</string>
+    <string name="friday_short">Пт</string>
+    <string name="saturday_short">Сб</string>
+    <string name="sunday_short">Вс</string>
+    <string name="january">январь</string>
+    <string name="february">февраль</string>
+    <string name="march">март</string>
+    <string name="april">апрель</string>
+    <string name="may">май</string>
+    <string name="june">июнь</string>
+    <string name="july">июль</string>
+    <string name="august">август</string>
+    <string name="september">сентябрь</string>
+    <string name="october">октябрь</string>
+    <string name="november">ноябрь</string>
+    <string name="december">декабрь</string>
+
+</resources>

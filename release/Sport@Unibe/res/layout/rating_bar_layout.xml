@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="1dp"
+    android:paddingTop="1dp" >
+
+    <TextView
+        android:id="@+id/stars_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical|left" />
+
+    <LinearLayout
+        android:id="@+id/bar_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" >
+
+        <View
+            android:id="@+id/bar"
+            android:layout_width="1.5dp"
+            android:layout_height="15dp"
+        	android:gravity="center_vertical"
+            android:layout_gravity="bottom|left"
+            android:background="#22222222" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/rating_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical|right" />
+
+</LinearLayout>

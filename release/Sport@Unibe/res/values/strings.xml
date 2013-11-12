@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">214680625360314</string>
+    <string name="app_name">Sport@Unibe</string>
+    <string name="activity_course_info_name">Sport@Unibe</string>
+    
+    <string name="menu_search_title">Search</string>
+    <string name="menu_favorite_title">Favorite</string>
+    <string name="menu_navigation_title">Navigation</string>
+    <string name="menu_favorites_list_title">Show as list</string>
+    <string name="menu_favorites_grid_title">Show as grid</string>
+    <string name="menu_search_advanced_day_text">Day:</string>
+    <string name="menu_search_advanced_day_all_text">All</string>
+    <string name="menu_search_advanced_time_text">Time:</string>
+    <string name="menu_search_advanced_time_all_text">All</string>
+    <string name="menu_search_advanced_time_8_10">8–10</string>
+    <string name="menu_search_advanced_time_10_12">10–12</string>
+    <string name="menu_search_advanced_time_12_14">12–14</string>
+    <string name="menu_search_advanced_time_14_16">14–16</string>
+    <string name="menu_search_advanced_time_16_18">16–18</string>
+    <string name="menu_search_advanced_time_18_20">18–20</string>
+    <string name="menu_search_advanced_time_20_22">20–22</string>
+    
+    <string name="menu_search_advanced_search_text">Search</string>
+    <string name="menu_search_advanced_clear_text">Clear</string>
+    
+    <string name="dialog_button_ok_text">OK</string>
+    <string name="dialog_button_cancel_text">Cancel</string>
+    <string name="dialog_button_close_text">Close</string>
+    
+    
+    <string name="dialog_item_menu_change_color">Change color</string>
+    <string name="dialog_item_menu_remove_from_favorites">Remove from favorites</string>
+    <string name="dialog_item_menu_show_on_map">Show on map</string>
+    
+    <string name="dialog_raiting_title_select_rating">Please choose your rating:</string>
+    <string name="dialog_raiting_title_done">Done! Your rating accepted</string>
+    <string name="dialog_raiting_button_ok">Rate!</string>
+    <string name="dialog_raiting_error_not_attended">You don\'t attend this course</string>
+    <string name="dialog_raiting_error_not_attended_details">only attended course can be rated</string>
+    <string name="dialog_raiting_error_already_rated">You already rated this course</string>
+    <string name="dialog_raiting_error_already_rated_details">sorry, course can be rated only once</string>
+    
+    <string name="dialog_attend_title_select_course">Attend course:</string>
+    <string name="dialog_attend_title_done">Done! You attended course</string>
+    <string name="dialog_attend_button_ok">Attend!</string>
+    <string name="dialog_attend_info">Would you like to attend</string>
+    <string name="dialog_attend_share">Share with friends</string>
+    <string name="dialog_attended_error_already_attended">You already attend this course</string>
+    <string name="dialog_attended_error_already_attended_details">sorry, you can\'t attend one course at one day twice</string>
+    
+    <string name="dialog_change_color_title_change_color">Choose new color:</string>
+    <string name="dialog_change_color_random">Random</string>
+    <string name="dialog_change_color_customize">Customize</string>
+    <string name="dialog_change_color_change">Change!</string>
+    
+    <string name="dialog_map_loading_title">Loading…</string>
+    <string name="dialog_map_found_title">Found</string>
+    <string name="dialog_map_not_found_title">Location not found</string>
+    <string name="dialog_map_show">Search</string>
+    
+    <string name="dialog_title_error">Oops!</string>
+    <string name="dialog_title_loading">Loading…</string>
+    <string name="dialog_error_no_connection">Check your internet connection</string>
+    <string name="dialog_error_no_connection_details">application was unable to connect remote server</string>
+    <string name="dialog_error_unexpected_error">Oops, unexpected error</string>
+    <string name="dialog_error_unexpected_error_details">something went wrong, we\'ll try to fix it as fast as possible</string>
+    <string name="dialog_error_parse_error">Back-end server problem</string>
+    <string name="dialog_error_parse_error_details">something went wrong with our server, please try later</string>
+    <string name="dialog_error_sync_error">Synchronization problem</string>
+    <string name="dialog_error_sync_error_details">user data is out of date and we were unable to synchronize it</string>
+    
+	<string name="list_add_button_add_text">Add</string>
+	<string name="list_add_button_save_text">Save</string>
+	
+    <string name="course_info_directions">Show on map</string>
+    <string name="course_info_more">More info</string>
+    <string name="course_info_more_site">http://sport.unibe.ch</string>
+    <string name="course_info_course">Course</string>
+    <string name="course_info_online">Online registration required</string>
+    <string name="course_info_weather">Weather-dependent Offer</string>
+    <string name="course_info_info">Info (.pdf)</string>
+    <string name="course_info_subscription">Subscription until</string>
+    <string name="course_info_attend">Attend</string>
+    <string name="course_info_attend_detail">Click on colored day to attend course</string>
+    <string name="course_info_already_attended">You attend this course</string>
+    <string name="course_info_rate">Rate</string>
+    <string name="course_info_already_rated">You have already rated this course</string>
+    <string name="course_rating_stars">stars</string>
+    <string name="course_rating_review_header">Rating</string>
+    <string name="course_rating_overview">Overview</string>
+    <string name="course_rating_review_header_sub">Other users course review</string>
+    
+    <string name="sport_info_course">Course</string>
+    <string name="sport_info_day">Day</string>
+    <string name="sport_info_time">Time</string>
+    <string name="sport_info_place">Place</string>
+    
+    <string name="monday_short">Mo</string>
+	<string name="tuesday_short">Tu</string>
+	<string name="wednesday_short">We</string>
+	<string name="thursday_short">Th</string>
+	<string name="friday_short">Fr</string>
+	<string name="saturday_short">Sa</string>
+	<string name="sunday_short">Su</string>
+	<string name="january">january</string>
+	<string name="february">february</string>
+	<string name="march">march</string>
+	<string name="april">april</string>
+	<string name="may">may</string>
+	<string name="june">june</string>
+	<string name="july">july</string>
+	<string name="august">august</string>
+	<string name="september">september</string>
+	<string name="october">october</string>
+	<string name="november">november</string>
+	<string name="december">december</string>
+	
+	<string name="slider_menu_about">About</string>
+	<string name="slider_menu_options">Options</string>
+	<string name="slider_menu_favorites">Favorites</string>
+	<string name="slider_menu_sports_list">Sports List</string>
+	
+	<string name="about_page_text"><![CDATA[Application Name : <b>Sport@Unibe</b><br>
+Supported Android Versions: 2.3 - 4.4<br>
+Authors: Team1 from Software Engineering Course 2013 at University of Bern<br>
+Stefan Borer, Toño Teran, Noemi Wälle, Aliaksei Syrel<br>
+Application Version: V1.0<br>
+Support and Contact Page: <a href="http://wiki.unisport.hut.by/doku.php">Support and Contact</a><br>
+Visit Universitätssport Bern <a href="http://www.sport.unibe.ch">Unisport</a><br>
+used library: actionbar sherlock <a href="http://actionbarsherlock.com">Actionbarsherlock</a><br>
+Sport@Unibe was modeled to make it easy to give owerview about sport program Universitätssport Bern offers. 
+Users can organize sport courses, rate them or share attended ones with friends. 
+Also search functions and option to show places of courses in external map application should ease requirements for users. 
+We are keen to matching app design acording to user wishes, please contact us at our webpage if you have any suggestions for improvements. <br>
+Team1 wishes fun with Sport@Unibe!<br><br>
+
+<pre>V1.0 - supports notifications about attended courses</pre>
+<pre>     - users can assign desired colors to his favorite courses</pre>]]></string>
+	
+
+	
+	</resources>

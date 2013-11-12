@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/ab_home"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingRight="10dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/ab_action_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:visibility="invisible"
+            android:src="@drawable/ic_navigation_drawer" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+        	android:layout_marginLeft="0dp" >
+
+            <ToggleButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/unisport_logo_v2"
+                android:textOff=""
+                android:textOn="" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="-12dp"
+                android:src="@drawable/unisport_logo_v2_b" />
+
+            <TextView
+                android:id="@+id/ab_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/app_name"
+                android:textColor="#FFFFFFFF"
+                android:textSize="20sp"
+                android:textStyle="italic" />
+        </FrameLayout>
+    </LinearLayout>
+
+</FrameLayout>

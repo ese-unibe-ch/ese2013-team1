@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- pressed state -->
+    <item android:drawable="@drawable/actionbar_favorite_off_normal" android:state_pressed="true"/>
+    <!-- normal state -->
+    <item android:drawable="@drawable/actionbar_favorite_off_normal"/>
+
+</selector>

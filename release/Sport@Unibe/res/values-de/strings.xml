@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sport@Unibe</string>
+    <string name="activity_course_info_name">Sport@Unibe</string>
+    
+   	<string name="menu_search_title">Suche</string>
+    <string name="menu_favorite_title">Favoriten</string>
+    <string name="menu_navigation_title">Navigation</string>
+    <string name="menu_favorites_list_title">Zeige als Liste</string>
+    <string name="menu_favorites_grid_title">Zeige als Kalender</string>
+    <string name="menu_search_advanced_day_text">Tag:</string>
+    <string name="menu_search_advanced_day_all_text">Alle</string>
+    <string name="menu_search_advanced_time_text">Zeit:</string>
+    <string name="menu_search_advanced_time_all_text">Alle</string>
+    <string name="menu_search_advanced_time_8_10">8–10</string>
+    <string name="menu_search_advanced_time_10_12">10–12</string>
+    <string name="menu_search_advanced_time_12_14">12–14</string>
+    <string name="menu_search_advanced_time_14_16">14–16</string>
+    <string name="menu_search_advanced_time_16_18">16–18</string>
+    <string name="menu_search_advanced_time_18_20">18–20</string>
+    <string name="menu_search_advanced_time_20_22">20–22</string>
+    
+    <string name="menu_search_advanced_search_text">Suche</string>
+    <string name="menu_search_advanced_clear_text">Löschen</string>
+    
+    <string name="dialog_button_ok_text">OK</string>
+    <string name="dialog_button_cancel_text">Abbrechen</string>
+    <string name="dialog_button_close_text">Schliessen</string>
+    
+    <string name="dialog_raiting_title_select_rating">Bitte bewärte den Kurs:</string>
+    <string name="dialog_raiting_title_done">Fertig! Deine Bewertung wurde akzeptiert</string>
+    <string name="dialog_raiting_button_ok">Bewerte!</string>  
+    <string name="dialog_raiting_error_not_attended">Du hast diesen Kurs nicht besucht</string>
+    <string name="dialog_raiting_error_not_attended_details">nur besuchte Kurse können bewertet werden</string>
+    <string name="dialog_raiting_error_already_rated">Du hast diesen Kurs bereits bewertet</string>
+    <string name="dialog_raiting_error_already_rated_details">Entschuldigung, Kurse können nur einmal bewertet werden</string>
+    
+    <string name="dialog_title_loading">Lade…</string>
+    <string name="dialog_title_error">Oops!</string>
+    <string name="dialog_error_no_connection">Überprüfe deine Internetverbindung</string>
+    <string name="dialog_error_no_connection_details">Der Applikation war es nicht möglich den Server zu kontaktieren</string>
+    <string name="dialog_error_unexpected_error">Oops, unerwarteter Fehler</string>
+    <string name="dialog_error_unexpected_error_details">etwas ging schief, wir werden versuchen das Problem schnellstmöglich zu beheben</string>
+    <string name="dialog_error_parse_error">Der Back-end Server hat ein Problem</string>
+    <string name="dialog_error_parse_error_details">Problem mit unserem Server, bitte versuche es später nochmals</string>
+    <string name="dialog_error_sync_error">synchronisations Problem</string>
+    <string name="dialog_error_sync_error_details">Benutzerdaten sind ausserhalb des Datums und es war uns leicer nicht möglich sie zu synchronisieren</string>
+    
+	<string name="list_add_button_add_text">Hinzufügen</string>
+	<string name="list_add_button_save_text">Speichern</string>
+	
+    <string name="course_info_directions">Zeige auf Karte</string>
+    <string name="course_info_more">Mehr Infos</string>
+    <string name="course_info_more_site">http://sport.unibe.ch</string>
+    <string name="course_info_course">Kurs</string>
+    <string name="course_info_online">online Registrierung notwendig</string>
+    <string name="course_info_weather">Wetterabhängiges Angebot</string>
+    <string name="course_info_info">Info</string>
+    <string name="course_info_subscription">Einschreiben</string>
+    <string name="course_info_attend">Besucht</string>
+    <string name="course_info_already_attended">Du besucht diesen Kurs</string>
+    <string name="course_info_rate">Bewerten</string>
+    <string name="course_info_already_rated">Du hast diesen Kurs bereits bewertet</string>
+    <string name="course_rating_stars">Sterne</string>
+    <string name="course_rating_review_header">Bewertung</string>
+    <string name="course_rating_overview">Übersicht</string>
+    <string name="course_rating_review_header_sub">Kursbewertungen von anderen Benutzern</string>
+    
+    <string name="monday_short">Mo</string>
+	<string name="tuesday_short">Di</string>
+	<string name="wednesday_short">Mi</string>
+	<string name="thursday_short">Do</string>
+	<string name="friday_short">Fr</string>
+	<string name="saturday_short">Sa</string>
+	<string name="sunday_short">So</string>
+	<string name="january">Janurar</string>
+	<string name="february">Februar</string>
+	<string name="march">März</string>
+	<string name="april">April</string>
+	<string name="may">Mai</string>
+	<string name="june">Juni</string>
+	<string name="july">Juli</string>
+	<string name="august">August</string>
+	<string name="september">September</string>
+	<string name="october">Oktober</string>
+	<string name="november">November</string>
+	<string name="december">Dezember</string>
+	
+	<string name="about_page_text"><![CDATA[Name der Applikation: <b>Sport@Unibe</b><br>
+Unterstützte Android Versionen: 2.3 - 4.4<br>
+Authoren: Team1 vom Software Engineering Kurs 2013 an der University Bern<br>
+             Stefan Borer, Toño Teran, Noemi Wälle, Aliaksei Syrel<br>
+Applikations Version: V1.0<br>
+Webseite für Support und Kontakt: <a href="http://wiki.unisport.hut.by/doku.php">Support und Kontakt</a><br>
+Besuche Universitätssport Bern <a href="http://www.sport.unibe.ch">Unisport</a><br>
+Benutzte Bibliotheken: actionbar sherlock <a href="http://actionbarsherlock.com">Actionbarsherlock</a><br>
+Sport@Unibe wurde designt um einen Überblick über das angebotende Sportprogramm vom Universitätssport Bern zu geben. 
+Benutzer können ihre Sportkurse organisieren, bewerten und falls gewünscht Freunde über Kurse welche besucht werden informieren.
+Suchfunktionen und die Möglichkeit die Orte von Kursen in einer externen Applikation auf Karte anzuzeigen unterstützen zusätzlich.
+Wir sind stehts bemüht unsere Applikation bezüglich Funktionalität und Design den Benutzerwünschen anzupassen, bitte kontaktiert uns auf unserer Webseite, falls ihr Anregungen und Vorschläge habt.<br>
+Team1 wünscht euch viel Spass mit Sport@Unibe!<br><br>
+
+<pre>V1.0 - Unterstützung von Benachrichtigungen über Kurse welche besucht werden</pre>
+<pre>	 - Favoriten Kursen kann vom Benutzer eine wählbare Farbe zugewiesen werden</pre>]]></string>
+</resources>
+    

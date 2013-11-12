@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="7dp"
+    android:background="@drawable/card_layout_bg" >
+    
+    <View
+        android:id="@+id/strut"
+        android:layout_width="0dp"
+        android:layout_height="0dp" 
+        android:layout_centerHorizontal="true"/>
+    
+    <View
+        android:id="@+id/fake_button"
+        android:layout_width="1dp"
+        android:layout_height="35dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignTop="@+id/course"
+        android:layout_alignParentRight="true"/>
+    
+    <View
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/divider_head"/>
+    
+    <ImageView
+        android:id="@+id/attended"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:src="@drawable/ic_attended_on_normal"
+        android:layout_marginLeft="5dp"
+        
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/course"
+        android:layout_alignBottom="@+id/sport"/>
+
+    <TextView
+        android:id="@+id/course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        
+        android:layout_toRightOf="@+id/attended" />
+
+    <TextView
+        android:id="@+id/sport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/holo_grey_dark"
+        android:textStyle="italic"
+        
+        android:layout_marginRight="30dp"
+        
+        android:layout_toRightOf="@+id/attended"
+        android:layout_alignLeft="@+id/course"
+        android:layout_below="@+id/course" />
+
+    <ch.unibe.sport.widget.view.RightAlignImageView
+        android:id="@+id/menu_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sport"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/course"
+        android:adjustViewBounds="true"
+        android:clickable="true"
+        android:paddingBottom="10dp"
+        android:paddingRight="7dp"
+        android:paddingTop="10dp"
+        android:scaleType="fitEnd"
+        android:src="@drawable/ic_menu" />
+
+    <ImageView
+        android:id="@+id/favorites_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:scaleType="fitCenter"
+        
+        android:paddingBottom="0dp"
+        android:paddingRight="7dp"
+        android:paddingLeft="7dp"
+        android:paddingTop="0dp"
+        
+        android:layout_alignBottom="@+id/sport"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+
+    <View
+        android:id="@+id/divider_head"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#22222222"
+        
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/sport" />
+
+    <ImageView
+        android:id="@+id/time_image"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_time"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        
+        android:layout_below="@+id/divider_head" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#bb222222"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        
+        android:layout_toRightOf="@+id/time_image"
+        android:layout_alignTop="@+id/time_image"
+        android:layout_alignBottom="@+id/time_image" />
+
+    <ImageView
+        android:id="@+id/day_image"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_calendar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        
+        android:layout_below="@+id/time_image" />
+
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#bb222222"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        
+        android:layout_toRightOf="@+id/day_image"
+        android:layout_alignTop="@+id/day_image"
+        android:layout_alignBottom="@+id/day_image" />
+
+    <ImageView
+        android:id="@+id/place_image"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_place_normal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        
+        android:layout_below="@+id/day_image" />
+
+    <TextView
+        android:id="@+id/place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#bb222222"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        
+        android:layout_toRightOf="@+id/place_image"
+        android:layout_alignTop="@+id/place_image"
+        android:layout_alignBottom="@+id/place_image" />
+
+    <ImageView
+        android:id="@+id/period_image"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_period"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        
+        android:layout_below="@+id/place_image" />
+
+    <TextView
+        android:id="@+id/period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#bb222222"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        
+        android:layout_toRightOf="@+id/period_image"
+        android:layout_alignTop="@+id/period_image"
+        android:layout_alignBottom="@+id/period_image" />
+
+    <ImageView
+        android:id="@+id/subscription_image"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/period_image"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_anmeldung" />
+
+    <TextView
+        android:id="@+id/subscription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:fontFamily="sans-serif"
+        android:textColor="#ffc60868"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        
+        android:layout_toRightOf="@+id/subscription_image"
+        android:layout_alignTop="@+id/subscription_image"
+        android:layout_alignBottom="@+id/subscription_image" />
+    
+    <View
+        android:id="@+id/divider_info"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#22222222"
+        android:layout_marginTop="5dp"
+        
+        android:layout_below="@+id/subscription_image" />
+
+    <ImageView
+        android:id="@+id/directions_image"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:src="@drawable/ic_directions"
+        
+        android:layout_below="@+id/divider_info" />
+
+    <ch.unibe.sport.widget.view.GravityTextView
+        android:id="@+id/directions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/course_info_directions"
+        android:textColor="@color/holo_blue_dark"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        android:background="@drawable/course_info_link_bg"
+        android:clickable="true"
+        
+        android:paddingLeft="35dp"
+        
+        android:layout_toRightOf="@+id/directions_image"
+        android:layout_alignTop="@+id/directions_image"
+        android:layout_alignBottom="@+id/directions_image"
+        android:layout_alignRight="@id/strut"
+        android:layout_alignParentLeft="true" />
+
+    <ch.unibe.sport.widget.view.GravityTextView
+        android:id="@+id/more"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="right|center_vertical"
+        
+        android:fontFamily="sans-serif-light"
+        android:text="@string/course_info_more"
+        android:textColor="@color/holo_grey_dark"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        android:background="@drawable/course_info_link_bg"
+        android:clickable="true"
+        
+        android:paddingRight="35dp"
+        
+        android:layout_toLeftOf="@+id/more_image"
+        android:layout_alignTop="@+id/more_image"
+        android:layout_alignBottom="@+id/more_image"
+        android:layout_alignLeft="@id/strut"
+        android:layout_alignParentRight="true" />
+
+    <ImageView
+        android:id="@+id/more_image"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:src="@drawable/ic_more_right_normal"
+        
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/divider_info" />
+</RelativeLayout>

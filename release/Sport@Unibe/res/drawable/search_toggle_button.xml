@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- toggle on, pressed -->
+    <item android:drawable="@drawable/toggle_button_on_pressed" android:state_checked="true" android:state_pressed="true" />
+    <!-- toggle on, normal -->
+    <item android:drawable="@drawable/toggle_button_on_normal" android:state_checked="true"/>
+    <!-- toggle off, pressed -->
+    <item android:drawable="@drawable/toggle_button_off_pressed" android:state_pressed="true" />
+    <!-- toggle off -->
+    <item android:drawable="@drawable/toggle_button_off_normal"/>
+</selector>

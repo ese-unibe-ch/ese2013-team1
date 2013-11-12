@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ch.unibe.sport"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="18" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <permission
+        android:name="ch.unibe.sport.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="ch.unibe.sport.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Unisport" >
+        
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCxneWJpX-qeuyys3e3na8uIXxzedWaoOA" />
+        
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="ch.unibe.sport.main.MainActivity"
+            android:theme="@style/Theme.Unisport"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.parse.PushService" />
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+		
+        <receiver android:name="ch.unibe.sport.main.OnBootBroadcastReceiver">
+            <intent-filter>  
+        		<action android:name="android.intent.action.BOOT_COMPLETED" />  
+    		</intent-filter>
+        </receiver>
+        
+        <receiver android:name="ch.unibe.sport.course.info.CourseNotificationAlarmManagerReceiver">
+        </receiver>
+        
+        <activity
+            android:name="ch.unibe.sport.info.SportInfoActivity"
+            android:label="SportInfoActivity" >
+        </activity>
+                
+        <activity
+            android:name="ch.unibe.sport.main.SettingsActivity"
+            android:label="SettingsActivity" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.main.search.AdvancedSearchResultActivity"
+            android:label="AdvancedSearchResultActivity" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.course.info.CourseInfoActivity"
+            android:label="CourseInfoActivity" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.course.info.CourseInfoActivity"
+            android:label="CourseInfoActivity" >
+        </activity>
+                
+        <activity
+            android:name="ch.unibe.sport.course.info.MapDialog"
+            android:label="MapDialog"
+            android:theme="@style/Theme.Unisport.Dialog"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        
+        <activity android:name="com.facebook.LoginActivity" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.course.info.ItemMenu"
+            android:label="ItemMenu"
+            android:theme="@style/DialogFloating" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.main.search.AdvancedSearchDialog"
+            android:label="AdvancedSearchDialog"
+            android:theme="@style/DialogFloating" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.course.info.CourseRatingDialog"
+            android:label="CourseRatingDialog"
+            android:theme="@style/Theme.Unisport.Dialog" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.course.info.CourseAttendDialog"
+            android:label="CourseAttendDialog"
+            android:theme="@style/Theme.Unisport.Dialog" >
+        </activity>
+        
+         <activity
+            android:name="ch.unibe.sport.course.info.CourseChangeColorDialog"
+            android:label="CourseChangeColorDialog"
+            android:theme="@style/Theme.Unisport.Dialog" >
+        </activity>
+        
+          <activity
+            android:name="ch.unibe.sport.slidingmenu.AboutDialog"
+            android:label="AboutDialog"
+            android:theme="@style/Theme.Unisport.Dialog" >
+        </activity>
+        
+    </application>
+
+</manifest>
