@@ -53,7 +53,7 @@ public class CourseChangeColorDialog extends BaseDialog {
 			if (checkedButton == null) return;
 			int color = checkedButton.getColor();
 			new FavoriteCourses(getContext()).setBGColor(course.getCourseID(), color);
-			send(MessageFactory.updateBGColorFromChangeColorDialog(course.getCourseID(), color));
+			send(MessageFactory.updateCourse(TAG, course.getCourseID()));
 			finish();
 		}
 		
