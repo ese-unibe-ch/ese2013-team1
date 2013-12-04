@@ -49,12 +49,11 @@
     <string name="dialog_error_parse_error_details">что-то не так с нашим сервером, попробуйте позже</string>
     <string name="dialog_error_sync_error">Ошибка синхронизации</string>
     <string name="dialog_error_sync_error_details">пользовательские данные устарели и мы не согли их обновить</string>
-
     
 	<string name="list_add_button_add_text">Добавить</string>
 	<string name="list_add_button_save_text">Сохранить</string>
 
-    <string name="course_info_directions">Показать на карте</string>
+    <string name="course_info_directions">На карте</string>
     <string name="course_info_more">Доп.инфо</string>
     <string name="course_info_more_site">http://sport.unibe.ch</string>
     <string name="course_info_course">Платный курс</string>

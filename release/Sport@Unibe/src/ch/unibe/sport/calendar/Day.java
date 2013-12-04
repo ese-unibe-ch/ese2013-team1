@@ -1,6 +1,6 @@
 package ch.unibe.sport.calendar;
 
-import ch.unibe.sport.course.Time;
+import ch.unibe.sport.core.Time;
 import ch.unibe.sport.utils.Date;
 
 public final class Day {
@@ -71,7 +71,7 @@ public final class Day {
 		return (day.id == this.id && day.date.equals(this.date) && this.timeFrom.equals(day.timeFrom));
 	}
 	public int hashCode() {
-		final int prime = 8;
+		final int prime = 7;
 		int hash = 1;
 		hash = hash * prime + id;
 		hash = hash * prime + date.hashCode();

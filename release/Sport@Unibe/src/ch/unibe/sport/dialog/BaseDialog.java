@@ -1,7 +1,8 @@
 package ch.unibe.sport.dialog;
 
-import android.graphics.Typeface;
+import android.annotation.SuppressLint;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -151,18 +152,22 @@ public abstract class BaseDialog extends Dialog {
 		this.title.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp);
 	}
 	
+	@SuppressLint("NewApi")
 	protected void disallowFinish(){
 		this.isFinishAllowed = false;
 		disableCancelButton();
 		disableCloseButton();
-		this.setFinishOnTouchOutside(false);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			this.setFinishOnTouchOutside(false);
 	}
-	
+
+	@SuppressLint("NewApi")
 	protected void allowFinish(){
 		this.isFinishAllowed = true;
 		enableCancelButton();
 		enableCloseButton();
-		this.setFinishOnTouchOutside(true);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			this.setFinishOnTouchOutside(true);
 	}
 
 	protected void disableOkButton(){

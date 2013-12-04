@@ -27,6 +27,8 @@ public class ActionBarSearchItem {
 	private final IMainTab tab;
 	private final MenuItem item;
 	
+	public static final String TAG = "actionSearch";
+	
 	public ActionBarSearchItem(IMainTab tab, Menu menu, int id) {
 		this.tab = tab;
 		item = menu.add(0, id, 0, R.string.menu_search_title);
@@ -49,6 +51,7 @@ public class ActionBarSearchItem {
 	    
 		SearchAutoComplete searchEditText = searchView.getQueryTextView();
 		searchEditText.setTextColor(Color.WHITE);
+		searchEditText.setTag(TAG);
 		
 		ImageView closeButton = searchView.getCloseButton();
 		closeButton.setImageResource(R.drawable.ic_action_content_backspace);

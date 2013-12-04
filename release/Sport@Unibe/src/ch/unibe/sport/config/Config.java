@@ -3,17 +3,19 @@ package ch.unibe.sport.config;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import ch.unibe.sport.course.info.CourseNotificationAlarmManagerReceiver;
-import ch.unibe.sport.utils.Print;
 import android.content.Context;
+import ch.unibe.sport.course.info.EventNotificationAlarmManagerReceiver;
+import ch.unibe.sport.network.MessageFactory;
+import ch.unibe.sport.network.ProxySherlockFragmentActivity;
+import ch.unibe.sport.utils.Print;
 
-public enum Config implements Database.OnDatabaseInitializedListener{
+public enum Config implements Database.OnDatabaseInitializedListener, System.OnSystemInitializedListener {
 	INST;
 	public static final String TAG = Config.class.getName();
 	public static final String PACKAGE_NAME = "ch.unibe.sport";
 	
 	private Config(){}
-
+	
 	public System SYSTEM;
 	public Strings STRINGS;
 	public Display DISPLAY;
@@ -26,15 +28,22 @@ public enum Config implements Database.OnDatabaseInitializedListener{
 	
 	private LinkedList<String> runningActivities;
 	private ArrayList<IPreferences> preferences;
+	
+	public interface OnConfigInitializedListener {
+		public void onConfigInitialized();
+	}
+	
+	public OnConfigInitializedListener mOnConfigInitializedListener;
 	/*------------------------------------------------------------
 	---------------------------- I N I T -------------------------
 	------------------------------------------------------------*/
 	public void init(Context context){
 		assert context != null;
+		
 		runningActivities = new LinkedList<String>();
 		preferences = new ArrayList<IPreferences>();
 		
-		this.SYSTEM = new System(context);
+		this.SYSTEM = new System(context,this);
 		this.STRINGS = new Strings(context);
 		this.DISPLAY = new Display(context);
         DISPLAY.reInit();
@@ -49,7 +58,7 @@ public enum Config implements Database.OnDatabaseInitializedListener{
 		preferences.add(CALENDAR);
 		preferences.add(SYNCHRONIZE);
 		
-		CourseNotificationAlarmManagerReceiver alarmManager = new CourseNotificationAlarmManagerReceiver();
+		EventNotificationAlarmManagerReceiver alarmManager = new EventNotificationAlarmManagerReceiver();
 		alarmManager.setAlarm(context);
 		INIT = true;
 	}
@@ -57,6 +66,10 @@ public enum Config implements Database.OnDatabaseInitializedListener{
 	-------------------------- C H E C K S -----------------------
 	------------------------------------------------------------*/
 
+	public boolean readyToStart(){
+		return (Database.INIT && System.INIT);
+	}
+	
 	public boolean isRunning(Context context,String activityName){
 		if (runningActivities == null) {
 			init(context);
@@ -66,15 +79,26 @@ public enum Config implements Database.OnDatabaseInitializedListener{
 		return runningActivities.contains(activityName);
 	}
 
+	private void checkInitialization(){
+		if (readyToStart() && this.mOnConfigInitializedListener != null){
+			this.mOnConfigInitializedListener.onConfigInitialized();
+		}
+	}
 	
 	/*------------------------------------------------------------
 	------------------------- A C T I O N S ----------------------
 	------------------------------------------------------------*/
 	@Override
 	public void onDatabaseInitialized() {
-		
+		Print.log("DB is initialized");
+		checkInitialization();
 	}
 	
+	@Override
+	public void onSystemInitialized() {
+		Print.log("System is initialized");
+		checkInitialization();
+	}
 
 	public void addToRuningActivitiesList(String activityName){
 		assert !this.runningActivities.contains(activityName);
@@ -87,14 +111,26 @@ public enum Config implements Database.OnDatabaseInitializedListener{
 		this.runningActivities.remove(activityName);
 	}
 	
-	public void finishApp(){
-		android.os.Process.killProcess(android.os.Process.myPid());
+	/**
+	 * Finishes all activities in application
+	 * @param activity
+	 */
+	public void finishApp(ProxySherlockFragmentActivity activity){
+		if (activity != null && runningActivities != null && runningActivities.size() > 0){
+			Print.log(TAG,"Finishing application");
+			/* sends finish message to all running activities */
+			activity.send(MessageFactory.finishActivities(TAG, runningActivities));
+		}
 	}
 	
 	public void reInit(){
 		for (IPreferences preference : preferences){
 			preference.reInit();
 		}
+	}
+	
+	public void setOnConfigInitializedListener(OnConfigInitializedListener l){
+		this.mOnConfigInitializedListener = l;
 	}
 	/*------------------------------------------------------------
 	------------------------- D E F A U L T ----------------------

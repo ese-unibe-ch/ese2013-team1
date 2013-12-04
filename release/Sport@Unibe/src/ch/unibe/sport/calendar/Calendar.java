@@ -46,54 +46,7 @@ public class Calendar extends LinearLayout {
 		super(context, attrs);
 		initView();
 	}
-	
-	public Calendar(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		initView();
-	}
-	
-	/*public void initialize(){
-        days = new Day[ROWS*COLUMNS];	
-        initDate = new Date();
-        
-        DBAdapter.INST.open(context, TAG);
-        FavoriteCourses favoriteCoursesDB = new FavoriteCourses(context);
-        String[][] coursesData = CourseData.Calendar.getData(favoriteCoursesDB);
-        DBAdapter.INST.close(TAG);
-        
-        AssociativeList<ArrayList<String[]>> courses = new AssociativeList<ArrayList<String[]>>();
-        for (String[] course : coursesData){
-        	int day = Utils.Int(course[CourseData.Calendar.DAY_OF_WEEK]);
-        	if (courses.get(day) == null) courses.add(new ArrayList<String[]>(), day);
-        	courses.get(day).add(course);
-        }
-        
-        Date tmpDate = initDate.findDate(-new CalendarHelper(initDate).dayOfWeek);
-        int dayOfWeek = 0;
-        for (int i = 0,length = days.length; i < length; i++){
-        	if (dayOfWeek == 7) dayOfWeek = 0;
-        	int bgColor = Color.WHITE;
-        	Time timeFrom = new Time();
-        	int coursesNum = 0;
-        	if (courses.containsKey(dayOfWeek) && Config.INST.SYSTEM.TODAY.compareTo(tmpDate) != 1){
-        		int k = 0;
-        		while (timeFrom.unknown && k < courses.get(dayOfWeek).size()){
-            		timeFrom = new Time(Utils.Int(courses.get(dayOfWeek).get(k)[CourseData.Calendar.TIME_FROM]));
-            		k++;
-        		}
-        		if (!timeFrom.unknown){
-            		bgColor = Utils.Int(courses.get(dayOfWeek).get(k-1)[CourseData.Calendar.BG_COLOR]);
-        		}
-        		else {
-            		bgColor = Utils.Int(courses.get(dayOfWeek).get(0)[CourseData.Calendar.BG_COLOR]);
-        		}
-        		coursesNum = courses.get(dayOfWeek).size();
-        	}
-        	days[i] = new Day(i,tmpDate.copy(),Color.BLACK,bgColor,timeFrom,coursesNum);
-        	tmpDate.next();
-        	dayOfWeek++;
-        }
-	}*/
+
 	
 	/*------------------------------------------------------------
 	---------------------------- I N I T -------------------------
@@ -140,7 +93,7 @@ public class Calendar extends LinearLayout {
 	}
 	
 	/**
-	 * Starts calendar initializing correspindig to adapter
+	 * Starts calendar initializing correspondig to adapter
 	 */
 	private void initialize(){
 		removeAllViews();
@@ -152,7 +105,7 @@ public class Calendar extends LinearLayout {
 	}
 	
 	/**
-	 * Initialzies calendar rows
+	 * Initializes calendar rows
 	 * @throws NullAdapterException if adapter is null
 	 */
 	private void initRows() throws NullAdapterException {

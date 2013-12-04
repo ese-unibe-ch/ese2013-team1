@@ -4,36 +4,11 @@
     android:layout_height="fill_parent"
     android:fillViewport="true" >
 
-    <LinearLayout
+   <LinearLayout
         android:id="@+id/info_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:id="@+id/main_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-        <LinearLayout
-            android:id="@+id/calendar_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-        
-        <LinearLayout
-            android:id="@+id/additional_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-        
-        <LinearLayout
-            android:id="@+id/rating_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </LinearLayout>
+        android:orientation="vertical" />
 
 </ScrollView>

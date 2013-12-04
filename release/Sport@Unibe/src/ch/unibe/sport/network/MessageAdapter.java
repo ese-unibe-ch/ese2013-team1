@@ -10,6 +10,12 @@ public class MessageAdapter {
 		this.message = message;
 	}
 	
+	public boolean isContinueLoading(){
+		if (!this.message.containsKey(Message.ACTION)) return false;
+		if (!this.message.get(Message.ACTION).equals(MessageBuilder.CONTINUE_LOADING)) return false;
+		return true;
+	}
+	
 	public boolean isCourseUpdate(){
 		if (!this.message.containsKey(Message.ACTION)) return false;
 		if (!this.message.get(Message.ACTION).equals(MessageBuilder.COURSE_UPDATE)) return false;
@@ -70,6 +76,12 @@ public class MessageAdapter {
 	public boolean isStartActivity(){
 		if (!this.message.containsKey(Message.ACTION)) return false;
 		if (!this.message.get(Message.ACTION).equals(MessageBuilder.START_ACTIVITY)) return false;
+		return true;
+	}
+	
+	public boolean isFinishActivity(){
+		if (!this.message.containsKey(Message.ACTION)) return false;
+		if (!this.message.get(Message.ACTION).equals(MessageBuilder.FINISH_ACTIVITY)) return false;
 		return true;
 	}
 	

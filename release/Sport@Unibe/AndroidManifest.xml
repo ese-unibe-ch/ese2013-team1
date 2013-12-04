@@ -31,8 +31,9 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Unisport" >
-        
+        android:theme="@style/Theme.Unisport"
+        android:restoreAnyVersion="true" >
+        <!--  android:backupAgent="ch.unibe.sport.main.initialization.InitializationSystemBackupAgent" -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCxneWJpX-qeuyys3e3na8uIXxzedWaoOA" />
@@ -40,7 +41,11 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
+        
+		<meta-data
+		    android:name="com.google.android.backup.api_key"
+		    android:value="AEdPqrEAAAAIqF89xfhFI1FeyMMR7wDbd3frzdqYl8WAD32wWg" />
+		
         <activity
             android:name="ch.unibe.sport.main.MainActivity"
             android:theme="@style/Theme.Unisport"
@@ -53,6 +58,10 @@
 
         <service android:name="com.parse.PushService" />
 
+        <service
+            android:name="ch.unibe.sport.DBAdapter.restApi.UnisportSpiceService"
+            android:exported="false" />
+        
         <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -66,8 +75,13 @@
     		</intent-filter>
         </receiver>
         
-        <receiver android:name="ch.unibe.sport.course.info.CourseNotificationAlarmManagerReceiver">
+        <receiver android:name="ch.unibe.sport.course.info.EventNotificationAlarmManagerReceiver">
         </receiver>
+        
+        <activity
+            android:name="ch.unibe.sport.main.initialization.InitializationActivity"
+            android:label="InitializationActivity" >
+        </activity>
         
         <activity
             android:name="ch.unibe.sport.info.SportInfoActivity"
@@ -85,15 +99,10 @@
         </activity>
         
         <activity
-            android:name="ch.unibe.sport.course.info.CourseInfoActivity"
+            android:name="ch.unibe.sport.course.info.EventInfoActivity"
             android:label="CourseInfoActivity" >
         </activity>
-        
-        <activity
-            android:name="ch.unibe.sport.course.info.CourseInfoActivity"
-            android:label="CourseInfoActivity" >
-        </activity>
-                
+                        
         <activity
             android:name="ch.unibe.sport.course.info.MapDialog"
             android:label="MapDialog"
@@ -117,19 +126,19 @@
         </activity>
         
         <activity
-            android:name="ch.unibe.sport.course.info.CourseRatingDialog"
+            android:name="ch.unibe.sport.course.info.EventRatingDialog"
             android:label="CourseRatingDialog"
             android:theme="@style/Theme.Unisport.Dialog" >
         </activity>
         
         <activity
-            android:name="ch.unibe.sport.course.info.CourseAttendDialog"
+            android:name="ch.unibe.sport.course.info.EventAttendDialog"
             android:label="CourseAttendDialog"
             android:theme="@style/Theme.Unisport.Dialog" >
         </activity>
         
          <activity
-            android:name="ch.unibe.sport.course.info.CourseChangeColorDialog"
+            android:name="ch.unibe.sport.course.info.EventChangeColorDialog"
             android:label="CourseChangeColorDialog"
             android:theme="@style/Theme.Unisport.Dialog" >
         </activity>

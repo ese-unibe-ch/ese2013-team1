@@ -10,17 +10,17 @@ import java.util.Calendar;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
-import ch.unibe.sport.DBAdapter.tables.AttendedCourses;
-import ch.unibe.sport.DBAdapter.tables.CourseDays;
-import ch.unibe.sport.DBAdapter.tables.CourseIntervals;
+import ch.unibe.sport.DBAdapter.tables.EventAttended;
+import ch.unibe.sport.DBAdapter.tables.EventDaysOfWeek;
+import ch.unibe.sport.DBAdapter.tables.EventKew;
+import ch.unibe.sport.DBAdapter.tables.EventPeriods;
 import ch.unibe.sport.DBAdapter.tables.FacebookFriends;
-import ch.unibe.sport.DBAdapter.tables.FavoriteCourses;
-import ch.unibe.sport.DBAdapter.tables.Intervals;
-import ch.unibe.sport.DBAdapter.tables.Rating;
-import ch.unibe.sport.DBAdapter.tables.SportCourses;
+import ch.unibe.sport.DBAdapter.tables.EventFavorite;
+import ch.unibe.sport.DBAdapter.tables.EventIntervals;
+import ch.unibe.sport.DBAdapter.tables.EventRating;
+import ch.unibe.sport.DBAdapter.tables.SportEvents;
 import ch.unibe.sport.DBAdapter.tables.Sports;
-import ch.unibe.sport.DBAdapter.tables.Courses;
-import ch.unibe.sport.config.Config;
+import ch.unibe.sport.DBAdapter.tables.Events;
 import ch.unibe.sport.utils.Print;
 import android.content.Context;
 import android.database.SQLException;
@@ -52,6 +52,16 @@ public enum DBAdapter {
 	private boolean open = false;
 	private boolean lock = false;
 	private Context context;
+	
+	private String customDBName;
+	
+	public void useCustomDatabase(String name){
+		this.customDBName = name;
+	}
+	
+	public void useDefaultDatabase(){
+		this.customDBName = null;
+	}
 	
 	public interface OnOpenedListener {
 		public void onOpened();
@@ -86,7 +96,12 @@ public enum DBAdapter {
 	public DBAdapter open(Context context,String tag) throws SQLException {
 		if (TRANSACTION_HARD_LOCK && lock) return this;
 		if (!open){
-			this.DBHelper = new DatabaseHelper(context);
+			if (customDBName == null){
+				this.DBHelper = new DatabaseHelper(context);
+			}
+			else {
+				this.DBHelper = new DatabaseHelper(context,this.customDBName);
+			}
 			db = DBHelper.getWritableDatabase();
 			open = true;
 			if (mOnOpenedListeners != null) {
@@ -183,35 +198,40 @@ public enum DBAdapter {
 			super(context, DBStructure.DATABASE_NAME, null, DBStructure.DATABASE_VERSION);  
 		}
 		
+		DatabaseHelper(Context context,String name) {  
+			super(context, name, null, DBStructure.DATABASE_VERSION);  
+		}
+		
 		@Override  
 		public void onCreate(SQLiteDatabase db) {
 			System.out.println("Create db");
 			db.execSQL(Sports.CREATE);
-			db.execSQL(Courses.CREATE);
-			db.execSQL(SportCourses.CREATE);
-			db.execSQL(FavoriteCourses.CREATE);
+			db.execSQL(Events.CREATE);
+			db.execSQL(SportEvents.CREATE);
+			db.execSQL(EventFavorite.CREATE);
 			db.execSQL(FacebookFriends.CREATE);
-			db.execSQL(CourseIntervals.CREATE);
-			db.execSQL(Intervals.CREATE);
-			db.execSQL(CourseDays.CREATE);
-			db.execSQL(AttendedCourses.CREATE);
-			db.execSQL(Rating.CREATE);
-			Config.INST.DATABASE.setDatabaseInitialized();
+			db.execSQL(EventIntervals.CREATE);
+			db.execSQL(EventAttended.CREATE);
+			db.execSQL(EventKew.CREATE);
+			db.execSQL(EventDaysOfWeek.CREATE);
+			db.execSQL(EventPeriods.CREATE);
+			db.execSQL(EventRating.CREATE);
 		}
 		
 		@Override  
 		public void onUpgrade(final SQLiteDatabase db, int oldVersion, int newVersion) {  
 			Log.w(DBStructure.TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
 			db.execSQL("DROP TABLE IF EXISTS "+Sports.NAME);
-            db.execSQL("DROP TABLE IF EXISTS "+Courses.NAME);
-            db.execSQL("DROP TABLE IF EXISTS "+SportCourses.NAME);
-            db.execSQL("DROP TABLE IF EXISTS "+FavoriteCourses.NAME);
+            db.execSQL("DROP TABLE IF EXISTS "+Events.NAME);
+            db.execSQL("DROP TABLE IF EXISTS "+SportEvents.NAME);
+            db.execSQL("DROP TABLE IF EXISTS "+EventFavorite.NAME);
             db.execSQL("DROP TABLE IF EXISTS "+FacebookFriends.NAME);
-            db.execSQL("DROP TABLE IF EXISTS "+CourseIntervals.NAME);
-            db.execSQL("DROP TABLE IF EXISTS "+Intervals.NAME);
-			db.execSQL("DROP TABLE IF EXISTS "+CourseDays.NAME);
-			db.execSQL("DROP TABLE IF EXISTS "+AttendedCourses.NAME);
-			db.execSQL("DROP TABLE IF EXISTS "+Rating.NAME);
+            db.execSQL("DROP TABLE IF EXISTS "+EventIntervals.NAME);
+			db.execSQL("DROP TABLE IF EXISTS "+EventAttended.NAME);
+			db.execSQL("DROP TABLE IF EXISTS "+EventKew.NAME);
+			db.execSQL("DROP TABLE IF EXISTS "+EventDaysOfWeek.NAME);
+			db.execSQL("DROP TABLE IF EXISTS "+EventPeriods.NAME);
+			db.execSQL("DROP TABLE IF EXISTS "+EventRating.NAME);
             onCreate(db);
 		}
 	}

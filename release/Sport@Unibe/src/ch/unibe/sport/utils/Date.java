@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * Stable and tested Date class for fast operations with dates
  * @version 1.6 2013-08-14
- * @author Team
+ * @author Team 1
  */
 public class Date {
 	public static final int[] DAYS_IN_MONTH = {31,28,31,30,31,30,31,31,30,31,30,31};

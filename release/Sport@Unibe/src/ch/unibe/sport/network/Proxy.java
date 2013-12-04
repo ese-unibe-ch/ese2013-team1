@@ -19,6 +19,7 @@ public class Proxy implements IProxy {
 		public void onReceive(Context context, Intent intent) {			
 			Message message = (Message) intent.getParcelableExtra(Message.BROADCAST);
 			if (message != null){
+				if (preDeliverActions(message)) return;
 				if (message.isDelivered()) return;
 				if (message.getSender().equals(proxyable.tag())) return;
 				if (message.isInTrace(proxyable.tag())) return;
@@ -34,6 +35,22 @@ public class Proxy implements IProxy {
 			}
 		}
 	};
+	
+	/**
+	 * True to cancel delivering, false otherwise
+	 * @param message
+	 * @return
+	 */
+	private boolean preDeliverActions(Message message){
+		MessageAdapter adapter = new MessageAdapter(message);
+		if (adapter.isFinishActivity() && message.isReceiver(proxyable.tag())){
+			if (proxyable.getActivity() != null){
+				proxyable.getActivity().finish();
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	private Proxy(IProxyable proxyable){
 		this.proxyable = proxyable;
@@ -66,7 +83,7 @@ public class Proxy implements IProxy {
 		if (message.isDelivered()) return;
 		if (message.isInTrace(proxyable.tag())) return;
 		message.addToTrace(proxyable.tag());
-		if (message.isReceiver(proxyable.tag())){
+		if (message.isReceiver(proxyable.tag())) {
 			proxyable.process(message);
 			if (message.isDelivered()) return;
 		}

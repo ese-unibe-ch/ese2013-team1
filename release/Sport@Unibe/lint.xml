@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
     <issue id="ContentDescription" severity="ignore" />
+    <issue id="InnerclassSeparator" severity="ignore" />
     <issue id="SmallSp" severity="ignore" />
     <issue id="TextFields" severity="ignore" />
     <issue id="UseCompoundDrawables" severity="ignore" />

@@ -7,7 +7,6 @@ import org.json.simple.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -17,19 +16,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import ch.unibe.sport.R;
-import ch.unibe.sport.DBAdapter.DBAdapter;
-import ch.unibe.sport.DBAdapter.tables.Sports;
-import ch.unibe.sport.DBAdapter.tasks.CourseInfoLoaderTask;
-import ch.unibe.sport.DBAdapter.tasks.CourseInfoLoaderTask.OnProgressUpdateListener;
-import ch.unibe.sport.course.Time;
+import ch.unibe.sport.core.Time;
 import ch.unibe.sport.dialog.DialogFloating;
 import ch.unibe.sport.network.Message;
-import ch.unibe.sport.taskmanager.OnTaskCompletedListener;
-import ch.unibe.sport.utils.Print;
 import ch.unibe.sport.utils.Utils;
 import ch.unibe.sport.widget.view.SeekBar;
 
@@ -48,11 +40,6 @@ public class AdvancedSearchDialog extends DialogFloating {
 	
 	private Button clear;
 	private Button search;
-	
-	private TextView progressText;
-	private ViewGroup progressContainer;
-	
-	private CourseInfoLoaderTask infoLoader;
 	
 	public static void show(Context context, View view) {
 		DialogFloating.show(context, view, new Bundle(),AdvancedSearchDialog.class);
@@ -88,39 +75,15 @@ public class AdvancedSearchDialog extends DialogFloating {
 		
 		clear = (Button) this.findViewById(R.id.clear);
 		search = (Button) this.findViewById(R.id.search);
-		progressText = (TextView) this.findViewById(R.id.progress);
-		progressContainer = (ViewGroup) this.findViewById(R.id.progess_container);
 		initListeners();
 		
-		DBAdapter.INST.open(this, TAG);
-		Sports sportsDB = new Sports(this);
-		int[] sportIDs = sportsDB.getSportIDsNotLoaded();
-		DBAdapter.INST.close(TAG);
-		infoLoader = new CourseInfoLoaderTask(this,sportIDs);
-		infoLoader.setOnProgressUpdateListener(new OnProgressUpdateListener(){
-
+		search.setVisibility(View.VISIBLE);
+		search.setOnClickListener(new OnClickListener(){
 			@Override
-			public void onProgressUpdate(int current, int all) {
-				if (progressText != null){
-					progressText.setText("loading... "+(current+1)+"/"+(all+1));
-				}
-			}
-			
-		});
-		infoLoader.setOnTaskCompletedListener(new OnTaskCompletedListener<Void, Integer, Boolean>(){
-			@Override
-			public void onTaskCompleted(AsyncTask<Void, Integer, Boolean> task) {
-				progressContainer.setVisibility(View.GONE);
-				search.setVisibility(View.VISIBLE);
-				search.setOnClickListener(new OnClickListener(){
-					@Override
-					public void onClick(View v) {
-						search();
-					}
-				});
+			public void onClick(View v) {
+				search();
 			}
 		});
-		infoLoader.execute();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -226,22 +189,4 @@ public class AdvancedSearchDialog extends DialogFloating {
 		return super.onKeyDown(keyCode, event);
 	}
 	@Override public void process(Message message) {}
-	
-	@Override
-	protected void onDestroy(){
-		if (infoLoader != null) {
-			Print.log("Teriminating task...");
-			infoLoader.requestTermination();
-		    try {
-		        Thread.sleep((int)(0.5 * 1000));
-		    } catch (InterruptedException e) {
-		        e.printStackTrace();
-		    }
-		    if (infoLoader.getStatus() != AsyncTask.Status.FINISHED) {
-		    	infoLoader.cancel(false);
-		    }
-		    infoLoader = null;
-		}
-		super.onDestroy();
-	}
 }

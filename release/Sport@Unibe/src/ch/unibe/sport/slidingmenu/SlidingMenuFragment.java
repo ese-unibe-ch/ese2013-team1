@@ -3,8 +3,8 @@ package ch.unibe.sport.slidingmenu;
 import java.util.ArrayList;
 
 import ch.unibe.sport.R;
-import ch.unibe.sport.favorites.FavoritesListView;
-import ch.unibe.sport.main.SportsListView;
+import ch.unibe.sport.main.favorites.FavoritesListView;
+import ch.unibe.sport.main.sports.SportsListView;
 import ch.unibe.sport.network.IPoint;
 import ch.unibe.sport.network.Message;
 import ch.unibe.sport.network.MessageAdapter;

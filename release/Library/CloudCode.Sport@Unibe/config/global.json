@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "Sport@Unibe": {
+            "applicationId": "u1SoZrTuTj6Yv6CsJR3Qlgb2L3Uhw9eCV5MpnQfW", 
+            "masterKey": "23KwpoUSbC1HqbHmDsN3COVxGdPKYwx6VvzG0BRl"
+        }, 
+        "_default": {
+            "link": "Sport@Unibe"
+        }
+    }
+}

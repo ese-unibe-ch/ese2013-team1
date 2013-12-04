@@ -15,7 +15,9 @@ public class MessageBuilder {
 	public static final String COURSE_ID = "courseID";
 	
 	public static final String START_ACTIVITY = "start_activity";
+	public static final String FINISH_ACTIVITY = "finish_activity";
 	public static final String ACTIVITY_TAG = "start_activity_tag";
+	public static final String CONTINUE_LOADING = "continue_loading";
 	
 	public static final String MAIN_ACTIVITY_SWITCH_TAB = "main_activity_switch_tab";
 	public static final String MAIN_ACTIVITY_TAB_TAG = "main_activity_tag";
@@ -46,6 +48,16 @@ public class MessageBuilder {
 	
 	public MessageBuilder startActivityShow(){
 		this.message.put(Message.ACTION, START_ACTIVITY);
+		return this;
+	}
+	
+	public MessageBuilder startActivityFinish(){
+		this.message.put(Message.ACTION, FINISH_ACTIVITY);
+		return this;
+	}
+	
+	public MessageBuilder startContinueLoading(){
+		this.message.put(Message.ACTION,CONTINUE_LOADING);
 		return this;
 	}
 	

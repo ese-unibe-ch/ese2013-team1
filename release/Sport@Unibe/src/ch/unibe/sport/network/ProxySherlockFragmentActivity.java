@@ -1,13 +1,14 @@
 package ch.unibe.sport.network;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ToggleButton;
 import ch.unibe.sport.R;
 import ch.unibe.sport.config.Config;
 import ch.unibe.sport.utils.Print;
@@ -24,16 +25,22 @@ public abstract class ProxySherlockFragmentActivity extends SherlockFragmentActi
 	private FrameLayout mActionBar;
 	private LinearLayout mActionBarHome;
 	private ImageView mActionIcon;
+	private ToggleButton mActionLogo;
 	
 	private Proxy proxy;
 	
 	public ProxySherlockFragmentActivity(String activityTag){
 		this.tag = activityTag;
 	}
-
+	
 	@Override
 	public String tag() {
 		return tag;
+	}
+	
+	@Override
+	public Activity getActivity(){
+		return this;
 	}
 	
 	@Override
@@ -70,11 +77,19 @@ public abstract class ProxySherlockFragmentActivity extends SherlockFragmentActi
 		mActionBar = (FrameLayout) getLayoutInflater().inflate(R.layout.actionbar_layout, null);
 		mActionBarHome = (LinearLayout) mActionBar.findViewById(R.id.ab_home);
 		mActionIcon = (ImageView) mActionBar.findViewById(R.id.ab_action_icon);
+		mActionLogo = (ToggleButton) mActionBar.findViewById(R.id.ab_logo);
 		
 		/* here goes dirty hack to fully change action bar */
 		hackActionBar(actionBar);
 	}
 
+	public void enableLogoSpinner(){
+		mActionLogo.setChecked(true);
+	}
+	
+	public void disableLogoSpinner(){
+		mActionLogo.setChecked(false);
+	}
 
 	public ViewGroup getActionBarHome(){
 		return this.mActionBarHome;
@@ -111,6 +126,10 @@ public abstract class ProxySherlockFragmentActivity extends SherlockFragmentActi
 		this.mActionBarHome.setBackgroundResource(resId);
 	}
 	
+	public void hideActionBar(){
+		this.getSupportActionBar().hide();
+	}
+	
 	/**
 	 * Hacks current action bar layout, and changes it with our custom,
 	 * saving all main actionbar features, such as actionviews and menu icons
@@ -130,11 +149,7 @@ public abstract class ProxySherlockFragmentActivity extends SherlockFragmentActi
 		ViewGroup absView = (ViewGroup) mActionBar.getParent();
 		absView.setBackgroundResource(R.drawable.actionbar_bg);
 		mActionBar.setLayoutParams(absView.getLayoutParams());
-		LayoutParams lp = (LayoutParams) mActionBar.getLayoutParams();
-		lp.height = LayoutParams.MATCH_PARENT;
-		mActionBar.setLayoutParams(lp);
-	}
-		
+	}			
 	/*------------------------------------------------------------
 	---------------------------- I N I T -------------------------
 	------------------------------------------------------------*/

@@ -1,6 +1,6 @@
 package ch.unibe.sport.main;
 
-import ch.unibe.sport.course.info.CourseNotificationAlarmManagerReceiver;
+import ch.unibe.sport.course.info.EventNotificationAlarmManagerReceiver;
 import ch.unibe.sport.utils.Print;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,7 +11,7 @@ public class OnBootBroadcastReceiver extends BroadcastReceiver{
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Print.log("Received on boot");
-		CourseNotificationAlarmManagerReceiver alarmManager = new CourseNotificationAlarmManagerReceiver();
+		EventNotificationAlarmManagerReceiver alarmManager = new EventNotificationAlarmManagerReceiver();
 		alarmManager.setAlarm(context);
 	}
 

@@ -1,7 +1,7 @@
 package ch.unibe.sport.info;
 
 import ch.unibe.sport.R;
-import ch.unibe.sport.course.Course;
+import ch.unibe.sport.core.Event;
 import ch.unibe.sport.utils.Print;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -50,8 +50,8 @@ public class HeaderView extends LinearLayout {
 	 * Drawing background for entry. Uses 2 RoundRectShapes for border and background
 	 */
 	@SuppressLint("NewApi") @SuppressWarnings("deprecation")
-	private void initBackground(Course course) {
-		final int backgroundColor = course.isFavorite() ? course.getBgColor() : Color.WHITE;
+	private void initBackground(Event event) {
+		final int backgroundColor = event.isFavorite() ? event.getBackground() : Color.WHITE;
 		
 		RoundRectShape borderRect = new RoundRectShape(
 				new float[] {
@@ -113,17 +113,17 @@ public class HeaderView extends LinearLayout {
 		}
 	}
 
-	public void setCourse(Course course){
-		if (course == null) {
+	public void setEvent(Event event){
+		if (event == null) {
 			Print.err("SportEntryHeaderView","Course is null");
 			return;
 		}
-		holder.course.setText(course.getCourse());
-		holder.day.setText(course.getDay());
-		holder.time.setText(course.getTime());
-		holder.place.setText(course.getPlace());
+		holder.course.setText(event.getEventName());
+		holder.day.setText(event.getDaysOfWeekString());
+		holder.time.setText(event.getTimeString());
+		holder.place.setText(event.getPlace());
 
-		initBackground(course);
+		initBackground(event);
 	}
 	
 	/**

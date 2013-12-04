@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class MainActivityPagerAdapter extends PagerAdapter {
-	public static final String[] TITLES = {"Sports List"/*,"Live"*/,"Favorites"/*,"Friends","Facebook Friends"*/};
 
 	List<IMainTab> pages = null;
 	

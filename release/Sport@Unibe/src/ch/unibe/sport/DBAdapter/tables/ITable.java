@@ -50,12 +50,12 @@ public interface ITable {
 	 * @param paramIDs
 	 * @param paramValues
 	 */
-	public void updateByID(int keyID, int keyValue, int[] paramIDs, String[] paramValues);
+	public void updateByID(int keyID, Object keyValue, int[] paramIDs, String[] paramValues);
 	
 	/**
 	 * 
 	 * @param keyID
 	 * @param keyValue
 	 */
-	public void removeByID(int keyID, int keyValue);
+	public void removeByID(int keyID, Object keyValue);
 }

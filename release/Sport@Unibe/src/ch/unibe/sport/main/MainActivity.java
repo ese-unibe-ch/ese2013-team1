@@ -1,17 +1,19 @@
 package ch.unibe.sport.main;
 
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import ch.unibe.sport.R;
-import ch.unibe.sport.DBAdapter.tasks.InitDBTask;
 import ch.unibe.sport.config.Config;
-import ch.unibe.sport.favorites.FavoritesListView;
+import ch.unibe.sport.main.favorites.FavoritesListView;
+import ch.unibe.sport.main.friends.FriendsTabView;
+import ch.unibe.sport.main.initialization.InitializationActivity;
+import ch.unibe.sport.main.search.ActionBarSearchItem;
+import ch.unibe.sport.main.sports.SportsListView;
 import ch.unibe.sport.network.Message;
 import ch.unibe.sport.network.MessageAdapter;
 import ch.unibe.sport.network.MessageBuilder;
 import ch.unibe.sport.network.ParamNotFoundException;
 import ch.unibe.sport.network.ProxySherlockFragmentActivity;
-import ch.unibe.sport.taskmanager.OnTaskCompletedListener;
 import ch.unibe.sport.utils.AssociativeList;
+import ch.unibe.sport.utils.Timer;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -20,7 +22,6 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
@@ -29,6 +30,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 /**
  * Main activity - that holds all tabs and controlls their switching
@@ -36,18 +38,20 @@ import android.view.inputmethod.InputMethodManager;
  *
  */
 
-public class MainActivity extends ProxySherlockFragmentActivity implements IPullToRefresh {
+public class MainActivity extends ProxySherlockFragmentActivity {
 	public static final String TAG = MainActivity.class.getName();
 
 	private Context context;
 	private ViewPager pager;
 	private MainActivityPagerAdapter adapter;
-	private PullToRefreshAttacher pullToRefreshAttacher;
 	private AssociativeList<IMainTab> tabViews;
 	private PagerSlidingTabStrip tabs;
 	private SlidingMenu slidingMenu;
 
 	private static Menu mMenu;
+	
+	private int backCounter = 0;
+	private Timer backTimer;
 
 	public MainActivity() {
 		super(TAG);
@@ -70,12 +74,15 @@ public class MainActivity extends ProxySherlockFragmentActivity implements IPull
 	 */
 	@Override
 	public void process(Message message) {
-		message.printTrace();
 		// creating message adapter for easy message process
 		MessageAdapter msgAdapter = new MessageAdapter(message);
 		// if we need to start activity
 		if (msgAdapter.isMainActivitySwitchTab()){
 			switchTabAction(msgAdapter);
+		}
+		/* continue loading after splash screen */
+		else if (msgAdapter.isContinueLoading()){
+			initView();
 		}
 	}
 
@@ -109,18 +116,9 @@ public class MainActivity extends ProxySherlockFragmentActivity implements IPull
 	 * Starting initialize check. If database isn't configured properly,
 	 * runs database init task.
 	 */
-	private void initReadyToRunCheck() {	
-		if (!Config.INST.DATABASE.INIT){
-			InitDBTask initDBTask = new InitDBTask();
-			initDBTask.setOnTaskCompletedListener(new OnTaskCompletedListener<Context,Void,Void>(){
-				@Override
-				public void onTaskCompleted(AsyncTask<Context,Void,Void> task) {
-					initView();
-				}
-			});
-			initDBTask.execute(context);
-		}
-		else initView();
+	private void initReadyToRunCheck() {
+		if (Config.INST.readyToStart()) initView();
+		else InitializationActivity.show(this);
 	}
 
 	/**
@@ -172,8 +170,13 @@ public class MainActivity extends ProxySherlockFragmentActivity implements IPull
 		favoritesList.initialize();
 		favoritesList.connect(this);
 		
+		FriendsTabView friendsTab = new FriendsTabView(this);
+		friendsTab.initialize();
+		friendsTab.connect(this);
+		
 		tabViews.add(sportList,SportsListView.TAG);
 		tabViews.add(favoritesList,FavoritesListView.TAG);
+		tabViews.add(friendsTab, FriendsTabView.TAG);
 		
 		
 		adapter = new MainActivityPagerAdapter(tabViews.getValues());
@@ -195,23 +198,17 @@ public class MainActivity extends ProxySherlockFragmentActivity implements IPull
 		
 		this.setCurrentPage(SportsListView.TAG, true);
 	}
-
-	/**
-	 * Returns pullToRefreshAttacher, so subfragments can attach themselfs.
-	 */
-	@Override
-	public PullToRefreshAttacher getPullToRefreshAttacher() {
-		return pullToRefreshAttacher;
-	}
 	
 	private void onPageSwitched(int page) {
 		if (page == 0) slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		else slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-		IMainTab fragmentTab = tabViews.getAt(page);
-		if (fragmentTab != null) {
-			notifySlidingMenuSwitchTab(fragmentTab.getClass().getName());
-			fragmentTab.initMenu(mMenu);
+		IMainTab tab = tabViews.getAt(page);
+		if (tab != null) {
+			notifySlidingMenuSwitchTab(tab.getClass().getName());
+			tab.initMenu(mMenu);
 		}
+		/* it's better to hide keyboard when switching tab */
+		hideKeyboard(getWindow().getCurrentFocus());
 	}
 
 	/**
@@ -254,22 +251,29 @@ public class MainActivity extends ProxySherlockFragmentActivity implements IPull
 	}
 
 	/**
-	 * Tries to hide soft keyboard if user clicks outside focused view (editText)
+	 * Tries to hide soft keyboard if user clicks outside ActionBarSearchItem (editText)
 	 */
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent event){
 		View view = getCurrentFocus();
 		if (view == null) return super.dispatchTouchEvent(event);
+		/* if focused view isn't actionbarsearchitem, then return */
+		if (view.getTag() == null || !view.getTag().equals(ActionBarSearchItem.TAG)) return super.dispatchTouchEvent(event);
 		int viewCoordinates[] = new int[2];
 		view.getLocationOnScreen(viewCoordinates);
 		float x = event.getRawX() + view.getLeft() - viewCoordinates[0];
 		float y = event.getRawY() + view.getTop() - viewCoordinates[1];
 		if (event.getAction() == MotionEvent.ACTION_UP
 				&& (x < view.getLeft() || x >= view.getRight() || y < view.getTop() || y > view.getBottom()) ) {
-			InputMethodManager inputManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-			inputManager.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+			hideKeyboard(getWindow().getCurrentFocus());
 		}
 		return super.dispatchTouchEvent(event);
+	}
+	
+	private void hideKeyboard(View view){
+		if (view == null) return;
+		InputMethodManager inputManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+		inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 	}
 	/*------------------------------------------------------------
 	---------------------------- M E N U -------------------------
@@ -284,14 +288,32 @@ public class MainActivity extends ProxySherlockFragmentActivity implements IPull
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			finish();
-			if (slidingMenu.isShown()){
+			if (slidingMenu != null && slidingMenu.isShown()){
 				if (slidingMenu.isMenuShowing()) {
 					slidingMenu.showContent(true);
 					return true;
 				}
 			}
-
+			
+			/* press back 2 times in 2.0 sec to exit */
+			if (backCounter == 0){
+				Toast.makeText(this, "Press back once more to exit", Toast.LENGTH_SHORT).show();
+				backTimer = new Timer();
+				backCounter = 1;
+			}
+			else if (backCounter == 1){
+				if (backTimer.timeElapsed() <= 2000){
+					finish();
+				}
+				else {
+					backCounter = 0;
+				}
+			}
+			else {
+				backCounter = 0;
+			}
+			
+			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}

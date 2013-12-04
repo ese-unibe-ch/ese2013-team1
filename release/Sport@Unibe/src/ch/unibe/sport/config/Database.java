@@ -1,5 +1,8 @@
 package ch.unibe.sport.config;
 
+import ch.unibe.sport.DBAdapter.DBAdapter;
+import ch.unibe.sport.DBAdapter.DBStructure;
+import ch.unibe.sport.utils.Print;
 import android.content.Context;
 
 /**
@@ -14,22 +17,24 @@ public class Database extends Preferences {
 
 	public static final String INIT_NAME = "init";
 	
-	public boolean INIT = false;
+	public static boolean INIT = false;
+	public int VERSION;
 	
 	private OnDatabaseInitializedListener mOnDatabaseInitializedListener;
 	
-	public interface OnDatabaseInitializedListener{
+	public interface OnDatabaseInitializedListener {
 		public void onDatabaseInitialized();
 	}
 	
 	public Database(Context context,OnDatabaseInitializedListener l){
 		super(TAG,context);
 		this.mOnDatabaseInitializedListener = l;
-		this.INIT = readInit();
+		VERSION = DBAdapter.INST.open(context, TAG).getDB().getVersion();
+		DBAdapter.INST.close(TAG);
+		Print.log(TAG,VERSION);
 		
-		check();
+		if (VERSION == DBStructure.DATABASE_VERSION) setDatabaseInitialized();
 	}
-
 	/*------------------------------------------------------------
 	------------------------- A C T I O N S ----------------------
 	------------------------------------------------------------*/
@@ -48,18 +53,17 @@ public class Database extends Preferences {
 	-------------------------- P U B L I C  ----------------------
 	------------------------------------------------------------*/	
 	public void setDatabaseInitialized(){
-		save(INIT_NAME,true);
-		this.INIT = true;
+		INIT = true;
 		if (mOnDatabaseInitializedListener != null){
 			mOnDatabaseInitializedListener.onDatabaseInitialized();
+		}
+		else {
+			Print.err("mOnDatabaseInitializedListener is null");
 		}
 	}
 	/*------------------------------------------------------------
 	----------------------------- R E A D ------------------------
 	------------------------------------------------------------*/
-	private boolean readInit() {
-		return this.getBoolean(INIT_NAME);
-	}
 	/*------------------------------------------------------------
 	----------------------------- I N I T ------------------------
 	------------------------------------------------------------*/

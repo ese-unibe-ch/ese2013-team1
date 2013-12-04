@@ -9,7 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import ch.unibe.sport.R;
-import ch.unibe.sport.DBAdapter.tasks.AddOrRemoveCourseFromFavoritesTask;
+import ch.unibe.sport.DBAdapter.tasks.AddOrRemoveEventFromFavoritesTask;
 import ch.unibe.sport.dialog.DialogFloating;
 import ch.unibe.sport.network.MessageFactory;
 import ch.unibe.sport.taskmanager.OnTaskCompletedListener;
@@ -21,19 +21,22 @@ import ch.unibe.sport.widget.layout.list.simple.List;
 import ch.unibe.sport.widget.layout.list.simple.List.OnEntryClickListener;
 
 public class ItemMenu extends DialogFloating implements OnEntryClickListener {
-	public static final String TAG = "ch.unibe.sport.course.info.ItemMenu";
+	public static final String TAG = ItemMenu.class.getName();
 	
-	private static final String COURSE_ID = "courseID";
+	private static final String EVENT_ID = "eventID";
+	private static final String EVENT_HASH = "eventHash";
 	private static final int REMOVE_FROM_FAVORITES = 1;
 	private static final int SHOW_MAP = 2;
 	private static final int CHANGE_COLOR = 3;
 	
 	private boolean favoriteButtonLock = false;
-	private int courseID;
+	private int eventID;
+	private String eventHash;
 	
-	public static void show(Context context, View view, int courseID) {
+	public static void show(Context context, View view, int eventID,String eventHash) {
 		Bundle extras = new Bundle();
-		extras.putInt(COURSE_ID, courseID);
+		extras.putInt(EVENT_ID, eventID);
+		extras.putString(EVENT_HASH, eventHash);
 		DialogFloating.show(context, view, extras,ItemMenu.class);
 	}
 	
@@ -52,15 +55,16 @@ public class ItemMenu extends DialogFloating implements OnEntryClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
-		courseID = this.getIntent().getIntExtra(COURSE_ID, 0);
-		if (courseID == 0){
+		eventID = this.getIntent().getIntExtra(EVENT_ID, 0);
+		eventHash = this.getIntent().getStringExtra(EVENT_HASH);
+		if (eventID == 0){
 			finish();
 			return;
 		}
 		Menu menu = new Menu(getContext());
 		menu.setOnEntryClickListener(this);
 		this.getLayout().addView(menu.getView());
-		this.getLayout().setBackgroundResource(R.drawable.card_layout_bg);
+		this.getLayout().setBackgroundResource(R.drawable.card_layout_bg_white);
 	}
 
 	@Override
@@ -86,23 +90,23 @@ public class ItemMenu extends DialogFloating implements OnEntryClickListener {
 	}
 	
 	private void showColorsDialog() {
-		CourseChangeColorDialog.show(getContext(),courseID);
+		EventChangeColorDialog.show(getContext(),eventID);
 		finish();
 	}
 
 	private void showMap(){
-		MapDialog.show(this, courseID);
+		MapDialog.show(this, eventID);
 		finish();
 	}
 	
 	private void removeFromFavorites(){
 		favoriteButtonLock = true;
-		AddOrRemoveCourseFromFavoritesTask task = new AddOrRemoveCourseFromFavoritesTask(courseID);
+		AddOrRemoveEventFromFavoritesTask task = new AddOrRemoveEventFromFavoritesTask(eventHash);
 		task.setOnTaskCompletedListener(new OnTaskCompletedListener<Context,Void,Boolean>(){
 			@Override
 			public void onTaskCompleted(AsyncTask<Context,Void,Boolean> task) {
 				try {
-					send(MessageFactory.updateFavoriteFromItemMenu(courseID, task.get()));
+					send(MessageFactory.updateFavoriteFromItemMenu(eventID, task.get()));
 				} catch (InterruptedException e){e.printStackTrace();}catch (ExecutionException e) {e.printStackTrace();}
 				favoriteButtonLock = false;
 			}

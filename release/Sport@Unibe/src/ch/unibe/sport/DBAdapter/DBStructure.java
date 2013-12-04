@@ -3,17 +3,15 @@ package ch.unibe.sport.DBAdapter;
 import java.util.ArrayList;
 
 import android.content.Context;
-import ch.unibe.sport.DBAdapter.tables.AttendedCourses;
-import ch.unibe.sport.DBAdapter.tables.CourseDays;
-import ch.unibe.sport.DBAdapter.tables.CourseIntervals;
+import ch.unibe.sport.DBAdapter.tables.EventAttended;
 import ch.unibe.sport.DBAdapter.tables.FacebookFriends;
-import ch.unibe.sport.DBAdapter.tables.FavoriteCourses;
-import ch.unibe.sport.DBAdapter.tables.Intervals;
-import ch.unibe.sport.DBAdapter.tables.Rating;
-import ch.unibe.sport.DBAdapter.tables.SportCourses;
+import ch.unibe.sport.DBAdapter.tables.EventFavorite;
+import ch.unibe.sport.DBAdapter.tables.EventIntervals;
+import ch.unibe.sport.DBAdapter.tables.EventRating;
+import ch.unibe.sport.DBAdapter.tables.SportEvents;
 import ch.unibe.sport.DBAdapter.tables.Sports;
 import ch.unibe.sport.DBAdapter.tables.ITable;
-import ch.unibe.sport.DBAdapter.tables.Courses;
+import ch.unibe.sport.DBAdapter.tables.Events;
 
 /**
  * 
@@ -23,7 +21,7 @@ public class DBStructure {
 	public static final String TAG = "DBAdapter";
     
 	public static final String DATABASE_NAME = "sports.db";  
-	public static final int DATABASE_VERSION = 32;
+	public static final int DATABASE_VERSION = 34;
     
 	public static final String WHERE_DELIMITER = " = ?";
 	public static final String AND_CLAUSE = " AND ";
@@ -47,15 +45,13 @@ public class DBStructure {
 	private void initTableList(){
 		tables = new ArrayList<ITable>();
 		tables.add(new Sports(context));
-		tables.add(new Courses(context));
-		tables.add(new SportCourses(context));
-		tables.add(new FavoriteCourses(context));
+		tables.add(new Events(context));
+		tables.add(new SportEvents(context));
+		tables.add(new EventFavorite(context));
 		tables.add(new FacebookFriends(context));
-		tables.add(new CourseIntervals(context));
-		tables.add(new Intervals(context));
-		tables.add(new CourseDays(context));
-		tables.add(new AttendedCourses(context));
-		tables.add(new Rating(context));
+		tables.add(new EventIntervals(context));
+		tables.add(new EventAttended(context));
+		tables.add(new EventRating(context));
 	}
 	/*------------------------------------------------------------
 	------------------------- G E T T E R S ----------------------

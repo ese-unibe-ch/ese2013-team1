@@ -1,6 +1,6 @@
 package ch.unibe.sport.main.search;
 
-import ch.unibe.sport.course.Time;
+import ch.unibe.sport.core.Time;
 import ch.unibe.sport.widget.view.SeekBarAdapter;
 
 public class TimeSeekBarAdapter implements SeekBarAdapter<Time> {

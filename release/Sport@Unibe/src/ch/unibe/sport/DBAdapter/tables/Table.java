@@ -216,8 +216,7 @@ public class Table implements ITable, OnOpenedListener {
 	
 
 	@Override
-	public void updateByID(int keyID, int keyValue, int[] paramIDs, String[] paramValues) {
-		assert keyValue > 0;
+	public void updateByID(int keyID, Object keyValue, int[] paramIDs, String[] paramValues) {
 		assert paramIDs.length > 0;
 		assert paramValues.length > 0;
 		assert paramIDs.length == paramValues.length;
@@ -231,8 +230,7 @@ public class Table implements ITable, OnOpenedListener {
 	}
 	
 	@Override
-	public void removeByID(int keyID, int keyValue) {
-		assert keyValue > 0;
+	public void removeByID(int keyID, Object keyValue) {
 		db.open(context,TAG);
 		db.getDB().delete(tableName, tableStructure[keyID]+" = ?", new String[]{""+keyValue});
 		db.close(TAG);

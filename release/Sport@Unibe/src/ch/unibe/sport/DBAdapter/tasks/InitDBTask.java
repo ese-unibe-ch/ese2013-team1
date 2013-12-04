@@ -6,6 +6,7 @@ import ch.unibe.sport.DBAdapter.tables.QuerySyntaxException;
 import ch.unibe.sport.DBAdapter.tables.TableAlreadyExistsException;
 import ch.unibe.sport.DBAdapter.tables.TableNotExistsException;
 import ch.unibe.sport.config.Config;
+import ch.unibe.sport.config.Database;
 import ch.unibe.sport.taskmanager.ObservableAsyncTask;
 import android.content.Context;
 
@@ -14,7 +15,7 @@ public class InitDBTask extends ObservableAsyncTask<Context,Void,Void> {
 	
 	@Override
 	protected Void doInBackground(Context... context) {
-		if (!Config.INST.DATABASE.INIT){
+		if (!Database.INIT){
 			DBAdapter.INST.beginTransaction(context[0],TAG);
 			DBUpdate db = new DBUpdate(context[0]);
 			try {

@@ -2,6 +2,7 @@ package ch.unibe.sport.utils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Simple associative list, that holds entries as Key:Value.
@@ -11,9 +12,9 @@ import java.util.Iterator;
  * @author Aliaksei Syrel
  */
 public class AssociativeList<E> implements Iterable<E>{
-	private ArrayList<String> strKeys;
-	private ArrayList<Integer> intKeys;
-	private ArrayList<E> values;
+	private LinkedList<String> strKeys;
+	private LinkedList<Integer> intKeys;
+	private LinkedList<E> values;
 	private int size = 0;
 	
 	public boolean invariant(){
@@ -26,16 +27,16 @@ public class AssociativeList<E> implements Iterable<E>{
 	}
 	
 	public AssociativeList(){
-		strKeys = new ArrayList<String>();
-		intKeys = new ArrayList<Integer>();
-		values = new ArrayList<E>();
+		strKeys = new LinkedList<String>();
+		intKeys = new LinkedList<Integer>();
+		values = new LinkedList<E>();
 		assert invariant();
 	}
 	
 	private AssociativeList(ArrayList<E> values, ArrayList<Integer> intKeys, ArrayList<String> strKeys){
-		this.values = values;
-		this.intKeys = intKeys;
-		this.strKeys = strKeys;
+		this.values = new LinkedList<E>(values);
+		this.intKeys = new LinkedList<Integer>(intKeys);
+		this.strKeys = new LinkedList<String>(strKeys);
 		this.size = values.size();
 		assert invariant();
 	}
@@ -135,7 +136,7 @@ public class AssociativeList<E> implements Iterable<E>{
 	}
 
 	public ArrayList<E> getValues(){
-		return this.values;
+		return new ArrayList<E>(this.values);
 	}
 	
 	public E remove(int key){

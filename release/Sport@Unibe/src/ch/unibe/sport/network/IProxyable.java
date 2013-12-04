@@ -1,5 +1,6 @@
 package ch.unibe.sport.network;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -13,5 +14,6 @@ public interface IProxyable {
 	public void send(Message message);
 	public void connect(IPoint point);
 	public IProxy getProxy();
+	public Activity getActivity();
 
 }

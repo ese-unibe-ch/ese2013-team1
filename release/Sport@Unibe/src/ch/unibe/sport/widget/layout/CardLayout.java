@@ -40,7 +40,7 @@ public class CardLayout extends LinearLayout{
 				(int)Utils.convertDpToPx(getContext(), padding)		// bottom
 		);
 		this.setOrientation(LinearLayout.VERTICAL);
-		this.setBackgroundResource(R.drawable.card_layout_bg);
+		this.setBackgroundResource(R.drawable.card_layout_bg_white);
 	}
 	
 	private void initMargins(LayoutParams lp){

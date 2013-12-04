@@ -26,30 +26,7 @@ public class DBParse {
 	public static final String RATING_UUID = "uuid";
 	public static final String RATING_COURSE_ID = "courseID";
 	public static final String RATING_RATING = "rating";
-	
-	public static final boolean isCourseRated(Context context,String courseHash) throws ParseException {
-		if (context == null || !Utils.haveNetworkConnection(context)) throw new ParseException(0, "no connection");
-		ParseQuery<ParseObject> query = ParseQuery.getQuery(RATING_NAME);
-		query.whereEqualTo(RATING_UUID, Config.INST.SYSTEM.UUID);
-		query.whereEqualTo(RATING_COURSE_ID, courseHash);
-		List<ParseObject> resultList = query.find();
-		return resultList.size() > 0;
-	}
-	
-	public static final void rateCourse(Context context,String courseHash, int rating) throws ParseException, AlreadyRatedException {
-		if (context == null || !Utils.haveNetworkConnection(context)) throw new ParseException(0, "no connection");
-		if (!isCourseRated(context,courseHash)){
-			ParseObject obj = new ParseObject(RATING_NAME);
-			obj.put(RATING_UUID, Config.INST.SYSTEM.UUID);
-			obj.put(RATING_COURSE_ID, courseHash);
-			obj.put(RATING_RATING, rating);
-			obj.save();
-		}
-		else {
-			throw new AlreadyRatedException(courseHash);
-		}
-	}
-	
+		
 	public static final void clearAttendedCourses(Context context) throws ParseException{
 		if (context == null || !Utils.haveNetworkConnection(context)) throw new ParseException(0, "no connection");
 		ParseQuery<ParseObject> query = ParseQuery.getQuery(ATTENDED_NAME);
@@ -71,32 +48,7 @@ public class DBParse {
 		}
 		ParseObject.saveAll(attended);
 	}
-	
-	public static final boolean isCourseAttended(Context context, final String courseHash, final Date date) throws ParseException{
-		if (context == null || !Utils.haveNetworkConnection(context)) throw new ParseException(0, "no connection");
-		ParseQuery<ParseObject> query = ParseQuery.getQuery(ATTENDED_NAME);
-		query.whereEqualTo(ATTENDED_UUID, Config.INST.SYSTEM.UUID);
-		query.whereEqualTo(ATTENDED_COURSE_ID, courseHash);
-		query.whereEqualTo(ATTENDED_DATE, date.toInt());
-		List<ParseObject> resultList = query.find();
-		return resultList.size() > 0;
-	}
-	
-	public static final void addAttendedCourse(Context context,final String courseHash, final Date date, boolean share) throws ParseException, AlreadyAttendedException {
-		if (!isCourseAttended(context, courseHash, date)){
-			if (context == null || !Utils.haveNetworkConnection(context)) throw new ParseException(0, "no connection");
-			ParseObject attended = new ParseObject(ATTENDED_NAME);
-			attended.put(ATTENDED_UUID, Config.INST.SYSTEM.UUID);
-			attended.put(ATTENDED_COURSE_ID, courseHash);
-			attended.put(ATTENDED_DATE, date.toInt());
-			attended.put(ATTENDED_SHARE, share);
-			attended.save();
-		}
-		else {
-			throw new AlreadyAttendedException(courseHash);
-		}
-	}
-	
+		
 	public static final int[] getRating(Context context,final String courseHash) throws ParseException{
 		if (context == null || !Utils.haveNetworkConnection(context)) throw new ParseException(0, "no connection");
 		int[] rating = new int[5];

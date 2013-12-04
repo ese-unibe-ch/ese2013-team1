@@ -11,11 +11,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import ch.unibe.sport.DBAdapter.DBAdapter;
-import ch.unibe.sport.DBAdapter.tables.Courses;
-import ch.unibe.sport.course.Course;
-import ch.unibe.sport.course.Interval;
-import ch.unibe.sport.course.Time;
-import ch.unibe.sport.course.info.CoursesListAdapter;
+import ch.unibe.sport.DBAdapter.tables.Events;
+import ch.unibe.sport.core.Event;
+import ch.unibe.sport.core.Interval;
+import ch.unibe.sport.core.Time;
+import ch.unibe.sport.course.info.EventsListAdapter;
 import ch.unibe.sport.main.IFilterable;
 import ch.unibe.sport.network.Message;
 import ch.unibe.sport.network.MessageAdapter;
@@ -34,7 +34,7 @@ public class AdvancedSearchResultFragment extends PointSherlockListFragment impl
 	public static final String JSON_INTERVAL_FROM = "interval_from";
 	public static final String JSON_INTERVAL_TO = "interval_to";
 	
-	private static CoursesListAdapter listAdapter;
+	private static EventsListAdapter listAdapter;
 	
 	
 	public AdvancedSearchResultFragment() {
@@ -45,13 +45,13 @@ public class AdvancedSearchResultFragment extends PointSherlockListFragment impl
 	public void onCreated(Bundle savedInstanceState) {
 		getListView().setDivider(null);
 		
-		ResultCoursesLoader coursesLoader = new ResultCoursesLoader();
-		coursesLoader.setOnTaskCompletedListener(new OnTaskCompletedListener<Context,Void,Course[]>(){
+		ResultEventsLoader eventsLoader = new ResultEventsLoader();
+		eventsLoader.setOnTaskCompletedListener(new OnTaskCompletedListener<Context,Void,Event[]>(){
 			@Override
-			public void onTaskCompleted(AsyncTask<Context,Void,Course[]> task) {
-				Course[] courses = new Course[0];
+			public void onTaskCompleted(AsyncTask<Context,Void,Event[]> task) {
+				Event[] events = new Event[0];
 				try {
-					courses = task.get();
+					events = task.get();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					return;
@@ -59,15 +59,15 @@ public class AdvancedSearchResultFragment extends PointSherlockListFragment impl
 					e.printStackTrace();
 					return;
 				}
-				initAdapter(courses);
+				initAdapter(events);
 			}
 		});
-		coursesLoader.execute(getActivity());
+		eventsLoader.execute(getActivity());
 	}
 	
-	private class ResultCoursesLoader extends ObservableAsyncTask<Context,Void,Course[]>{
+	private class ResultEventsLoader extends ObservableAsyncTask<Context,Void,Event[]>{
 		@Override
-		protected Course[] doInBackground(Context... context) {
+		protected Event[] doInBackground(Context... context) {
 			String json = getJson();
 			
 			JSONParser parser = new JSONParser();
@@ -76,7 +76,7 @@ public class AdvancedSearchResultFragment extends PointSherlockListFragment impl
 				params = (JSONObject) parser.parse(json);
 			} catch (ParseException e) {
 				e.printStackTrace();
-				return new Course[0];
+				return new Event[0];
 			}
 			JSONArray daysArray = (JSONArray) params.get(JSON_DAYS);
 			int[] days = new int[daysArray.size()];
@@ -94,16 +94,16 @@ public class AdvancedSearchResultFragment extends PointSherlockListFragment impl
 			}
 			
 			DBAdapter.INST.beginTransaction(getActivity(),TAG);
-			Courses courseDB = new Courses(context[0]);
-			int[] courseIDs = courseDB.searchCourses(days, times);
-			Course[] courses = new Course[courseIDs.length];
+			Events eventDB = new Events(context[0]);
+			int[] eventIDs = eventDB.searchCourses(days, times);
+			Event[] events = new Event[eventIDs.length];
 			int i = 0;
-			for (int id : courseIDs){
-				courses[i] = new Course(getActivity(),id);
+			for (int id : eventIDs){
+				events[i] = new Event(getActivity(),id);
 				i++;
 			}
 			DBAdapter.INST.endTransaction(TAG);
-			return courses;
+			return events;
 		}
 	}
 	
@@ -111,14 +111,14 @@ public class AdvancedSearchResultFragment extends PointSherlockListFragment impl
 		return this.getArguments().getString(JSON_QUERY);
 	}
 	
-	private void initAdapter(Course[] courses){
-		listAdapter = new CoursesListAdapter(getActivity(),courses);
+	private void initAdapter(Event[] events){
+		listAdapter = new EventsListAdapter(getActivity(),events);
 		setListAdapter(listAdapter);
 	}
 	
 	@Override
 	public boolean isFilterExists() {
-		if (listAdapter == null) listAdapter = (CoursesListAdapter) this.getListAdapter();
+		if (listAdapter == null) listAdapter = (EventsListAdapter) this.getListAdapter();
 		return listAdapter != null && listAdapter.getFilter() != null;
 	}
 
@@ -133,16 +133,16 @@ public class AdvancedSearchResultFragment extends PointSherlockListFragment impl
 		message.removeReceiver(getMemberTag());
 		if (adapter.isCourseUpdate()){
 			try {
-				int courseID = adapter.getCourseID();
-				updateCourse(courseID);
+				int eventID = adapter.getCourseID();
+				updateEvent(eventID);
 			} catch (ParamNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	private void updateCourse(int courseID){
-		listAdapter.update(courseID);
+	private void updateEvent(int eventID){
+		listAdapter.update(eventID);
 	}
 	
 	/**

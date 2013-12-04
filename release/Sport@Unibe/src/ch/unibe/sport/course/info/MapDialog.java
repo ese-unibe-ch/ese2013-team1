@@ -14,8 +14,8 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import ch.unibe.sport.R;
 import ch.unibe.sport.DBAdapter.DBAdapter;
-import ch.unibe.sport.DBAdapter.tables.Courses;
-import ch.unibe.sport.course.Course;
+import ch.unibe.sport.DBAdapter.tables.Events;
+import ch.unibe.sport.core.Event;
 import ch.unibe.sport.dialog.BaseDialog;
 import ch.unibe.sport.dialog.Dialog;
 import ch.unibe.sport.taskmanager.ObservableAsyncTask;
@@ -27,10 +27,10 @@ public class MapDialog extends BaseDialog {
 	public static final String TAG = MapDialog.class.getName();
 	public static final String API_URL = "http://scg.unibe.ch/ese/unisport/location.php?loc=";
 	
-	public static final String COURSE_ID = "courseID";
+	public static final String EVENT_ID = "eventID";
 	
-	private Course course;
-	private int courseID;
+	private Event event;
+	private int eventID;
 	
 	private EditText location;
 	
@@ -40,7 +40,7 @@ public class MapDialog extends BaseDialog {
 	public static void show(final Context context,final int courseID){
 		Intent intent = new Intent(context, MapDialog.class);
 		intent.putExtra(Dialog.ACTION_ASK, Dialog.ACTION_YES);
-		intent.putExtra(COURSE_ID, courseID);
+		intent.putExtra(EVENT_ID, courseID);
 		context.startActivity(intent);
 	}
 
@@ -52,7 +52,7 @@ public class MapDialog extends BaseDialog {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initCourseHash();
-		if (courseID <= 0) {
+		if (eventID <= 0) {
 			finish();
 			return;
 		}
@@ -64,8 +64,8 @@ public class MapDialog extends BaseDialog {
 	------------------------------------------------------------*/
 	
 	private void initCourseHash(){
-		this.courseID = this.getIntent().getIntExtra(COURSE_ID, 0);
-		this.course = new Course(getContext(),courseID);
+		this.eventID = this.getIntent().getIntExtra(EVENT_ID, 0);
+		this.event = new Event(getContext(),eventID);
 	}
 	
 	private void initView(){
@@ -73,7 +73,7 @@ public class MapDialog extends BaseDialog {
 		
 		this.setTitle(R.string.dialog_map_loading_title);
 		this.location = (EditText) this.findViewById(R.id.location);
-		this.location.setText(this.course.getPlace());
+		this.location.setText(this.event.getPlace());
 		this.setOkText(R.string.dialog_map_show);
 		
 		initLocationLoader();
@@ -87,7 +87,7 @@ public class MapDialog extends BaseDialog {
 		this.disableOkButton();
 		
 		
-		final String place = getLabel(getContext(),courseID);
+		final String place = getLabel(getContext(),eventID);
 		PlaceLoader loader = new PlaceLoader();
 		loader.setOnTaskCompletedListener(new OnTaskCompletedListener<String, Void, Double[]>(){
 			@Override
@@ -162,13 +162,13 @@ public class MapDialog extends BaseDialog {
 	private static String getLabel(final Context context, final int courseID){
 		
 		DBAdapter.INST.open(context, TAG);
-		Courses coursesDB = new Courses(context);
+		Events coursesDB = new Events(context);
 		String [] coursesDBString = coursesDB.getData(courseID);
-		String placeName = coursesDBString[Courses.PLACE];
+		//String placeName = coursesDBString[Events.PLACE];
 			
 		DBAdapter.INST.close(TAG);
 		
-		return placeName;
+		return "";
 	}
 	
 	private static Double[] getLatLng(String placeName) throws Exception {

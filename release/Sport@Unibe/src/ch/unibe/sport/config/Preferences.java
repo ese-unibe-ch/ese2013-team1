@@ -39,6 +39,14 @@ public abstract class Preferences implements IPreferences{
 		return sharedPrefs.getBoolean(name(name), false);
 	}
 	
+	protected int getInt(String prefRes,String name){
+		return this.context.getSharedPreferences(prefRes, Context.MODE_PRIVATE).getInt(name(name), NONE);
+	}
+	
+	protected String getString(String prefRes,String name){
+		return this.context.getSharedPreferences(prefRes, Context.MODE_PRIVATE).getString(name(name), NULL);
+	}
+	
 	protected boolean getBoolean(String tag,String name){
 		return sharedPrefs.getBoolean(name(tag,name), false);
 	}
@@ -57,6 +65,24 @@ public abstract class Preferences implements IPreferences{
 	
 	protected void save(String name, boolean value){
 		Editor editor = sharedPrefs.edit();
+		editor.putBoolean(name(name), value);
+		editor.commit();
+	}
+	
+	protected void save(String prefRes,String name, int value){
+		Editor editor = this.context.getSharedPreferences(prefRes, Context.MODE_PRIVATE).edit();
+		editor.putInt(name(name), value);
+		editor.commit();
+	}
+	
+	protected void save(String prefRes,String name, String value){
+		Editor editor = this.context.getSharedPreferences(prefRes, Context.MODE_PRIVATE).edit();
+		editor.putString(name(name), value);
+		editor.commit();
+	}
+	
+	protected void save(String prefRes,String name, boolean value){
+		Editor editor = this.context.getSharedPreferences(prefRes, Context.MODE_PRIVATE).edit();
 		editor.putBoolean(name(name), value);
 		editor.commit();
 	}

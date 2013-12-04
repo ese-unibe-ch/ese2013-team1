@@ -1,12 +1,14 @@
 package ch.unibe.sport.network;
 
-import ch.unibe.sport.course.info.CourseAttendDialog;
-import ch.unibe.sport.course.info.CourseChangeColorDialog;
-import ch.unibe.sport.course.info.CourseInfoActivity;
-import ch.unibe.sport.course.info.CourseRatingDialog;
+import java.util.LinkedList;
+
+import ch.unibe.sport.course.info.EventAttendDialog;
+import ch.unibe.sport.course.info.EventChangeColorDialog;
+import ch.unibe.sport.course.info.EventInfoActivity;
+import ch.unibe.sport.course.info.EventRatingDialog;
 import ch.unibe.sport.course.info.ItemMenu;
-import ch.unibe.sport.favorites.FavoritesListView;
 import ch.unibe.sport.info.SportInfoController;
+import ch.unibe.sport.main.favorites.FavoritesListView;
 import ch.unibe.sport.main.search.AdvancedSearchResultFragment;
 
 public class MessageFactory {
@@ -18,8 +20,24 @@ public class MessageFactory {
 		msgBuilder.addReceiver(FavoritesListView.TAG);
 		msgBuilder.addReceiver(SportInfoController.TAG);
 		msgBuilder.addReceiver(AdvancedSearchResultFragment.TAG);
-		msgBuilder.addReceiver(CourseInfoActivity.TAG);
+		msgBuilder.addReceiver(EventInfoActivity.TAG);
 		
+		return msgBuilder.getMessage();
+	}
+	
+	public static Message continueLoading(String tag,String receiver){
+		MessageBuilder msgBuilder = new MessageBuilder(tag);
+		msgBuilder.startContinueLoading();
+		msgBuilder.addReceiver(receiver);
+		return msgBuilder.getMessage();
+	}
+	
+	public static Message finishActivities(String tag, LinkedList<String> activities){
+		MessageBuilder msgBuilder = new MessageBuilder(tag);
+		msgBuilder.startActivityFinish();
+		for (String activity : activities){
+			msgBuilder.addReceiver(activity);
+		}
 		return msgBuilder.getMessage();
 	}
 	
@@ -30,12 +48,12 @@ public class MessageFactory {
 		msgBuilder.addReceiver(SportInfoController.TAG);
 		
 		msgBuilder.addReceiver(AdvancedSearchResultFragment.TAG);
-		msgBuilder.addReceiver(CourseInfoActivity.TAG);
+		msgBuilder.addReceiver(EventInfoActivity.TAG);
 		return msgBuilder.getMessage();
 	}
 	
 	public static Message updateFavoriteFromCourseInfoActivity(int courseID, boolean favorite){
-		MessageBuilder msgBuilder = new MessageBuilder(CourseInfoActivity.TAG);
+		MessageBuilder msgBuilder = new MessageBuilder(EventInfoActivity.TAG);
 		msgBuilder.startCourseUpdate().putFavorite(favorite).putCourseID(courseID);
 		msgBuilder.addReceiver(SportInfoController.TAG);
 		
@@ -44,21 +62,21 @@ public class MessageFactory {
 	}
 	
 	public static Message updateAttendedFromAttendDialog(int courseID, boolean attended){
-		MessageBuilder msgBuilder = new MessageBuilder(CourseAttendDialog.TAG);
+		MessageBuilder msgBuilder = new MessageBuilder(EventAttendDialog.TAG);
 		msgBuilder.startCourseUpdate().putAttended(attended).putCourseID(courseID);
 		msgBuilder.addReceiver(AdvancedSearchResultFragment.TAG);
 		return msgBuilder.getMessage();
 	}
 	
 	public static Message updateRatedFromRatingDialog(int courseID, int rating){
-		MessageBuilder msgBuilder = new MessageBuilder(CourseRatingDialog.TAG);
+		MessageBuilder msgBuilder = new MessageBuilder(EventRatingDialog.TAG);
 		msgBuilder.startCourseUpdate().putRating(rating).putCourseID(courseID);
-		msgBuilder.addReceiver(CourseInfoActivity.TAG);
+		msgBuilder.addReceiver(EventInfoActivity.TAG);
 		return msgBuilder.getMessage();
 	}
 	
 	public static Message updateBGColorFromChangeColorDialog(int courseID, int color){
-		MessageBuilder msgBuilder = new MessageBuilder(CourseChangeColorDialog.TAG);
+		MessageBuilder msgBuilder = new MessageBuilder(EventChangeColorDialog.TAG);
 		msgBuilder.startCourseUpdate().putCourseID(courseID).putBGColor(color);
 		msgBuilder.addReceiver(FavoritesListView.TAG);
 		msgBuilder.addReceiver(AdvancedSearchResultFragment.TAG);

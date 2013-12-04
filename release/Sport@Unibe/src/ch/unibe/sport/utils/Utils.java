@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import com.parse.codec.binary.Hex;
@@ -190,7 +191,7 @@ public class Utils {
 	 *
 	 */
 	@SuppressWarnings("unchecked")
-	public static final <E> E[] arrayListToArray(ArrayList<E> list){
+	public static final <E> E[] arrayListToArray(List<E> list){
 		if (list == null) return null;
 		if (list.size() == 0) return null;
 		E[] array = null;

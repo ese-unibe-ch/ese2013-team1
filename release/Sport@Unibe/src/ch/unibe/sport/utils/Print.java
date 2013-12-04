@@ -1,6 +1,6 @@
 package ch.unibe.sport.utils;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -46,7 +46,7 @@ public class Print {
 		}
 	}
 	
-	public static <E> void p(ArrayList<E> list,Object delimiter){
+	public static <E> void p(List<E> list,Object delimiter){
 		log(toString(list,delimiter));
 	}
 	
@@ -74,7 +74,7 @@ public class Print {
 		return str.toString();
 	}
 	
-	public static <E> String toString(ArrayList<E> list, Object delimiter){
+	public static <E> String toString(List<E> list, Object delimiter){
 		if (list == null) return "null";
 		if (list.size() == 0) return "empty";
 		StringBuilder str = new StringBuilder();

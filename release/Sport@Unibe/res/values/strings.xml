@@ -4,6 +4,10 @@
     <string name="app_name">Sport@Unibe</string>
     <string name="activity_course_info_name">Sport@Unibe</string>
     
+    <string name="initialization_status_button_completed">Done! Press to start</string>
+    <string name="initialization_status_button_loading">Loading</string>
+    <string name="initialization_status_button_error">:( Press to exit</string>
+    
     <string name="menu_search_title">Search</string>
     <string name="menu_favorite_title">Favorite</string>
     <string name="menu_navigation_title">Navigation</string>
