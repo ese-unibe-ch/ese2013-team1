@@ -93,7 +93,7 @@ public class Calendar extends LinearLayout {
 	}
 	
 	/**
-	 * Starts calendar initializing correspondig to adapter
+	 * Starts calendar initializing corresponding to adapter
 	 */
 	private void initialize(){
 		removeAllViews();
