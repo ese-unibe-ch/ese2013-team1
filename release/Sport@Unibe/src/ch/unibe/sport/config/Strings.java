@@ -9,7 +9,7 @@ import android.content.Context;
  * and fast access in runtime
  * 
  * @version 1.0 2013-09-19
- * @author Aliaksei Syrel
+ * @author Team 1
  */
 public class Strings extends Preferences {
 	private static final String TAG = "strings";

@@ -12,7 +12,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
 /**
- * System configuraton class that loads and stores
+ * System configuration class that loads and stores
  * parameters for simple and fast access in runtime
  * 
  * @version 1.0 2013-09-19

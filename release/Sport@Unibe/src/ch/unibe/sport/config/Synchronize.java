@@ -23,7 +23,11 @@ public class Synchronize extends Preferences {
 		super(TAG, context);
 		SYNCHRONIZED = readSynchronized();
 	}
-
+	
+	/**
+	 * Checks synchronized status, if false, checks the task's status 
+	 * and sets synchronized status.
+	 */
 	@Override
 	public void check() {
 		if (SYNCHRONIZED) return;
