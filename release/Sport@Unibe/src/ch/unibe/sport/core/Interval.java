@@ -8,6 +8,14 @@ import ch.unibe.sport.utils.bulker.BulkKey;
 import ch.unibe.sport.utils.bulker.BulkParam;
 import ch.unibe.sport.utils.bulker.BulkTable;
 
+/**
+ * Class that handles the courses' time
+ * interval (Start to End time)
+ * 
+ * @author Team 1
+ *
+ */
+
 @BulkTable(EventIntervals.NAME)
 public class Interval {
 	public static final String TAG = Interval.class.getName();

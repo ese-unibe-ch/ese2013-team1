@@ -18,6 +18,15 @@ import ch.unibe.sport.utils.bulker.BulkParam;
 import ch.unibe.sport.utils.bulker.BulkRelation;
 import ch.unibe.sport.utils.bulker.BulkTable;
 
+/**
+ * 
+ * Event class that handles the information of sports events
+ * such as rating, favorite status, periods, subscriptions and dates.
+ * 
+ * @author Team 1
+ *
+ */
+
 @BulkTable(Events.NAME)
 public class Event {
 	public static final String TAG = Event.class.getName();
