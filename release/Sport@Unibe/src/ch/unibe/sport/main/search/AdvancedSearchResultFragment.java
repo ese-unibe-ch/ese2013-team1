@@ -2,20 +2,13 @@ package ch.unibe.sport.main.search;
 
 import java.util.concurrent.ExecutionException;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONParser;
-import org.json.simple.ParseException;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import ch.unibe.sport.DBAdapter.DBAdapter;
 import ch.unibe.sport.DBAdapter.tables.Events;
 import ch.unibe.sport.core.Event;
-import ch.unibe.sport.core.Interval;
-import ch.unibe.sport.core.Time;
-import ch.unibe.sport.course.info.EventsListAdapter;
+import ch.unibe.sport.event.info.EventsListAdapter;
 import ch.unibe.sport.main.IFilterable;
 import ch.unibe.sport.network.Message;
 import ch.unibe.sport.network.MessageAdapter;
@@ -23,6 +16,7 @@ import ch.unibe.sport.network.ParamNotFoundException;
 import ch.unibe.sport.network.PointSherlockListFragment;
 import ch.unibe.sport.taskmanager.ObservableAsyncTask;
 import ch.unibe.sport.taskmanager.OnTaskCompletedListener;
+import ch.unibe.sport.utils.Objeckson;
 
 public class AdvancedSearchResultFragment extends PointSherlockListFragment implements IFilterable{
 
@@ -68,34 +62,11 @@ public class AdvancedSearchResultFragment extends PointSherlockListFragment impl
 	private class ResultEventsLoader extends ObservableAsyncTask<Context,Void,Event[]>{
 		@Override
 		protected Event[] doInBackground(Context... context) {
-			String json = getJson();
-			
-			JSONParser parser = new JSONParser();
-			JSONObject params = null;
-			try {
-				params = (JSONObject) parser.parse(json);
-			} catch (ParseException e) {
-				e.printStackTrace();
-				return new Event[0];
-			}
-			JSONArray daysArray = (JSONArray) params.get(JSON_DAYS);
-			int[] days = new int[daysArray.size()];
-			for (int i = 0, length = days.length; i < length; i++){
-				days[i] = ((Long) daysArray.get(i)).intValue();
-			}
-			
-			JSONArray intervalsArray = (JSONArray) params.get(JSON_INTERVALS);
-			Interval[] times = new Interval[intervalsArray.size()];
-			
-			for (int i = 0, length = times.length; i < length; i++){
-				Time timeFrom = new Time(((Long) ((JSONObject)intervalsArray.get(i)).get(JSON_INTERVAL_FROM)).intValue());
-				Time timeTo = new Time(((Long) ((JSONObject)intervalsArray.get(i)).get(JSON_INTERVAL_TO)).intValue());
-				times[i] = new Interval(timeFrom,timeTo);
-			}
+			SearchRequest request = Objeckson.fromJson(getJson(), SearchRequest.class);
 			
 			DBAdapter.INST.beginTransaction(getActivity(),TAG);
 			Events eventDB = new Events(context[0]);
-			int[] eventIDs = eventDB.searchCourses(days, times);
+			int[] eventIDs = eventDB.searchEvents(request.getDays(), request.getTimeFrom(),request.getTimeTo(),request.getEventName());
 			Event[] events = new Event[eventIDs.length];
 			int i = 0;
 			for (int id : eventIDs){

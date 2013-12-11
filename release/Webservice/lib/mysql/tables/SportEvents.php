@@ -46,6 +46,10 @@ class SportEvents extends Table {
     }
 
     public function getSportID($eventID){
-        return $this->getRow($this->selectByID(array(self::EID),array($eventID),array(self::SID)),0);
+        $data = $this->getRow($this->selectByID(array(self::EID),array($eventID),array(self::SID)),0);
+        if (count($data) === 0){
+            return 0;
+        }
+        else return Int::intValue($data[self::SID]);
     }
 } 

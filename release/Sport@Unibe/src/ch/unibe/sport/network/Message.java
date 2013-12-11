@@ -181,8 +181,8 @@ public class Message implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(this.data.getSize());
-		if (this.data.getSize() > 0){
+		dest.writeInt(this.data.size());
+		if (this.data.size() > 0){
 			dest.writeArray(Utils.objectArrayListToArray(this.data.getValues()));
 			dest.writeArray(this.data.getIntKeysArray());
 			dest.writeArray(this.data.getStringKeysArray());

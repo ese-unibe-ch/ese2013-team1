@@ -1,9 +1,14 @@
 package ch.unibe.sport.main.favorites;
 
+import android.os.Build;
+import ch.unibe.sport.R;
+
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 
 public class ActionBarListMenu {
-	//private final SubMenu subMenu;
+	private final SubMenu subMenu;
 	
 	
 	/**
@@ -12,11 +17,11 @@ public class ActionBarListMenu {
 	 * @param id
 	 */
 	public ActionBarListMenu(Menu menu, int id) {
-		//this.subMenu = menu.addSubMenu(0, 0, 0, R.string.menu_navigation_title).setIcon(R.drawable.ic_action_core_overflow);
-		//init();
+		this.subMenu = menu.addSubMenu(0, 0, 0, R.string.menu_navigation_title).setIcon(R.drawable.ic_action_core_overflow);
+		init();
 	}
 
-	/*private void init() {
+	private void init() {
 	    MenuItem subMenuItem = subMenu.getItem();
 	    subMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 	    
@@ -25,5 +30,5 @@ public class ActionBarListMenu {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
 			showAsGrid.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		}
-	}*/
+	}
 }

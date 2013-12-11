@@ -142,6 +142,20 @@
         android:layout_below="@+id/time_image" />
 
     <TextView
+        android:id="@+id/day_attended"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#ffff8800"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        
+        android:layout_toRightOf="@+id/day_image"
+        android:layout_alignTop="@+id/day_image"
+        android:layout_alignBottom="@+id/day_image" />
+    
+    <TextView
         android:id="@+id/day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -151,7 +165,7 @@
         android:textSize="15sp"
         android:textStyle="bold"
         
-        android:layout_toRightOf="@+id/day_image"
+        android:layout_toRightOf="@+id/day_attended"
         android:layout_alignTop="@+id/day_image"
         android:layout_alignBottom="@+id/day_image" />
 

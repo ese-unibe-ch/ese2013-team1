@@ -41,8 +41,8 @@ class Updater {
             $this->inProgress = TRUE;
             $state = file_get_contents(self::LOCK);
             $tmp = explode(":",$state);
-            $this->currentLink = Integer::intValue($tmp[0])+1;
-            $this->linksNum = Integer::intValue($tmp[1]);
+            $this->currentLink = Int::intValue($tmp[0])+1;
+            $this->linksNum = Int::intValue($tmp[1]);
         }
         else {
             $this->installer->drop();

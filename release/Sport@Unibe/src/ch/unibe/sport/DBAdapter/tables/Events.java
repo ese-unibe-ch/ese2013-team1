@@ -3,7 +3,7 @@ package ch.unibe.sport.DBAdapter.tables;
 import android.content.Context;
 import android.database.Cursor;
 import ch.unibe.sport.DBAdapter.tables.Table;
-import ch.unibe.sport.core.Interval;
+import ch.unibe.sport.core.Time;
 import ch.unibe.sport.utils.Print;
 import ch.unibe.sport.utils.Utils;
 
@@ -13,8 +13,8 @@ public class Events extends Table {
 	public static final String NAME = "events";
 	public static final String CREATE = "CREATE TABLE " + NAME + " (" +
 			"eid integer UNIQUE NOT NULL, " +
-			"iid char DEFAULT NULL," +
-			"pid char DEFAULT NULL," +
+			"iid char DEFAULT ''," +
+			"pid char DEFAULT ''," +
 			"hash char NOT NULL, "+
 			"eventName char NOT NULL, "+
 			"date char DEFAULT '', "+
@@ -41,6 +41,15 @@ public class Events extends Table {
 		super(context, NAME, CREATE, DB);
 	}		
 	
+	public int getEventID(String hash){
+		db.open(context,TAG);
+		Cursor cursor = db.getDB().query(NAME, DB, DB[HASH]+" = ?", new String[]{hash}, null, null, DB[EID]);
+		int[] result = Utils.getRow(getResultInt(cursor),0);
+		db.close(TAG);
+		if (result.length == 0) return 0;
+		return result[0];
+	}
+	
 	/**
 	 * Returns full data of sub course with it's course id
 	 * @param courseID
@@ -61,22 +70,20 @@ public class Events extends Table {
 		db.close(TAG);
 		return result;
 	}
-		
-	//TOOD
-	public int[] searchCourses(int[] days, Interval[] times){
+	
+	public int[] searchEvents(int[] days, Time timeFrom, Time timeTo,String eventName){
 		db.open(context,TAG);
-		String query = "SELECT c.cid FROM "+NAME+" c INNER JOIN  "+EventIntervals.NAME + " i ON "
-				+ "c.cid = cd.cid AND c.cid = ci.cid AND ci.iid = i.iid WHERE cd.dayOfWeek IN("+Print.toString(days, ",")+") AND (";
-		boolean first = true;
-		for (Interval interval : times){
-			if (!first) {
-				query += " OR ";
-			}
-			query += "(i.timeFrom >= "+interval.getTimeFrom().toMinutes()+" AND i.timeFrom <= "+interval.getTimeTo().toMinutes()+")";
-			first = false;
+		String query = "SELECT e.eid FROM "+NAME+" e INNER JOIN  "+EventIntervals.NAME + " ei,"+EventDaysOfWeek.NAME + " ed ON "
+				+ "e.iid = ei.iid AND e.eid = ed.eid WHERE ed.dayOfWeek IN("+Print.toString(days, ",")+") AND "
+				+ "ei.timeFrom >= ? AND ei.timeFrom <= ?";
+		Cursor cursor;
+		if (eventName != null && eventName.length() > 0){
+			query += " AND e.eventName LIKE ?";
+			cursor = db.getDB().rawQuery(query, new String[]{""+timeFrom.toMinutes(),""+timeTo.toMinutes(),"%"+eventName+"%"});
 		}
-		query += ")";
-		Cursor cursor = db.getDB().rawQuery(query, null);
+		else {
+			cursor = db.getDB().rawQuery(query, new String[]{""+timeFrom.toMinutes(),""+timeTo.toMinutes()});
+		}
 		int[] result = Utils.getRow(Utils.transpose(getResultInt(cursor)),0);
 		db.close(TAG);
 		return result;

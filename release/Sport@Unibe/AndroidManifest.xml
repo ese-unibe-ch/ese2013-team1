@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="11"
         android:targetSdkVersion="18" />
 
     <uses-feature
@@ -32,8 +32,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Unisport"
-        android:restoreAnyVersion="true" >
-        <!--  android:backupAgent="ch.unibe.sport.main.initialization.InitializationSystemBackupAgent" -->
+        android:restoreAnyVersion="true"
+        android:backupAgent="ch.unibe.sport.main.initialization.InitializationSystemBackupAgent" >
+        
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCxneWJpX-qeuyys3e3na8uIXxzedWaoOA" />
@@ -49,6 +50,7 @@
         <activity
             android:name="ch.unibe.sport.main.MainActivity"
             android:theme="@style/Theme.Unisport"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -75,7 +77,7 @@
     		</intent-filter>
         </receiver>
         
-        <receiver android:name="ch.unibe.sport.course.info.EventNotificationAlarmManagerReceiver">
+        <receiver android:name="ch.unibe.sport.event.info.EventNotificationAlarmManagerReceiver">
         </receiver>
         
         <activity
@@ -99,12 +101,28 @@
         </activity>
         
         <activity
-            android:name="ch.unibe.sport.course.info.EventInfoActivity"
+            android:name="ch.unibe.sport.event.info.EventInfoActivity"
             android:label="CourseInfoActivity" >
         </activity>
-                        
+        
         <activity
-            android:name="ch.unibe.sport.course.info.MapDialog"
+            android:name="ch.unibe.sport.main.friends.FriendInfoActivity"
+            android:label="FriendInfoActivity" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.main.friends.FriendsFindNewDialog"
+            android:label="FriendsFindNewDialog"
+            android:theme="@style/Theme.Unisport.Dialog" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.main.friends.FriendsFindNewResultActivity"
+            android:label="FriendsFindNewResultActivity" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.event.info.MapDialog"
             android:label="MapDialog"
             android:theme="@style/Theme.Unisport.Dialog"
             android:windowSoftInputMode="stateHidden" >
@@ -114,7 +132,13 @@
         </activity>
         
         <activity
-            android:name="ch.unibe.sport.course.info.ItemMenu"
+            android:name="ch.unibe.sport.dialog.DialogGuide"
+            android:label="DialogGuide"
+            android:theme="@style/DialogGuide" >
+        </activity>
+        
+        <activity
+            android:name="ch.unibe.sport.event.info.ItemMenu"
             android:label="ItemMenu"
             android:theme="@style/DialogFloating" >
         </activity>
@@ -126,19 +150,19 @@
         </activity>
         
         <activity
-            android:name="ch.unibe.sport.course.info.EventRatingDialog"
+            android:name="ch.unibe.sport.event.info.EventRatingDialog"
             android:label="CourseRatingDialog"
             android:theme="@style/Theme.Unisport.Dialog" >
         </activity>
         
         <activity
-            android:name="ch.unibe.sport.course.info.EventAttendDialog"
+            android:name="ch.unibe.sport.event.info.EventAttendDialog"
             android:label="CourseAttendDialog"
             android:theme="@style/Theme.Unisport.Dialog" >
         </activity>
         
          <activity
-            android:name="ch.unibe.sport.course.info.EventChangeColorDialog"
+            android:name="ch.unibe.sport.event.info.EventChangeColorDialog"
             android:label="CourseChangeColorDialog"
             android:theme="@style/Theme.Unisport.Dialog" >
         </activity>

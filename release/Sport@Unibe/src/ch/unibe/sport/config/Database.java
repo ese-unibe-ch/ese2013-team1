@@ -6,11 +6,11 @@ import ch.unibe.sport.utils.Print;
 import android.content.Context;
 
 /**
- * Database configuraton class that loads and stores
+ * Database configuration class that loads and stores
  * parameters for simple and fast access in runtime
  * 
  * @version 1.1 2013-09-19
- * @author Aliaksei Syrel
+ * @author Team 1
  */
 public class Database extends Preferences {
 	protected static final String TAG = "database";
@@ -51,7 +51,10 @@ public class Database extends Preferences {
 	}
 	/*------------------------------------------------------------
 	-------------------------- P U B L I C  ----------------------
-	------------------------------------------------------------*/	
+	------------------------------------------------------------*/
+	/**
+	 * Changes Database boolean "status", which other methods check in order to work.
+	 */
 	public void setDatabaseInitialized(){
 		INIT = true;
 		if (mOnDatabaseInitializedListener != null){

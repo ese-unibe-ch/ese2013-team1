@@ -15,8 +15,7 @@ import java.util.Map;
  * 
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
-@SuppressWarnings("rawtypes")
-public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAware{
+public class JSONObject<K,V> extends HashMap<K,V> implements Map<K,V>, JSONAware, JSONStreamAware{
 	private static final long serialVersionUID = -503443796854799292L;
 
     /**
@@ -28,14 +27,14 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
      * @param map
      * @param out
      */
-	public static void writeJSONString(Map map, Writer out) throws IOException {
+	public static <K,V> void writeJSONString(Map<K,V> map, Writer out) throws IOException {
 		if(map == null){
 			out.write("null");
 			return;
 		}
 		
 		boolean first = true;
-		Iterator iter=map.entrySet().iterator();
+		Iterator<Map.Entry<K,V>> iter=map.entrySet().iterator();
 		
         out.write('{');
 		while(iter.hasNext()){
@@ -43,7 +42,7 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
                 first = false;
             else
                 out.write(',');
-			Map.Entry entry=(Map.Entry)iter.next();
+			Map.Entry<K,V> entry = iter.next();
             out.write('\"');
             out.write(escape(String.valueOf(entry.getKey())));
             out.write('\"');
@@ -66,13 +65,13 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 	 * @param map
 	 * @return JSON text, or "null" if map is null.
 	 */
-	public static String toJSONString(Map map){
+	public static <K,V> String toJSONString(Map<K,V> map){
 		if(map == null)
 			return "null";
 		
         StringBuffer sb = new StringBuffer();
         boolean first = true;
-		Iterator iter=map.entrySet().iterator();
+		Iterator<Map.Entry<K,V>> iter=map.entrySet().iterator();
 		
         sb.append('{');
 		while(iter.hasNext()){
@@ -81,7 +80,7 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
             else
                 sb.append(',');
             
-			Map.Entry entry=(Map.Entry)iter.next();
+			Map.Entry<K,V> entry = iter.next();
 			toJSONString(String.valueOf(entry.getKey()),entry.getValue(), sb);
 		}
         sb.append('}');

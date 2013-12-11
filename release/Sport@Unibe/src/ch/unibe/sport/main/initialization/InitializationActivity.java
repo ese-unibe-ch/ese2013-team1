@@ -3,6 +3,7 @@ package ch.unibe.sport.main.initialization;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import ch.unibe.sport.R;
 import ch.unibe.sport.main.MainActivity;

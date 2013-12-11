@@ -38,7 +38,7 @@ public class WebApi {
 	 * @param hash
 	 * @param date
 	 * @param share
-	 * @throws Exception is course is already attended or someting went wrong
+	 * @throws Exception is course is already attended or something went wrong
 	 */
 	public static final void addToAttended(Context context,String hash, int date, boolean share) throws Exception {
 		if (context == null || !Utils.haveNetworkConnection(context)) throw new Exception("no connection");

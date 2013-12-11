@@ -107,7 +107,7 @@ class Sport {
 
     public function toJson(){
         $jSonArray = array();
-        $jSonArray[self::SPORT_ID] = Integer::intValue($this->sportID);
+        $jSonArray[self::SPORT_ID] = Int::intValue($this->sportID);
         $jSonArray[self::SPORT_HASH] = $this->sportHash;
         $jSonArray[self::SPORT_NAME] = $this->sportName;
         $jSonArray[self::SPORT_LINK] = $this->sportLink;

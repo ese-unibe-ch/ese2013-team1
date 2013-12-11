@@ -12,7 +12,7 @@ public class EventIntervals extends Table {
 			"iid char UNIQUE NOT NULL, "+
 			"timeFrom integer, "+
 			"timeTo integer, "+
-			"status char DEFAULT NULL, "+
+			"status char DEFAULT '', "+
 			"CONSTRAINT chk_favorite_timeFrom CHECK (timeFrom >= -1 AND timeFrom < 1440), "+
 			"CONSTRAINT chk_favorite_timeTo CHECK (timeTo >= -1 AND timeTo < 1440)"+
 		");";

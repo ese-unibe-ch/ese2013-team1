@@ -15,6 +15,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONParser;
 import org.json.simple.ParseException;
 
+/**
+ * This class provides a load of static classes, which allow to generate specific objects from json-objects.
+ * 
+ * @author Team 1
+ *
+ */
 public class Objeckson {
 		
 	/**

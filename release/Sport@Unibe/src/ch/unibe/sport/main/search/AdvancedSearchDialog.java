@@ -2,13 +2,9 @@ package ch.unibe.sport.main.search;
 
 import java.util.ArrayList;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import ch.unibe.sport.R;
@@ -35,22 +32,22 @@ public class AdvancedSearchDialog extends DialogFloating {
 	
 	private ToggleButton dayAll;
 	private SeekBar<Time> seekBar;
+	private EditText event;
 	
 	private int daysChecked;
 	
-	private Button clear;
+	private Button close;
 	private Button search;
 	
 	public static void show(Context context, View view) {
 		DialogFloating.show(context, view, new Bundle(),AdvancedSearchDialog.class);
-		//activity.overridePendingTransition(R.anim.translate_out, R.anim.translate_in);
+		((Activity)context).overridePendingTransition(R.anim.translate_out, R.anim.translate_in);
 	}
 	
 	public AdvancedSearchDialog() {
 		super(TAG);
 	}
 
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,6 +59,7 @@ public class AdvancedSearchDialog extends DialogFloating {
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		ViewGroup searchLayout = (ViewGroup) this.getLayoutInflater().inflate(R.layout.advanced_search_layout, null);
 		this.getLayout().addView(searchLayout);
+		this.event = (EditText) this.findViewById(R.id.event);
 		initButtons();
 		initSeekBar();
 	}
@@ -73,12 +71,12 @@ public class AdvancedSearchDialog extends DialogFloating {
 		}
 		dayAll = (ToggleButton) this.findViewById(R.id.day_all);
 		
-		clear = (Button) this.findViewById(R.id.clear);
+		close = (Button) this.findViewById(R.id.close);
 		search = (Button) this.findViewById(R.id.search);
 		initListeners();
 		
 		search.setVisibility(View.VISIBLE);
-		search.setOnClickListener(new OnClickListener(){
+		search.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				search();
@@ -97,8 +95,8 @@ public class AdvancedSearchDialog extends DialogFloating {
 	}
 	
 	private void initListeners(){
-		for (ToggleButton button : days){
-			button.setOnClickListener(new OnClickListener(){
+		for (ToggleButton button : days) {
+			button.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					boolean checked = ((ToggleButton)v).isChecked();
@@ -114,20 +112,14 @@ public class AdvancedSearchDialog extends DialogFloating {
 			});
 		}
 				
-		clear.setOnClickListener(new OnClickListener(){
+		close.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				seekBar.setMinValueIndex(5);
-				seekBar.setMaxValueIndex(11);
-				for (ToggleButton button : days){
-					button.setChecked(false);
-				}
-				dayAll.setChecked(false);
-				daysChecked = 0;
+				finish();
 			}
 		});
 		
-		dayAll.setOnClickListener(new OnClickListener(){
+		dayAll.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				boolean checked = ((ToggleButton)v).isChecked();
@@ -139,31 +131,30 @@ public class AdvancedSearchDialog extends DialogFloating {
 		});
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void search(){
-		JSONObject json = new JSONObject();
-		
-		JSONArray daysArray = new JSONArray();
-		int dayOfWeek = 0;
-		for (ToggleButton button : days){
-			if (button.isChecked()){
-				daysArray.add(dayOfWeek);
+	private void search() {	
+		SearchRequest request = new SearchRequest();
+	
+		ArrayList<Integer> daysArray = new ArrayList<Integer>();
+		for (int index = 0,length = days.size(); index < length; index++) {
+			if (days.get(index).isChecked()){
+				daysArray.add(index+1);
 			}
-			dayOfWeek++;
 		}
 		
-		JSONArray timesArray = new JSONArray();
-		JSONObject interval = new JSONObject();
-		interval.put(AdvancedSearchResultFragment.JSON_INTERVAL_FROM, seekBar.getSelectedMinValue().toMinutes());
-		interval.put(AdvancedSearchResultFragment.JSON_INTERVAL_TO, seekBar.getSelectedMaxValue().toMinutes());
-		timesArray.add(interval);
-		json.put(AdvancedSearchResultFragment.JSON_DAYS, daysArray);
-		json.put(AdvancedSearchResultFragment.JSON_INTERVALS, timesArray);
+		int[] daysInt = new int[daysArray.size()];
+		for (int index = 0,length = daysInt.length; index < length; index++) {
+			daysInt[index] = daysArray.get(index);
+		}
 		
-		String searchQuery = json.toJSONString();
+		request.setDays(daysInt);
+		request.setTimeFrom(seekBar.getSelectedMinValue());
+		request.setTimeTo(seekBar.getSelectedMaxValue());
+		request.setEventName(event.getText().toString());
 		
-		if (daysArray.size() == 0 || timesArray.size() == 0){
-			Toast.makeText(this, "Please select days and times", Toast.LENGTH_LONG);
+		String searchQuery = request.toJson().toJSONString();
+		
+		if (request.getDays().length == 0) {
+			Toast.makeText(this, "Please select day", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		AdvancedSearchResultActivity.show(this, searchQuery);
@@ -177,13 +168,7 @@ public class AdvancedSearchDialog extends DialogFloating {
 			return true;
 		}
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			/* finishing activity without delay causes action bar in main activity to collapse action views (WTF Android?) */
-			new Handler().postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					finish();
-				}
-			}, 150);
+			finish();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

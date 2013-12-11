@@ -66,6 +66,7 @@ public class SportInfoController implements IPointable {
 				public void onTaskCompleted(AsyncTask<Context, Void, Sport> task) {
 					try {
 						sport = task.get();
+						mActivity.setActionBarTitle(sport.getSportName());
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 						mActivity.disableLogoSpinner();
@@ -128,8 +129,9 @@ public class SportInfoController implements IPointable {
 	
 	private void initDescription(){
 		StringBuilder html = new StringBuilder();
-		html.append("<html><header><style type=\"text/css\">");
-		String css = "a {color: #ff4444;text-decoration: none;} p{color: #222222} h1{font-family: Arial, Helvetica, SunSans-Regular, sans-serif;font-size: 93%;margin: 0px;margin-bottom: 8pt;font-weight: bold;line-height: 103%;}ul{font-size: 76%;margin-left: 0px;line-height: 120%;list-style-type: disc;margin-top: 5px;margin-bottom: 10px;padding: 0px 5px 0px 25px}ul ul{ font-size: 100%;}ul ul ul{ list-style-type: none;}p {margin-top: 0px;padding: 0px 3px 5px 5px;margin-bottom: 5px;font-size: 76%;line-height: 130%;}.linkliste{text-indent: 0px;text-decoration: none;} li.linkliste{color: #FF0033;} li.linkliste a {color:#222222;text-decoration: underline;} table {margin-top: 5px;margin-bottom: 10px;rules:none;}td {vertical-align:top;font-size: 76%;line-height: 110%;}th{font-size: 76%;text-align: left;}table ul{font-size: 100%;}.unirot{color: #ff8800;}.lead{color: #666666;font-weight: bold;}";
+		html.append("<!DOCTYPE html><html><header><style type=\"text/css\">");
+		// fast workaround
+		String css = "a {color: #ff4444;text-decoration: none;} p{color: #222222} h1{font-family: Arial, Helvetica, SunSans-Regular, sans-serif;font-size: 93%;margin: 0px;margin-bottom: 8pt;font-weight: bold;line-height: 103%;}h2{font-family: Arial, Helvetica, SunSans-Regular, sans-serif;font-size: 86%;margin: 0px;font-weight: bold;}h3{font-family: Arial, Helvetica, SunSans-Regular, sans-serif;font-size: 76%;margin: 0px;font-weight: bold;}h4{font-size: 69%;font-weight: normal;margin: 0px;}ul{font-size: 76%;margin-left: 0px;line-height: 120%;list-style-type: disc;margin-top: 5px;margin-bottom: 10px;padding: 0px 5px 0px 25px}ul ul{ font-size: 100%;}ul ul ul{ list-style-type: none;}p {margin-top: 0px;padding: 0px 3px 5px 5px;margin-bottom: 5px;font-size: 76%;line-height: 130%;}.linkliste{text-indent: 0px;text-decoration: none;} li.linkliste{color: #FF0033;} li.linkliste a {color:#222222;text-decoration: underline;} table {width:100%;margin-top: 5px;margin-bottom: 10px;rules:none;}td {vertical-align:top;font-size: 76%;line-height: 110%;}th{font-size: 76%;text-align: left;}table ul{font-size: 100%;}.unirot{color: #ff8800;}.lead{color: #666666;font-weight: bold;}";
 		html.append(css);
 		html.append("</style></header><body>");
 		html.append(sport.getDescriptionHeader());

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/friends_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/options_panel"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:id="@+id/options_panel"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_above="@+id/pager_panel"
+        android:background="@drawable/bottom_panel_bg"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="horizontal" >
+    </LinearLayout>
+        
+    <LinearLayout
+        android:id="@+id/pager_panel"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_panel_bg"
+        android:gravity="center"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/options_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/pager_panel"
+        android:layout_alignTop="@+id/pager_panel"
+        android:layout_alignBottom="@+id/pager_panel"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:clickable="true"
+        android:visibility="gone"
+        android:src="@drawable/ic_menu" />
+    
+</RelativeLayout>

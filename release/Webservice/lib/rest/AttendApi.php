@@ -57,12 +57,12 @@ class IsAttended {
         $this->hash = $_GET[self::HASH];
         $this->date = $_GET[self::DATE];
         if(String::length($this->uuid) === 0 || String::length($this->hash) === 0 || String::length($this->date) === 0) ActionsHandler::error("[isAttended] not all parameters are specified");
-        $this->date = intval($this->date);
         $this->init();
     }
 
     private function init(){
-        if ($this->date <= 0 || "".$this->date !== $_GET[self::DATE]) ActionsHandler::error("[isAttended] wrong date! should be > 0");
+        if (!Int::isInt($this->date)) ActionsHandler::error("[isAttended] wrong date! should be > 0");
+        $this->date = Int::intValue($this->date);
         $attended = new Attended();
         if (!$attended->isAttended($this->uuid,$this->hash,$this->date)) ActionsHandler::no("course is not attended");
         $data = $attended->getData($this->uuid,$this->hash,$this->date);

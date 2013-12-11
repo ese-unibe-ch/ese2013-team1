@@ -9,36 +9,61 @@
 class Place {
 
     private $placeID;
-    private $place;
+    private $placeName;
     private $lat;
     private $lon;
 
-    private $isExists;
-
     private $placesDB;
 
-    private function __construct() {
-        /*$this->placesDB = new PlaceDB();
-        $data = $this->placesDB->getData($placeID);
-        if (length($data) === 0) {
-            $this->isExists = FALSE;
-            return;
-        }
+    const PLACE_ID = "placeID", PLACE_NAME = "placeName", LATITUDE = "lat", LONGITUDE = "lon";
 
-        $this->placeID = $data[PlaceDB::PID];
-        $this->place = $data[PlaceDB::PLACE];
-        $this->lat = $data[PlaceDB::LAT];
-        $this->lon = $data[PlaceDB::LON];*/
+    function __construct() {
+        $this->placesDB = new PlaceDB();
     }
 
-    public static function fromPlace($placeName){
+    public static function createFrom($placeName){
         $place = new Place();
-        $place->place = $placeName;
+        $place->placeName = $placeName;
         return $place;
     }
 
-    public function __toString(){
-        return $this->place;
+    public static function createByID($placeID){
+        $place = new Place();
+        $place->placeID = $placeID;
+        $place->init();
+        return $place;
+    }
+
+    public function saveInDB(){
+        if (String::length($this->placeID) === 0){
+            $this->placeID = $this->placesDB->add($this->hash(),$this->placeName);
+        }
+    }
+
+    private function init(){
+        $data = $this->placesDB->getData($this->placeID);
+        $this->lat = $data[PlaceDB::LAT];
+        $this->lon = $data[PlaceDB::LON];
+        $this->placeName = $data[PlaceDB::PLACE];
+    }
+
+    public function hash(){
+        return substr(hash("sha256",$this->placeName),0,16);
+    }
+
+    public function getPlaceID(){
+        return $this->placeID;
+    }
+
+    public function toJson(){
+        $jSonArray = array();
+
+        $jSonArray[self::PLACE_ID] = $this->placeID;
+        $jSonArray[self::PLACE_NAME] = $this->placeName;
+        $jSonArray[self::LATITUDE] = (double)$this->lat;
+        $jSonArray[self::LONGITUDE] = (double)$this->lon;
+
+        return $jSonArray;
     }
 
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import android.content.Context;
-import ch.unibe.sport.course.info.EventNotificationAlarmManagerReceiver;
+import ch.unibe.sport.event.info.EventNotificationAlarmManagerReceiver;
 import ch.unibe.sport.network.MessageFactory;
 import ch.unibe.sport.network.ProxySherlockFragmentActivity;
 import ch.unibe.sport.utils.Print;
@@ -22,6 +22,7 @@ public enum Config implements Database.OnDatabaseInitializedListener, System.OnS
 	public Database DATABASE;
 	public Calendar CALENDAR;
 	public Synchronize SYNCHRONIZE;
+	public User USER;
 	
 	public boolean REINIT = false;
 	public boolean INIT = false;
@@ -50,6 +51,7 @@ public enum Config implements Database.OnDatabaseInitializedListener, System.OnS
 		this.DATABASE = new Database(context,this);
 		this.CALENDAR = new Calendar(context);
 		this.SYNCHRONIZE = new Synchronize(context);
+		this.USER = new User(context);
 		
 		preferences.add(SYSTEM);
 		preferences.add(STRINGS);
@@ -57,6 +59,7 @@ public enum Config implements Database.OnDatabaseInitializedListener, System.OnS
 		preferences.add(DATABASE);
 		preferences.add(CALENDAR);
 		preferences.add(SYNCHRONIZE);
+		preferences.add(USER);
 		
 		EventNotificationAlarmManagerReceiver alarmManager = new EventNotificationAlarmManagerReceiver();
 		alarmManager.setAlarm(context);

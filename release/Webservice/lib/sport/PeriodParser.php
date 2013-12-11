@@ -39,7 +39,7 @@ class PeriodParser {
         }
 
         foreach($periods as $period){
-            $periodInt = Integer::intValue(trim($period));
+            $periodInt = Int::intValue(trim($period));
             if ($periodInt > 0 && $periodInt < 6){
                 $this->mPeriods->add($periodInt);
             }

@@ -10,6 +10,13 @@ import ch.unibe.sport.utils.bulker.BulkParam;
 import ch.unibe.sport.utils.bulker.BulkRelation;
 import ch.unibe.sport.utils.bulker.BulkTable;
 
+/**
+ * Class that handles the sports' information
+ * 
+ * @author Team 1
+ *
+ */
+
 @BulkTable(Sports.NAME)
 public class Sport {
 	public static final String TAG = Sport.class.getName();
@@ -43,7 +50,7 @@ public class Sport {
 	
 	private void initData(Context context){
 		if (this.sid <= 0){
-			Print.err(TAG,"SportID is valid: "+this.sid);
+			Print.err(TAG,"SportID is invalid: "+this.sid);
 		}
 		
 		Sports sportDB = new Sports(context);

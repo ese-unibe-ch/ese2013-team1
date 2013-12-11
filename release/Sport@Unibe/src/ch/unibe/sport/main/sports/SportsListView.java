@@ -2,6 +2,7 @@ package ch.unibe.sport.main.sports;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.octo.android.robospice.SpiceManager;
 
 import ch.unibe.sport.R;
 import ch.unibe.sport.DBAdapter.tables.Sports;
@@ -28,7 +29,7 @@ public class SportsListView extends ListView  implements IFilterable, IMainTab, 
 	private Sports sportsDB;
 	private String[][] sportsData;
 	private SportsListAdapter listAdapter;
-	
+	private ActionBarSearchItem searchAction;
 	private Point point;
 	
 	private OnItemClickListener itemClickListener = new OnItemClickListener(){
@@ -94,7 +95,7 @@ public class SportsListView extends ListView  implements IFilterable, IMainTab, 
 		if (menu == null) return;
 		menu.clear();
 		/* Initalizes search item in actionbar menu */
-		new ActionBarSearchItem(this, menu, R.id.menu_search);
+		searchAction = new ActionBarSearchItem(this.getContext(),this, menu, R.id.menu_search);
 	}
 
 	@Override
@@ -125,7 +126,7 @@ public class SportsListView extends ListView  implements IFilterable, IMainTab, 
 
 	@Override
 	public void filter(String prefix) {
-		if (isFilterExists())listAdapter.getFilter().filter(prefix);
+		if (isFilterExists())listAdapter.filter(prefix);
 	}
 
 	@Override
@@ -154,6 +155,17 @@ public class SportsListView extends ListView  implements IFilterable, IMainTab, 
 	@Override
 	public IPoint getPoint() {
 		return point;
+	}
+
+	@Override
+	public void collapseActionBar() {
+		if (searchAction != null)searchAction.clear();
+	}
+
+	@Override
+	public void setSpiceManager(SpiceManager spiceManager) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

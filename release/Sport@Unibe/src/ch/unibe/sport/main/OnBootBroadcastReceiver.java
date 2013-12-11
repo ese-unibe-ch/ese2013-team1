@@ -1,6 +1,6 @@
 package ch.unibe.sport.main;
 
-import ch.unibe.sport.course.info.EventNotificationAlarmManagerReceiver;
+import ch.unibe.sport.event.info.EventNotificationAlarmManagerReceiver;
 import ch.unibe.sport.utils.Print;
 import android.content.BroadcastReceiver;
 import android.content.Context;

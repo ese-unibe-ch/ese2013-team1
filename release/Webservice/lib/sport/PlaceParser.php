@@ -20,7 +20,7 @@ class PlaceParser {
         if (String::length($this->mRaw) === 0) return;
         $placeArray = explode('/',$this->mRaw);
         foreach($placeArray as $place){
-            $this->mPlaces->add(trim($place));
+            $this->mPlaces->add(Place::createFrom(trim($place)));
         }
     }
 

@@ -12,7 +12,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
 /**
- * System configuraton class that loads and stores
+ * System configuration class that loads and stores
  * parameters for simple and fast access in runtime
  * 
  * @version 1.0 2013-09-19
@@ -53,7 +53,7 @@ public class System extends Preferences {
 	}
 	
 	private void checkInitialized(){
-		if (checkUUIDInitialized() && checkDataUpdated()) setSystemInitialized();
+		if (!INIT)if (checkBuildTime() && checkUUIDInitialized() && checkDataUpdated()) setSystemInitialized();
 	}
 	
 	public boolean checkUUIDInitialized(){
@@ -66,6 +66,17 @@ public class System extends Preferences {
 		return LAST_UPDATE > 0 && new Date(LAST_UPDATE).daysUntil(TODAY) < 4;
 	}
 	
+	public boolean checkBuildTime(){
+		if (BUILD_TIME.equals(getBuildTime())){
+			return true;
+		}
+		else {
+			//this.LAST_UPDATE = 0;
+			//save(LAST_UPDATE_NAME,LAST_UPDATE);
+			this.BUILD_TIME = initBuildTime();
+		}
+		return BUILD_TIME.equals(getBuildTime());
+	}
 	
 	/*------------------------------------------------------------
 	-------------------------- P U B L I C  ----------------------

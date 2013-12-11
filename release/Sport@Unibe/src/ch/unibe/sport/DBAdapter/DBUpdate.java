@@ -11,7 +11,7 @@ import ch.unibe.sport.utils.Print;
 
 /**
  * 
- * @author Aliaksei Syrel
+ * @author Team 1
  */
 public class DBUpdate{
 	public static final String TAG = DBUpdate.class.getName();
@@ -69,7 +69,7 @@ public class DBUpdate{
     /**
      * Inserts default data in all defined tables.</br>
      * <b><i>Uses fast 'bulk' insert method.</i></b>
-     * @return {@code True} if operation was succesfull, otherwise {@code False}
+     * @return {@code True} if operation was successful, otherwise {@code False}
      * @throws TableNotExistsException 
      */
 	public void dbTablesInsert() throws TableNotExistsException{

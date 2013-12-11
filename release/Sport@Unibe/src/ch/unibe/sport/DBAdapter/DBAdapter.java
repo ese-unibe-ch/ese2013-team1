@@ -14,9 +14,9 @@ import ch.unibe.sport.DBAdapter.tables.EventAttended;
 import ch.unibe.sport.DBAdapter.tables.EventDaysOfWeek;
 import ch.unibe.sport.DBAdapter.tables.EventKew;
 import ch.unibe.sport.DBAdapter.tables.EventPeriods;
-import ch.unibe.sport.DBAdapter.tables.FacebookFriends;
 import ch.unibe.sport.DBAdapter.tables.EventFavorite;
 import ch.unibe.sport.DBAdapter.tables.EventIntervals;
+import ch.unibe.sport.DBAdapter.tables.EventPlaces;
 import ch.unibe.sport.DBAdapter.tables.EventRating;
 import ch.unibe.sport.DBAdapter.tables.SportEvents;
 import ch.unibe.sport.DBAdapter.tables.Sports;
@@ -31,7 +31,7 @@ import android.os.Environment;
 import android.util.Log;
 
 /**
- * Database adapter, which controlls access to SQLiteDatabase.
+ * Database adapter, which controls access to SQLiteDatabase.
  * It's safe to open and close database from everywhere,
  * but it's important, that the number of opens == number of closes
  * 
@@ -88,7 +88,7 @@ public enum DBAdapter {
   
 	/**
 	 * Tries to open writable database. Adds a new open request in stack
-	 * to controll open-close pairs.
+	 * to control open-close pairs.
 	 * @param context
 	 * @return DBAdapter instance
 	 * @throws SQLException
@@ -117,7 +117,7 @@ public enum DBAdapter {
  
 	/**
 	 * Tries to close writable database. Pops open request from stack
-	 * to controll open-close pairs. If stack is empty closing will
+	 * to control open-close pairs. If stack is empty closing will
 	 * be failed with an error
 	 * @return true - if database was successfully closed, otherwise false
 	 */
@@ -143,15 +143,15 @@ public enum DBAdapter {
 	}
 	
 	/**
-	 * Excecutes sql queries such as "DROP TABLE" or "CREATE TABLE"
-	 * @param str - SQL query to be excecuted
+	 * Executes all queries such as "DROP TABLE" or "CREATE TABLE"
+	 * @param str - SQL query to be executed
 	 */
 	public void exec(String str){
 		db.execSQL(str);
 	}
 	
 	/**
-	 * Begins global database transacion. In this mode database
+	 * Begins global database transaction. In this mode database
 	 * become locked for close requests. If you want to close connection
 	 * to database use endTransaction(). begin-end transactions should
 	 * go in pairs.
@@ -205,35 +205,43 @@ public enum DBAdapter {
 		@Override  
 		public void onCreate(SQLiteDatabase db) {
 			System.out.println("Create db");
-			db.execSQL(Sports.CREATE);
-			db.execSQL(Events.CREATE);
-			db.execSQL(SportEvents.CREATE);
-			db.execSQL(EventFavorite.CREATE);
-			db.execSQL(FacebookFriends.CREATE);
-			db.execSQL(EventIntervals.CREATE);
-			db.execSQL(EventAttended.CREATE);
-			db.execSQL(EventKew.CREATE);
-			db.execSQL(EventDaysOfWeek.CREATE);
-			db.execSQL(EventPeriods.CREATE);
-			db.execSQL(EventRating.CREATE);
+			create(db);
 		}
 		
 		@Override  
 		public void onUpgrade(final SQLiteDatabase db, int oldVersion, int newVersion) {  
 			Log.w(DBStructure.TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-			db.execSQL("DROP TABLE IF EXISTS "+Sports.NAME);
-            db.execSQL("DROP TABLE IF EXISTS "+Events.NAME);
-            db.execSQL("DROP TABLE IF EXISTS "+SportEvents.NAME);
-            db.execSQL("DROP TABLE IF EXISTS "+EventFavorite.NAME);
-            db.execSQL("DROP TABLE IF EXISTS "+FacebookFriends.NAME);
-            db.execSQL("DROP TABLE IF EXISTS "+EventIntervals.NAME);
-			db.execSQL("DROP TABLE IF EXISTS "+EventAttended.NAME);
-			db.execSQL("DROP TABLE IF EXISTS "+EventKew.NAME);
-			db.execSQL("DROP TABLE IF EXISTS "+EventDaysOfWeek.NAME);
-			db.execSQL("DROP TABLE IF EXISTS "+EventPeriods.NAME);
-			db.execSQL("DROP TABLE IF EXISTS "+EventRating.NAME);
-            onCreate(db);
+			drop(db);
+            create(db);
 		}
+	}
+	
+	public static void create(SQLiteDatabase db) {
+		db.execSQL(Sports.CREATE);
+		db.execSQL(Events.CREATE);
+		db.execSQL(SportEvents.CREATE);
+		db.execSQL(EventFavorite.CREATE);
+		db.execSQL(EventIntervals.CREATE);
+		db.execSQL(EventPlaces.CREATE);
+		db.execSQL(EventAttended.CREATE);
+		db.execSQL(EventKew.CREATE);
+		db.execSQL(EventDaysOfWeek.CREATE);
+		db.execSQL(EventPeriods.CREATE);
+		db.execSQL(EventRating.CREATE);
+	}
+	
+	public static void drop(final SQLiteDatabase db) {
+		db.execSQL("DROP TABLE IF EXISTS "+Sports.NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+Events.NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+SportEvents.NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+EventFavorite.NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+EventIntervals.NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+EventPlaces.NAME);
+		db.execSQL("DROP TABLE IF EXISTS "+EventAttended.NAME);
+		db.execSQL("DROP TABLE IF EXISTS "+EventKew.NAME);
+		db.execSQL("DROP TABLE IF EXISTS "+EventDaysOfWeek.NAME);
+		db.execSQL("DROP TABLE IF EXISTS "+EventPeriods.NAME);
+		db.execSQL("DROP TABLE IF EXISTS "+EventRating.NAME);
 	}
 	
 	private class ExportDatabaseFileTask extends AsyncTask<String, Void, Boolean> {

@@ -121,7 +121,9 @@ public class HeaderView extends LinearLayout {
 		holder.course.setText(event.getEventName());
 		holder.day.setText(event.getDaysOfWeekString());
 		holder.time.setText(event.getTimeString());
-		holder.place.setText(event.getPlace());
+		if (event.getPlace() != null) {
+			holder.place.setText(event.getPlace().getPlaceName());
+		}
 
 		initBackground(event);
 	}

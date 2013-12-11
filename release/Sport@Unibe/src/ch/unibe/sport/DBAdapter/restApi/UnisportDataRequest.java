@@ -9,6 +9,11 @@ import android.os.Build;
 
 import com.octo.android.robospice.request.SpiceRequest;
 
+/**
+ * 
+ * @author Team 1
+ *
+ */
 public class UnisportDataRequest extends SpiceRequest<String> {
 
 	public UnisportDataRequest() {

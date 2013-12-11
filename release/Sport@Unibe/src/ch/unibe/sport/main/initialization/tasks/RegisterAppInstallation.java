@@ -51,7 +51,7 @@ public class RegisterAppInstallation implements IInitializationTask{
 		
 		spiceManager.start(context);
         spiceManager.addListenerIfPending(RegisterUUID.class, JSON_REGISTER_UUID_KEY, registerListener);
-        spiceManager.getFromCache(RegisterUUID.class, JSON_REGISTER_UUID_KEY, DurationInMillis.ALWAYS_RETURNED, registerListener);
+        spiceManager.getFromCache(RegisterUUID.class, JSON_REGISTER_UUID_KEY, DurationInMillis.ALWAYS_EXPIRED, registerListener);
 	}
 
 	@Override

@@ -12,8 +12,8 @@ class PlaceDB extends Table {
     public static $NAME = "places";
 
     private static $CREATE = "CREATE TABLE places (
-        pid varchar(8) NOT NULL,
-		place varchar(255) NOT NULL,
+        pid varchar(16) NOT NULL,
+		place varchar(255) NOT NULL UNIQUE,
 		lat double DEFAULT NULL,
 		lon double DEFAULT NULL,
 		PRIMARY KEY (pid),
@@ -33,17 +33,13 @@ class PlaceDB extends Table {
         parent::__construct(self::$NAME,self::$CREATE,self::$DB);
     }
 
-    public function add($place){
-        static $pid = "";
-        while($pid === ""){
-            $hash = substr(md5($place.time()),0,8);
-            if (!$this->isExistsID($hash)){
-                $pid = $hash;
-                break;
-            }
-        }
-        $this->insert(array(self::PID,self::PLACE),array($pid,$place));
-        return $pid;
+    public function add($hash,$place) {
+        $isTemp = DB::isTemp();
+        if ($isTemp === true) $this->insert(array(self::PID,self::PLACE),array($hash,$place));
+        DB::useMain();
+        $this->insert(array(self::PID,self::PLACE),array($hash,$place));
+        if ($isTemp === true) DB::useTemp();
+        return $hash;
     }
 
     public function isExistsID($placeID){
@@ -54,7 +50,23 @@ class PlaceDB extends Table {
         return !$this->isUnique(array(self::PLACE),array($place));
     }
 
+    public function update($hash,$place,$lat,$lon){
+        $this->updateByID(array(self::PID),array($hash),array(self::PLACE,self::LAT,self::LON),array($place,$lat,$lon));
+    }
+
     public function getData($placeID){
-        return $this->getRow($this->selectByID(array(self::PID),array($placeID),self::$DB),0);
+        $isTemp = DB::isTemp();
+        DB::useMain();
+        $data = $this->getRow($this->selectByID(array(self::PID),array($placeID),self::$DB),0);
+        if ($isTemp === true) DB::useTemp();
+        return $data;
+    }
+
+    public function getAllData(){
+        $isTemp = DB::isTemp();
+        DB::useMain();
+        $data = $this->selectAll(self::$DB,array(self::PLACE));
+        if ($isTemp === true) DB::useTemp();
+        return $data;
     }
 } 

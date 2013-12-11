@@ -9,6 +9,15 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 
+/**
+ * Designed for a fast construction of text view. 
+ * Very easy setter-methods and constructors.
+ * Is used especially in #calendar.Cell
+ * Includes various overloaded constructors.
+ * 
+ * @author Team 1
+ *
+ */
 public class FastTextView extends View {
 
 	private LayoutProvider provider;

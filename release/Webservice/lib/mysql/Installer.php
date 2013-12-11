@@ -25,7 +25,7 @@ class Installer {
         $this->tables->add(new Installations());
         $this->tables->add(new Users());
         $this->tables->add(new Attended());
-        $this->tables->add(new Friends());
+        $this->tables->add(new FriendsDB());
         $this->tables->add(new Rating());
     }
 

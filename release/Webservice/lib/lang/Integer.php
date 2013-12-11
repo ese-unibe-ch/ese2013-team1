@@ -8,7 +8,7 @@
 
 class Integer {
 
-    public static function isInt($string){
+    public static final function isInt($string){
         $int = (int)$string;
         if (String::length($int.'') !== String::length($string) || $int.'' !== $string){
             $test = ''.$int;
@@ -23,7 +23,7 @@ class Integer {
         else return true;
     }
 
-    public static function intValue($string){
+    public static final function intValue($string){
         $int = (int)$string;
         if (String::length($int.'') !== String::length($string) || $int.'' !== $string){
             $test = ''.$int;

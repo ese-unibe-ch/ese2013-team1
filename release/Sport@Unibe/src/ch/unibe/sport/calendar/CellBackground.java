@@ -66,6 +66,11 @@ public class CellBackground {
 				&& dimension != null;
 	}
 	
+	/**
+	 * Initializes the cell's background, drawing its border, time and courses.
+	 * @param dimension
+	 * @param day
+	 */
 	public CellBackground(Dimension dimension,Day day){
 		this.day = day;
 		this.date = this.day.date;

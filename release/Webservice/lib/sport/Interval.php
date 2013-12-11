@@ -40,8 +40,8 @@ class Interval {
 
     private function init(){
         $data = $this->intervalDB->getData($this->intervalID);
-        $this->timeFrom = Time::fromMinutes(Integer::intValue($data[IntervalDB::TIME_FROM]));
-        $this->timeTo = Time::fromMinutes(Integer::intValue($data[IntervalDB::TIME_TO]));
+        $this->timeFrom = Time::fromMinutes(Int::intValue($data[IntervalDB::TIME_FROM]));
+        $this->timeTo = Time::fromMinutes(Int::intValue($data[IntervalDB::TIME_TO]));
         $this->status = $data[IntervalDB::STATUS];
     }
 

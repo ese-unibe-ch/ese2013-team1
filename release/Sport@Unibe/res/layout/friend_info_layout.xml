@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ListView
+        android:id="@+id/event_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
+    
+    <ImageView
+        android:id="@+id/picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/name"
+        android:layout_alignBottom="@+id/name"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingBottom="5dp"
+        android:src="@drawable/no_avatar"
+        android:background="#eef3f3f3" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_toRightOf="@+id/picture"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textSize="17sp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
+        android:shadowColor="#FFFFFFFF"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:background="#eef3f3f3" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_marginBottom="1.5dp"
+        android:layout_below="@+id/name"
+        android:background="#aad4d4d4" />
+
+</RelativeLayout>

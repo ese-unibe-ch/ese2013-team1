@@ -37,7 +37,6 @@ public class AdvancedSearchResultActivity extends ProxySherlockFragmentActivity{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			
 			default:{
 				return super.onOptionsItemSelected(item);
 			}

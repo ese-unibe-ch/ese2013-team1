@@ -155,10 +155,10 @@ class TimeParser {
         }
         $hours = $time[0];
         $minutes = $time[1];
-        if (!Integer::isInt($hours) || !Integer::isInt($minutes)){
+        if (!Int::isInt($hours) || !Int::isInt($minutes)){
             return $this->UNKNOWN_TIME;
         }
-        return Time::fromTime(Integer::intValue($hours),Integer::intValue($minutes));
+        return Time::fromTime(Int::intValue($hours),Int::intValue($minutes));
     }
 
     public function getIntervals(){

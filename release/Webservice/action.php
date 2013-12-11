@@ -43,13 +43,56 @@ class ActionsHandler {
                 new IsRated();
                 break;
             }
-
             case GetRating::ACTION:{
                 new GetRating();
                 break;
             }
             case RegisterUUID::ACTION:{
                 new RegisterUUID();
+                break;
+            }
+            case RegisterUser::ACTION:{
+                new RegisterUser();
+                break;
+            }
+            case LoginUser::ACTION:{
+                new LoginUser();
+                break;
+            }
+            case SearchForNewFriends::ACTION:{
+                new SearchForNewFriends();
+                break;
+            }
+            case SendFriendRequest::ACTION:{
+                new SendFriendRequest();
+                break;
+            }
+            case AcceptFriendRequest::ACTION:{
+                new AcceptFriendRequest();
+                break;
+            }
+            case CancelFriendRequest::ACTION:{
+                new CancelFriendRequest();
+                break;
+            }
+            case GetFriendRequests::ACTION:{
+                new GetFriendRequests();
+                break;
+            }
+            case GetUserData::ACTION:{
+                new GetUserData();
+                break;
+            }
+            case GetFriendData::ACTION:{
+                new GetFriendData();
+                break;
+            }
+            case GetFriendNews::ACTION:{
+                new GetFriendNews();
+                break;
+            }
+            case SetUsername::ACTION:{
+                new SetUsername();
                 break;
             }
             default: {

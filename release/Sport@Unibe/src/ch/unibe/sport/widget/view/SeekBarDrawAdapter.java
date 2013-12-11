@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 
 /**
  * 
- * @author Team 1 2013
+ * @author Team 1
  *
  */
 public interface SeekBarDrawAdapter {

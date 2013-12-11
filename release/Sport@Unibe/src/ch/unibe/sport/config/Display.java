@@ -8,11 +8,11 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 /**
- * Display configuraton class that loads and stores
+ * Display configuration class that loads and stores
  * parameters for simple and fast access in runtime
  * 
  * @version 1.0 2013-09-19
- * @author Aliaksei Syrel
+ * @author Team 1
  */
 public class Display extends Preferences {
 	private static final String TAG  = "display";

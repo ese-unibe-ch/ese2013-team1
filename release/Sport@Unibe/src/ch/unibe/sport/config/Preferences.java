@@ -6,9 +6,9 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 
 /**
- * Abstract class that controlls reading and storing of sharedPreferences
+ * Abstract class that controls reading and storing of sharedPreferences
  * @version 1.0 2013-08-16
- * @author Aliaksei Syrel
+ * @author Team 1
  */
 public abstract class Preferences implements IPreferences{
 

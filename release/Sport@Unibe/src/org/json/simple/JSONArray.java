@@ -16,8 +16,7 @@ import java.util.List;
  * 
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
-@SuppressWarnings("rawtypes")
-public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamAware {
+public class JSONArray<E> extends ArrayList<E> implements List<E>, JSONAware, JSONStreamAware {
 	private static final long serialVersionUID = 3957988303675231981L;
 
     /**
@@ -29,14 +28,14 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
      * @param list
      * @param out
      */
-	public static void writeJSONString(List list, Writer out) throws IOException{
+	public static <E> void writeJSONString(List<E> list, Writer out) throws IOException{
 		if(list == null){
 			out.write("null");
 			return;
 		}
 		
 		boolean first = true;
-		Iterator iter=list.iterator();
+		Iterator<E> iter=list.iterator();
 		
         out.write('[');
 		while(iter.hasNext()){
@@ -69,13 +68,13 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 	 * @param list
 	 * @return JSON text, or "null" if list is null.
 	 */
-	public static String toJSONString(List list){
+	public static <E> String toJSONString(List<E> list){
 		if(list == null)
 			return "null";
 		
         boolean first = true;
         StringBuffer sb = new StringBuffer();
-		Iterator iter=list.iterator();
+		Iterator<E> iter=list.iterator();
         
         sb.append('[');
 		while(iter.hasNext()){

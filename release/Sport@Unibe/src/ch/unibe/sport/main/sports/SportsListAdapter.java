@@ -21,9 +21,10 @@ public class SportsListAdapter extends ArrayAdapter<String> {
 	private ArrayList<String> originalSportIDs;
 	private ArrayList<String> sportIDs;
 	private SportsListFilter filter;
+	private String lastFilterPrefix = "";
 	
 	public SportsListAdapter(Context context, String[][] sportsData) {
-		super(context, android.R.layout.simple_list_item_activated_1,
+		super(context, android.R.layout.simple_list_item_1,
 				new ArrayList<String>(Arrays.asList(Utils.getRow(Utils.transpose(sportsData),Sports.SPORT_NAME))));
 		this.sportsData = sportsData;
 		this.sportNames = Utils.getRow(Utils.transpose(sportsData),Sports.SPORT_NAME);
@@ -39,6 +40,20 @@ public class SportsListAdapter extends ArrayAdapter<String> {
 		return filter;
 	}
 
+	public void filter(String prefix){
+		if (prefix == null || prefix.trim().length() == 0) {
+			if (lastFilterPrefix.length() > 0){
+				lastFilterPrefix = "";
+				getFilter().filter("");
+				return;
+			}
+			return;
+		}
+		if (prefix.trim().equals(lastFilterPrefix)) return;
+		lastFilterPrefix = prefix.trim();
+		getFilter().filter(lastFilterPrefix);
+	}
+	
 	public int getIndex(int position){
 		return originalSportIDs.indexOf(this.sportIDs.get(position));
 	}

@@ -29,9 +29,12 @@ class Event {
     private $eventKewDB;
     private $eventDaysOfWeekDB;
 
+    private $attendedDate;
+    private $sportName;
+
     const EVENT_ID = "eventID", EVENT_HASH = "eventHash",EVENT_NAME = "eventName", DAYS_OF_WEEK = "daysOfWeek", INTERVAL = "interval",
         PLACE = "place", DATE = "date", PERIODS = "periods",INFO_LINK = "infoLink",
-        REGISTRATION = "registration", REGISTRATION_LINK = "registrationLink", KEW = "kew";
+        REGISTRATION = "registration", REGISTRATION_LINK = "registrationLink", KEW = "kew", ATTENDED_DATE = "attendedDate", SPORT_NAME = "sportName";
 
     public function __construct() {
         $this->daysOfWeek = new ArrayList();
@@ -50,6 +53,12 @@ class Event {
         return $event;
     }
 
+    public static function createByHash($hash){
+        $eventDB = new EventsDB();
+        $id = $eventDB->getIdByHash($hash);
+        return self::createByID($id);
+    }
+
     private function init(){
         $data = $this->eventsDB->getData($this->eventID);
 
@@ -61,6 +70,10 @@ class Event {
         $this->registration = $data[EventsDB::REGISTRATION];
         $this->registrationLink = $data[EventsDB::REGISTRATION_LINK];
         $this->interval = Interval::createByID($data[EventsDB::IID]);
+        if (String::length($data[EventsDB::PID]) > 0){
+         $this->place = Place::createByID($data[EventsDB::PID]);
+        }
+
         $this->initPeriods();
         $this->initKEW();
         $this->initDaysOfWeek();
@@ -70,7 +83,7 @@ class Event {
         $data = $this->eventPeriodsDB->getPeriods($this->eventID);
         if (count($data) === 0 || count($data[0]) === 0) return;
         foreach ($data as $period){
-            $this->periods->add(Integer::intValue($period[EventPeriods::PERIOD]));
+            $this->periods->add(Int::intValue($period[EventPeriods::PERIOD]));
         }
     }
 
@@ -86,20 +99,16 @@ class Event {
         $data = $this->eventDaysOfWeekDB->getDaysOfWeek($this->eventID);
         if (count($data) === 0 || count($data[0]) === 0) return;
         foreach ($data as $dayOfWeek){
-            $this->daysOfWeek->add(Integer::intValue($dayOfWeek[EventDaysOfWeek::DAY_OF_WEEK]));
+            $this->daysOfWeek->add(Int::intValue($dayOfWeek[EventDaysOfWeek::DAY_OF_WEEK]));
         }
     }
 
     public function saveInDB(){
         if (String::length($this->eventID) === 0){
             $this->eventHash = $this->hash();
-            $data = $this->eventsDB->getIdByHash($this->eventHash);
-            if (count($data) === 0){
+            $eventID = $this->eventsDB->getIdByHash($this->eventHash);
+            if ($eventID === 0){
                 $this->eventID = $this->eventsDB->add($this->eventHash,$this->eventName);
-            }
-            else {
-                $this->eventID = $data[EventsDB::EID];
-                return;
             }
         }
 
@@ -110,6 +119,11 @@ class Event {
 
         $this->interval->saveInDB();
         $this->eventsDB->setInterval($this->eventID,$this->interval->getIntervalID());
+
+        if ($this->place !== null){
+            $this->place->saveInDB();
+            $this->eventsDB->setPlace($this->eventID,$this->place->getPlaceID());
+        }
     }
 
     public function hash(){
@@ -160,6 +174,19 @@ class Event {
         $this->registrationLink = $registrationLink;
     }
 
+    public function setAttendedDate($date){
+        $this->attendedDate = $date;
+    }
+
+    public function initSportName(){
+        $sportDB = new SportsDB();
+        $sportEvents = new SportEvents();
+        $sportID = $sportEvents->getSportID($this->eventID);
+        if ($sportID === 0) return;
+        $data = $sportDB->getData($sportID);
+        $this->sportName = $data[SportsDB::SPORT];
+    }
+
     public function __toString(){
         $str = '{';
         $str .= self::EVENT_ID.': '.$this->eventID;
@@ -178,11 +205,13 @@ class Event {
 
     public function toJson(){
         $jSonArray = array();
-        $jSonArray[self::EVENT_ID] = Integer::intValue($this->eventID);
+        $jSonArray[self::EVENT_ID] = Int::intValue($this->eventID);
         if (String::length($this->eventHash) > 0)$jSonArray[self::EVENT_HASH] = $this->eventHash;
         else $jSonArray[self::EVENT_HASH] = $this->hash();
         $jSonArray[self::EVENT_NAME] = $this->eventName;
         $jSonArray[self::INTERVAL] = $this->interval->toJson();
+        if ($this->place !== null) $jSonArray[self::PLACE] = $this->place->toJson();
+        else $jSonArray[self::PLACE] = null;
         $jSonArray[self::DATE] = $this->date;
         $jSonArray[self::PERIODS] = $this->periods->getAll();
         $jSonArray[self::DAYS_OF_WEEK] = $this->daysOfWeek->getAll();
@@ -190,6 +219,12 @@ class Event {
         $jSonArray[self::REGISTRATION] = $this->registration;
         $jSonArray[self::REGISTRATION_LINK] = $this->registrationLink;
         $jSonArray[self::KEW] = $this->kew->getAll();
+        if (String::length($this->attendedDate) > 0) {
+            $jSonArray[self::ATTENDED_DATE] = array("date"=>Int::intValue($this->attendedDate));
+        }
+        if (String::length($this->sportName) > 0) {
+            $jSonArray[self::SPORT_NAME] = $this->sportName;
+        }
         return $jSonArray;
     }
 } 

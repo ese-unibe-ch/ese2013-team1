@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 import ch.unibe.sport.R;
 import ch.unibe.sport.config.Config;
@@ -128,6 +129,11 @@ public abstract class ProxySherlockFragmentActivity extends SherlockFragmentActi
 	
 	public void hideActionBar(){
 		this.getSupportActionBar().hide();
+	}
+	
+	public void setActionBarTitle(String title){
+		TextView titleView = (TextView)mActionBarHome.findViewById(R.id.ab_title);
+		if (titleView != null) titleView.setText(title);
 	}
 	
 	/**

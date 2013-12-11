@@ -60,6 +60,10 @@ public final class Day {
 	/*------------------------------------------------------------
 	------------------------- D E F A U L T ----------------------
 	------------------------------------------------------------*/
+	/**
+	 * Compares object using using three parameters: id, date and timeFrom. 
+	 * True only if the three are correct.
+	 */
 	public boolean equals(Object obj){
 		if (obj == null)
 			return false;

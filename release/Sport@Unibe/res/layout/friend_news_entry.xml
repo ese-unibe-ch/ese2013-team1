@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+    	android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:background="@drawable/card_layout_bg" >
+
+        <ImageView
+            android:id="@+id/picture"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/no_avatar" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/picture"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/username"
+            android:layout_alignTop="@+id/username"
+            android:layout_toRightOf="@+id/username"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_vertical"
+            android:paddingLeft="7dp"
+            android:text="attends"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+        
+        <TextView
+            android:id="@+id/event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/username"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/username"
+            android:layout_alignTop="@+id/username"
+            android:layout_toRightOf="@+id/action"
+            android:layout_marginRight="7dp"
+            android:paddingLeft="7dp"
+            android:fontFamily="sans-serif"
+            android:gravity="bottom"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/event_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/username"
+            android:layout_below="@+id/username"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:textSize="17sp"
+            android:textColor="#ff222222"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/stamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event_name"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:textColor="#66222222"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"
+            android:paddingBottom="1dp"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

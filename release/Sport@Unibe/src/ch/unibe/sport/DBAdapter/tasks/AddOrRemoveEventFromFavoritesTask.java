@@ -5,6 +5,11 @@ import ch.unibe.sport.DBAdapter.DBAdapter;
 import ch.unibe.sport.DBAdapter.tables.EventFavorite;
 import ch.unibe.sport.taskmanager.ObservableAsyncTask;
 
+/**
+ * Controls the status of a toggled favorite event.
+ * @author Team 1
+ *
+ */
 public class AddOrRemoveEventFromFavoritesTask extends ObservableAsyncTask<Context,Void,Boolean> {
 	public static final String TAG =  AddOrRemoveEventFromFavoritesTask.class.getName();
 

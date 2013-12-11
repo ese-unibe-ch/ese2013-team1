@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 /**
  * Stable and tested Date class for fast operations with dates
- * @version 1.6 2013-08-14
+ * @version 1.6 2013-11-14
  * @author Team 1
  */
 public class Date {
@@ -62,10 +62,7 @@ public class Date {
 	}
 	
 	public Date(int inttime){
-		this.year = inttime/10000;
-		this.month = (inttime - this.year * 10000) / 100;
-		this.day = (inttime - this.year * 10000 - this.month * 100);
-		assert invariant();
+		setDate(inttime);
 	}
 	
 	/*------------------------------------------------------------
@@ -101,6 +98,13 @@ public class Date {
 		this.month = month;
 		assert invariant();
 		return this;
+	}
+	
+	public void setDate(int inttime){
+		this.year = inttime/10000;
+		this.month = (inttime - this.year * 10000) / 100;
+		this.day = (inttime - this.year * 10000 - this.month * 100);
+		assert invariant();
 	}
 	/*------------------------------------------------------------
 	------------------------- A C T I O N S ----------------------

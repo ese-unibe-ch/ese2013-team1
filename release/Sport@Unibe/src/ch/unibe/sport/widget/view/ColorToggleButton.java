@@ -8,6 +8,10 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.ToggleButton;
 
+/**
+ * @author Team 1
+ *
+ */
 public class ColorToggleButton extends ToggleButton {
 	
 	private final Paint outterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -60,22 +64,37 @@ public class ColorToggleButton extends ToggleButton {
 		canvas.drawRoundRect(innerRect, CORNER_RADIUS, CORNER_RADIUS, this.innerPaint);
 	}
 
+	/**
+	 * @param color
+	 */
 	public void setBorderColor(int color){
 		this.outterColor = color;
 		this.invalidate();
 	}
 	
+	/**
+	 * @param color
+	 */
 	public void setBorderColorChecked(int color){
 		this.outterColorChecked = color;
 		this.invalidate();
 	}
 	
+	/**
+	 * @param color
+	 */
+	/**
+	 * @param color
+	 */
 	public void setColor(int color){
 		this.color = color;
 		this.innerPaint.setColor(this.color);
 		this.invalidate();
 	}
 	
+	/**
+	 * @return color
+	 */
 	public int getColor(){
 		return this.color;
 	}

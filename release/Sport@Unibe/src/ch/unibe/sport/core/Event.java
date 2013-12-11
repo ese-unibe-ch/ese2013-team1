@@ -11,12 +11,22 @@ import ch.unibe.sport.DBAdapter.tables.EventRating;
 import ch.unibe.sport.DBAdapter.tables.Events;
 import ch.unibe.sport.DBAdapter.tables.SportEvents;
 import ch.unibe.sport.config.Config;
+import ch.unibe.sport.utils.Date;
 import ch.unibe.sport.utils.Print;
 import ch.unibe.sport.utils.Utils;
 import ch.unibe.sport.utils.bulker.BulkKey;
 import ch.unibe.sport.utils.bulker.BulkParam;
 import ch.unibe.sport.utils.bulker.BulkRelation;
 import ch.unibe.sport.utils.bulker.BulkTable;
+
+/**
+ * 
+ * Event class that handles the information of sports events
+ * such as rating, favorite status, periods, subscriptions and dates.
+ * 
+ * @author Team 1
+ *
+ */
 
 @BulkTable(Events.NAME)
 public class Event {
@@ -38,6 +48,8 @@ public class Event {
 	private String registrationLink;
 	@BulkParam
 	private Interval interval;
+	@BulkParam
+	private Place place;
 	@BulkRelation(EventPeriods.NAME)
 	private int[] periods;
 	@BulkRelation(EventKew.NAME)
@@ -48,6 +60,7 @@ public class Event {
 	private String sportName;
 	private boolean favorite;
 	private int attended;
+	private Date attendedDate;
 	private int background;
 	private int rating;
 	
@@ -91,8 +104,11 @@ public class Event {
 		this.dayOfWeek = new EventDaysOfWeek(context).getDaysOfWeek(eid);
 		this.kew = new EventKew(context).getKew(eid);
 		this.sportName = new SportEvents(context).getSportName(eid);
-		if (data[Events.IID].length() > 0){
+		if (data[Events.IID] != null && data[Events.IID].length() > 0){
 			this.interval = new Interval(context,data[Events.IID]);
+		}
+		if (data[Events.PID] != null && data[Events.PID].length() > 0){
+			this.place = new Place(context,data[Events.PID]);
 		}
 		
 		initUserData(context);
@@ -296,11 +312,31 @@ public class Event {
 		return str.toString();
 	}
 	
-	public String getPlace(){
-		return "";
+	public Place getPlace(){
+		return this.place;
+	}
+	
+	public void setSportName(String sportName){
+		this.sportName = sportName;
 	}
 	
 	public String getSportName(){
 		return this.sportName;
+	}
+	
+	public String toString(){
+		return this.sportName + " "+this.eventName;
+	}
+
+	public void setPlace(Place place) {
+		this.place = place;
+	}
+
+	public Date getAttendedDate() {
+		return attendedDate;
+	}
+
+	public void setAttendedDate(Date attendedDate) {
+		this.attendedDate = attendedDate;
 	}
 }

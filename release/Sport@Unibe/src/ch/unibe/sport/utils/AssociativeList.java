@@ -8,33 +8,33 @@ import java.util.LinkedList;
  * Simple associative list, that holds entries as Key:Value.
  * Key can be {@code String} or {@code int}
  * @param <E>
- * @version 1.3 2013-09-22
- * @author Aliaksei Syrel
+ * @version 1.4 2013-12-11
+ * @author Team 1
  */
 public class AssociativeList<E> implements Iterable<E>{
 	private LinkedList<String> strKeys;
 	private LinkedList<Integer> intKeys;
-	private LinkedList<E> values;
+	private LinkedList<E> mValues;
 	private int size = 0;
 	
 	public boolean invariant(){
 		return strKeys != null
 				&& intKeys != null
-				&& values != null
+				&& mValues != null
 				&& strKeys.size() == size
 				&& intKeys.size() == size
-				&& values.size() == size;
+				&& mValues.size() == size;
 	}
 	
 	public AssociativeList(){
 		strKeys = new LinkedList<String>();
 		intKeys = new LinkedList<Integer>();
-		values = new LinkedList<E>();
+		mValues = new LinkedList<E>();
 		assert invariant();
 	}
 	
 	private AssociativeList(ArrayList<E> values, ArrayList<Integer> intKeys, ArrayList<String> strKeys){
-		this.values = new LinkedList<E>(values);
+		this.mValues = new LinkedList<E>(values);
 		this.intKeys = new LinkedList<Integer>(intKeys);
 		this.strKeys = new LinkedList<String>(strKeys);
 		this.size = values.size();
@@ -46,7 +46,7 @@ public class AssociativeList<E> implements Iterable<E>{
 	}
 	
 	public AssociativeList<E> copy(){
-		return new AssociativeList<E>(new ArrayList<E>(values), new ArrayList<Integer>(intKeys), new ArrayList<String> (strKeys));
+		return new AssociativeList<E>(new ArrayList<E>(mValues), new ArrayList<Integer>(intKeys), new ArrayList<String> (strKeys));
 	}
 	
 	public void add(E obj, String key){
@@ -56,7 +56,7 @@ public class AssociativeList<E> implements Iterable<E>{
 		assert (strKeys.contains(key) == false);
 		strKeys.add(key);
 		intKeys.add(null);
-		values.add(obj);
+		mValues.add(obj);
 		size++;
 		assert invariant();
 	}
@@ -65,31 +65,59 @@ public class AssociativeList<E> implements Iterable<E>{
 		assert (strKeys.contains(key) == false);
 		strKeys.add(null);
 		intKeys.add(key);
-		values.add(obj);
+		mValues.add(obj);
 		size++;
 		assert invariant();
 	}
 	public E get(String key){
 		assert invariant();
 		if (!strKeys.contains(key)) return null;
-		return values.get(strKeys.indexOf(key));
+		return mValues.get(strKeys.indexOf(key));
 	}
 	public E get(int key){
 		assert invariant();
 		if (!intKeys.contains(key)) return null;
-		return values.get(intKeys.indexOf(key));
+		return mValues.get(intKeys.indexOf(key));
+	}
+	
+	public ArrayList<E> getAll(int key){
+		assert invariant();
+		ArrayList<E> values = new ArrayList<E>();
+		if (!intKeys.contains(key)) return values;
+		int i = 0;
+		for (int intKey : intKeys){
+			if (key == intKey){
+				values.add(this.mValues.get(i));
+			}
+			i++;
+		}
+		return values;
+	}
+	
+	public ArrayList<E> getAll(String key){
+		assert invariant();
+		ArrayList<E> values = new ArrayList<E>();
+		if (!strKeys.contains(key)) return values;
+		int i = 0;
+		for (String strKey : strKeys){
+			if (strKey.equals(key)){
+				values.add(this.mValues.get(i));
+			}
+			i++;
+		}
+		return values;
 	}
 	
 	public E getAt(int index){
 		assert invariant();
 		assert index >= 0;
 		assert index < size;
-		return values.get(index);
+		return mValues.get(index);
 	}
 	
 	public int indexOf(E obj){
 		assert obj != null;
-		return this.values.indexOf(obj);
+		return this.mValues.indexOf(obj);
 	}
 	
 	public int indexOfKey(String key){
@@ -104,7 +132,7 @@ public class AssociativeList<E> implements Iterable<E>{
 		return this.intKeys.indexOf(key);
 	}
 	
-	public int getSize(){
+	public int size(){
 		assert invariant();
 		return size;
 	}
@@ -125,18 +153,18 @@ public class AssociativeList<E> implements Iterable<E>{
 		assert obj != null;
 		assert intKeys.contains(key);
 		int index = intKeys.indexOf(key);
-		return this.values.set(index, obj);
+		return this.mValues.set(index, obj);
 	}
 	
 	public E replace(E obj, String key){
 		assert obj != null;
 		assert strKeys.contains(key);
 		int index = strKeys.indexOf(key);
-		return this.values.set(index, obj);
+		return this.mValues.set(index, obj);
 	}
 
 	public ArrayList<E> getValues(){
-		return new ArrayList<E>(this.values);
+		return new ArrayList<E>(this.mValues);
 	}
 	
 	public E remove(int key){
@@ -145,7 +173,7 @@ public class AssociativeList<E> implements Iterable<E>{
 			intKeys.remove(index);
 			size--;
 			assert invariant();
-			return this.values.remove(index);
+			return this.mValues.remove(index);
 		}
 		else return null;
 	}
@@ -170,7 +198,7 @@ public class AssociativeList<E> implements Iterable<E>{
 	public String toString(){
 		String str = "[";
 		for (int i = 0 ; i < size; i++){
-			str += "'"+((strKeys.get(i) != null) ? strKeys.get(i) : intKeys.get(i))+"':'"+values.get(i)+((i != size-1) ? "', ": "'");
+			str += "'"+((strKeys.get(i) != null) ? strKeys.get(i) : intKeys.get(i))+"':'"+mValues.get(i)+((i != size-1) ? "', ": "'");
 		}
 		str += "]";
 		return str;
@@ -178,7 +206,7 @@ public class AssociativeList<E> implements Iterable<E>{
 
 	@Override
 	public Iterator<E> iterator() {
-		Iterator<E> valuesIterator = values.iterator();
+		Iterator<E> valuesIterator = mValues.iterator();
         return valuesIterator; 
 	}
 }

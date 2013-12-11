@@ -41,6 +41,9 @@ public abstract class DialogFloating extends Dialog {
 		return new int[]{x,y,width,height};
 	}
 
+	/**
+	 * Calculates position of dialogue and creates it.
+	 */
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +59,8 @@ public abstract class DialogFloating extends Dialog {
 			@Override
 			public void onGlobalLayout() {
 				int dialogHeight = dialogLayout.getHeight();
-				if (dialogHeight > 2*Config.INST.DISPLAY.HEIGHT/3){
-					dialogHeight = 2*Config.INST.DISPLAY.HEIGHT/3;
+				if (dialogHeight > Config.INST.DISPLAY.HEIGHT){
+					dialogHeight = Config.INST.DISPLAY.HEIGHT;
 				}
 				int[] dialogLocation = calcDialogLocation(viewMeasure,new int[]{dialogLayout.getWidth(),dialogHeight});
 				setDialogLocation(dialogLocation,dialogHeight);

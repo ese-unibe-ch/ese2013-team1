@@ -1,15 +1,28 @@
 package ch.unibe.sport.core;
 
+import org.json.simple.JSONObject;
+
 import ch.unibe.sport.utils.Utils;
+
+/**
+ * 
+ * Class that handles the time and duration of a sport course.
+ * 
+ * @author Team 1
+ *
+ */
 
 public class Time {
 	private static final char DIVIDER = ':';
 	private static final String UNKNOWN = "?";
+	public static final String HOURS_NAME = "hours";
+	public static final String MINUTES_NAME = "minutes";
+	public static final String UNKNOWN_NAME = "unknown";
 	/* public for fast access on android (OS specific) */
 	public int hours;
 	public int minutes;
 	public boolean unknown = false; 
-		
+	
 	private Time(int hour, int minute, boolean unknown){
 		this.hours = hour;
 		this.minutes = minute;
@@ -64,7 +77,7 @@ public class Time {
 	}
 	
 	public String toString(){
-		if (unknown) return UNKNOWN;
+		if (unknown) return "";
 		StringBuilder str = new StringBuilder();
 		if (hours > 9)str.append(hours);
 		else str.append('0').append(hours);
@@ -72,6 +85,14 @@ public class Time {
 		if (minutes > 9)str.append(minutes);
 		else str.append('0').append(minutes);
 		return str.toString();
+	}
+	
+	public JSONObject<String,Object> toJson(){
+		JSONObject<String,Object> time = new JSONObject<String,Object>();
+		time.put(HOURS_NAME, this.hours);
+		time.put(MINUTES_NAME, this.minutes);
+		time.put(UNKNOWN_NAME, this.unknown);
+		return time;
 	}
 	
 	public int toMinutes(){

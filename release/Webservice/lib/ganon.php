@@ -967,6 +967,16 @@ class HTML_Node {
 	function html() {
 		return $this->toString();
 	}
+
+    function htmlUTF8(){
+        $txt = $this->toString();
+        $enc = $this->getEncoding();
+        if ($enc !== false) {
+            $txt = mb_convert_encoding($txt, "UTF-8", $enc);
+        }
+        return $txt;
+    }
+
 	function getInnerText() {
 		return html_entity_decode($this->toString(true, true, 1), ENT_QUOTES);
 	}

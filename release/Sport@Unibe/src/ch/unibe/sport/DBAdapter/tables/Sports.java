@@ -4,6 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import ch.unibe.sport.utils.Utils;
 
+/**
+ * Gets sports information.
+ * @author Team 1
+ *
+ */
 public class Sports extends Table {
 	public static final String TAG =  Sports.class.getName();
 

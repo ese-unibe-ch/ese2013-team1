@@ -8,6 +8,14 @@ import ch.unibe.sport.utils.bulker.BulkKey;
 import ch.unibe.sport.utils.bulker.BulkParam;
 import ch.unibe.sport.utils.bulker.BulkTable;
 
+/**
+ * Class that handles the courses' time
+ * interval (Start to End time)
+ * 
+ * @author Team 1
+ *
+ */
+
 @BulkTable(EventIntervals.NAME)
 public class Interval {
 	public static final String TAG = Interval.class.getName();
@@ -87,7 +95,12 @@ public class Interval {
 	@Override
 	public String toString(){
 		if (status != null) return status;
-		return this.mTimeFrom.toString()+"-"+this.mTimeTo.toString();
+		if (mTimeFrom.unknown) return "";
+		StringBuilder str = new StringBuilder();
+		str.append(this.mTimeFrom.toString());
+		if (mTimeTo.unknown) return str.toString();
+		str.append("-"+this.mTimeTo.toString());
+		return str.toString();
 	}
 	
 }

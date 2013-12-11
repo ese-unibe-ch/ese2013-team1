@@ -8,6 +8,12 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.Layout.Alignment;
 
+/**
+ * Class to get layout in formated form.
+ * 
+ * @author Team 1
+ *
+ */
 public class CacheLayoutProvider implements LayoutProvider {
 
 	private Map<CharSequence, Layout> layoutMap = new HashMap<CharSequence, Layout>();

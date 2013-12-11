@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ch.unibe.sport.R;
 import ch.unibe.sport.main.favorites.FavoritesListView;
+import ch.unibe.sport.main.friends.FriendsTabView;
 import ch.unibe.sport.main.sports.SportsListView;
 import ch.unibe.sport.network.IPoint;
 import ch.unibe.sport.network.Message;
@@ -103,6 +104,7 @@ public class SlidingMenuFragment extends PointSherlockFragment {
 			items.add(new Item(getContext(),"").hideLine());
 			items.add(new SportsList(getContext()));
 			items.add(new FavoritesList(getContext()).hideLine());
+			items.add(new FriendsList(getContext()).hideLine());
 			items.add(new Item(getContext(),"").hideLine());
 			//items.add(new Options(getContext()));
 			items.add(new About(getContext()).hideLine());
@@ -138,15 +140,13 @@ public class SlidingMenuFragment extends PointSherlockFragment {
 			}
 		}
 		
-		/*private class Live extends Item {
-			public Live(Context context) {
-				super(context, "Live");
-				this.setDefaultIcon(R.drawable.ic_list_calendar_normal);
-				setActiveIcon(R.drawable.ic_list_calendar_active);
-				this.setTag(FavoritesGridFragment.TAG);
+		private class FriendsList extends Item {
+			public FriendsList(Context context) {
+				super(context, "Friends");
+				this.setTag(FriendsTabView.TAG);
 				this.setOnEntryClickListener(mainTabSwitcher);
 			}
-		}*/
+		}
 		
 		private class FavoritesList extends Item {
 			public FavoritesList(Context context) {

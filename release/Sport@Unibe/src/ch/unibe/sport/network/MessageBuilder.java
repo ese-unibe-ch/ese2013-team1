@@ -1,5 +1,6 @@
 package ch.unibe.sport.network;
 
+import ch.unibe.sport.core.User;
 import ch.unibe.sport.main.MainActivity;
 import ch.unibe.sport.slidingmenu.SlidingMenuFragment;
 import ch.unibe.sport.utils.Date;
@@ -35,10 +36,18 @@ public class MessageBuilder {
 	public static final String SLIDE_MENU_ITEM_ACTIVE_SWITCH = "slide_menu_item_active_switch";
 	public static final String SLIDE_MENU_ITEM_TAG = "slide_menu_item_tag";
 	
+	public static final String START_SENT_ADD_FRIEND = "start_sent_add_friend";
+	public static final String USER = "user";
+	
 	private Message message;
 	
 	public MessageBuilder(String sender){
 		this.message = new Message(sender);
+	}
+	
+	public MessageBuilder startSentAddFriend(){
+		this.message.put(Message.ACTION,START_SENT_ADD_FRIEND);
+		return this;
 	}
 	
 	public MessageBuilder startCourseUpdate(){
@@ -99,6 +108,11 @@ public class MessageBuilder {
 		for (int i = 0, length = receivers.length; i < length; i++){
 			this.message.addReceiver(receivers[i]);
 		}
+		return this;
+	}
+	
+	public MessageBuilder putUser(User user){
+		this.message.put(USER, user);
 		return this;
 	}
 	

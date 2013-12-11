@@ -1,5 +1,11 @@
 package ch.unibe.sport.utils;
 
+/**
+ * Provides better speed than standard java and android Color class.
+ * 
+ * @author Team 1
+ *
+ */
 public class Color {
 	public final int r;
 	public final int g;

@@ -31,6 +31,7 @@ public class MainActivityPagerAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup collection, int position, Object view){
         collection.removeView((View) view);
     }
+    
     @Override
     public int getCount(){
         return pages.size();

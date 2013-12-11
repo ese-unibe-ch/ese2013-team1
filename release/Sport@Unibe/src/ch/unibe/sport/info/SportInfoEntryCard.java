@@ -3,7 +3,7 @@ package ch.unibe.sport.info;
 import android.content.Context;
 import android.widget.AbsListView;
 import ch.unibe.sport.core.Event;
-import ch.unibe.sport.course.info.EventMainInfoCardRelative;
+import ch.unibe.sport.event.info.EventMainInfoCardRelative;
 import ch.unibe.sport.network.IPointable;
 import ch.unibe.sport.widget.layout.CollapsableLayout;
 import ch.unibe.sport.widget.layout.HiddableLayout;

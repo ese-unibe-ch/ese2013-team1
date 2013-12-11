@@ -2,13 +2,14 @@ package ch.unibe.sport.main.favorites;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.octo.android.robospice.SpiceManager;
 
 import ch.unibe.sport.R;
 import ch.unibe.sport.DBAdapter.DBAdapter;
 import ch.unibe.sport.DBAdapter.tables.EventAttended;
 import ch.unibe.sport.DBAdapter.tables.EventFavorite;
 import ch.unibe.sport.core.Event;
-import ch.unibe.sport.course.info.EventsListAdapter;
+import ch.unibe.sport.event.info.EventsListAdapter;
 import ch.unibe.sport.main.IFilterable;
 import ch.unibe.sport.main.IMainTab;
 import ch.unibe.sport.main.search.ActionBarSearchItem;
@@ -25,13 +26,17 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
-public class FavoritesListView extends ListView implements IMainTab, IFilterable, IPointable {
+public class FavoritesListView extends LinearLayout implements IMainTab, IFilterable, IPointable {
 	public static final String TAG = FavoritesListView.class.getName();
 	
 	private EventsListAdapter listAdapter;
 	private Point point;
+	private ActionBarSearchItem searchAction;
+	private ListView list;
+	private View emptyView;
 	
 	public FavoritesListView(Context context) {
 		super(context);
@@ -62,7 +67,11 @@ public class FavoritesListView extends ListView implements IMainTab, IFilterable
 	 */
 	public void initialize() {
 		point = Point.initialize(this);
-		this.setScrollingCacheEnabled(false);
+		list = new ListView(getContext());
+		addView(list,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		this.emptyView = View.inflate(getContext(), R.layout.favorites_layout_empty_view, null);
+		addView(this.emptyView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		list.setScrollingCacheEnabled(false);
 		new FavoriteEventsLoader().setOnTaskCompletedListener(onLoadListener).execute(getContext());
 	}
 	
@@ -94,18 +103,19 @@ public class FavoritesListView extends ListView implements IMainTab, IFilterable
 	
 	private void initAdapter(Event[] events){
 		listAdapter = new EventsListAdapter(getContext(),events);
-		setAdapter(listAdapter);
+		list.setAdapter(listAdapter);
+		list.setEmptyView(emptyView);
 	}
-
+	
 	@Override
 	public boolean isFilterExists() {
-		if (listAdapter == null) listAdapter = (EventsListAdapter) this.getAdapter();
+		if (listAdapter == null) listAdapter = (EventsListAdapter) list.getAdapter();
 		return listAdapter != null && listAdapter.getFilter() != null;
 	}
 
 	@Override
 	public void filter(String prefix) {
-		if (isFilterExists())listAdapter.getFilter().filter(prefix);
+		if (isFilterExists())listAdapter.filter(prefix);
 	}
 
 	@Override
@@ -113,8 +123,8 @@ public class FavoritesListView extends ListView implements IMainTab, IFilterable
 		if (menu == null) return;
 		menu.clear();
 		/* Initalizes search item in actionbar menu */
-		new ActionBarSearchItem(this, menu, R.id.menu_search);
-		new ActionBarListMenu(menu,R.id.menu_navigation_drawer);
+		searchAction = new ActionBarSearchItem(this.getContext(),this, menu, R.id.menu_search);
+		//new ActionBarListMenu(menu,R.id.menu_navigation_drawer);
 	}
 
 	@Override
@@ -172,5 +182,16 @@ public class FavoritesListView extends ListView implements IMainTab, IFilterable
 	@Override
 	public IPoint getPoint() {
 		return point;
+	}
+
+	@Override
+	public void collapseActionBar() {
+		if (searchAction != null)searchAction.clear();
+	}
+
+	@Override
+	public void setSpiceManager(SpiceManager spiceManager) {
+		// TODO Auto-generated method stub
+		
 	}
 }

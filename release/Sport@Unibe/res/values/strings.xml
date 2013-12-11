@@ -13,9 +13,11 @@
     <string name="menu_navigation_title">Navigation</string>
     <string name="menu_favorites_list_title">Show as list</string>
     <string name="menu_favorites_grid_title">Show as grid</string>
+    <string name="menu_friends_update">Update</string>
     <string name="menu_search_advanced_day_text">Day:</string>
     <string name="menu_search_advanced_day_all_text">All</string>
     <string name="menu_search_advanced_time_text">Time:</string>
+    <string name="menu_search_advanced_course_text">Course or sport name: (optional)</string>
     <string name="menu_search_advanced_time_all_text">All</string>
     <string name="menu_search_advanced_time_8_10">8–10</string>
     <string name="menu_search_advanced_time_10_12">10–12</string>
@@ -26,7 +28,7 @@
     <string name="menu_search_advanced_time_20_22">20–22</string>
     
     <string name="menu_search_advanced_search_text">Search</string>
-    <string name="menu_search_advanced_clear_text">Clear</string>
+    <string name="menu_search_advanced_close_text">Close</string>
     
     <string name="dialog_button_ok_text">OK</string>
     <string name="dialog_button_cancel_text">Cancel</string>
@@ -62,6 +64,9 @@
     <string name="dialog_map_found_title">Found</string>
     <string name="dialog_map_not_found_title">Location not found</string>
     <string name="dialog_map_show">Search</string>
+    
+    <string name="dialog_find_new_friends_title">Search for users</string>
+    <string name="dialog_find_new_friends_search">Search!</string>
     
     <string name="dialog_title_error">Oops!</string>
     <string name="dialog_title_loading">Loading…</string>

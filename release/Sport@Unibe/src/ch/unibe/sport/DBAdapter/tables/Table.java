@@ -156,7 +156,7 @@ public class Table implements ITable, OnOpenedListener {
 	}
 	
 	/**
-	 * The fastes possible Android SQLite insertion method for big amount of data.
+	 * The fastest possible Android SQLite insertion method for big amount of data.
 	 * @return 
 	 */
 	@Override

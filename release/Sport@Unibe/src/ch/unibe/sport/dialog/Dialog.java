@@ -65,7 +65,7 @@ public abstract class Dialog extends ProxySherlockFragmentActivity {
 	}
 	
 	/**
-	 * Initializes params, that was bekommen by dialog.
+	 * Initializes parameters, that were obtained by dialog.
 	 */
 	private boolean initParams(){
 		extras = getIntent().getExtras();
@@ -78,7 +78,7 @@ public abstract class Dialog extends ProxySherlockFragmentActivity {
 	}
 	
 	/**
-	 * Returns {@code String} object holidng parameter value. 
+	 * Returns {@code String} object holding parameter value. 
 	 * @param key - {@code String} param's key.
 	 * @return {@code String} - param value.
 	 */
@@ -97,7 +97,7 @@ public abstract class Dialog extends ProxySherlockFragmentActivity {
 	
 	/**
 	 * Gets 'Question' that will be displayed as title of dialog.
-	 * It hepls user to understand what will be task doing.
+	 * It helps user to understand what will be task doing.
 	 */
 	private void initQuestion(){
 		if (paramKeys.contains(ACTION_QUESTION)){
@@ -110,7 +110,7 @@ public abstract class Dialog extends ProxySherlockFragmentActivity {
 	
 	/**
 	 * Gets 'Ask' boolean parameter. It says whether user
-	 * should be asked if he acepts action.
+	 * should be asked if he accepts action.
 	 */
 	private void initAsk(){
 		if (paramKeys.contains(ACTION_ASK)){
@@ -128,8 +128,8 @@ public abstract class Dialog extends ProxySherlockFragmentActivity {
 	}
 	
 	/**
-	 * Gets 'AutoHide' parameter. If AutoHide is {@code True} dialog will hide after task ist complete,
-	 * otherwise no.
+	 * Gets 'AutoHide' parameter. If AutoHide is {@code True} dialog will hide after task is complete,
+	 * otherwise it won't.
 	 */
 	private void initAutoHide(){
 		if (paramKeys.contains(ACTION_AUTO_HIDE)){
@@ -147,7 +147,7 @@ public abstract class Dialog extends ProxySherlockFragmentActivity {
 	}
 	/**
 	 * Gets 'Hidden' parameter. If Hidden is {@code True} dialog will be hidden,
-	 * otherwise no.
+	 * otherwise it won't.
 	 */
 	private void initHidden(){
 		if (paramKeys.contains(ACTION_HIDDEN)){
@@ -166,7 +166,7 @@ public abstract class Dialog extends ProxySherlockFragmentActivity {
 	
 	/**
 	 * Gets 'Progress' parameter. If Progress is {@code True} progress bar will be visible,
-	 * otherwise no.
+	 * otherwise it won't.
 	 */
 	private void initProgress(){
 		if (paramKeys.contains(ACTION_PROGRESS)){
@@ -184,8 +184,8 @@ public abstract class Dialog extends ProxySherlockFragmentActivity {
 	}
 	
 	/**
-	 * Gets 'Progress' parameter. If Progress is {@code True} progress bar will be visible,
-	 * otherwise no.
+	 * Gets 'Quick Hide' parameter. 
+	 * 
 	 */
 	private void initQuickHide(){
 		if (paramKeys.contains(ACTION_QUICK_HIDE)){

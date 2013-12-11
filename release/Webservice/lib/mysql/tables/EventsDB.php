@@ -14,7 +14,7 @@ class EventsDB extends Table {
     private static $CREATE = "CREATE TABLE events (
         eid integer NOT NULL AUTO_INCREMENT,
 		iid varchar(16) DEFAULT NULL,
-		pid varchar(8) DEFAULT NULL,
+		pid varchar(16) DEFAULT NULL,
 		hash varchar(32) NOT NULL UNIQUE,
 		eventName varchar(255) NOT NULL,
 		date varchar(255) DEFAULT NULL,
@@ -60,12 +60,20 @@ class EventsDB extends Table {
         $this->updateByID(array(self::EID),array($eventID),array(self::IID),array($intervalID));
     }
 
+    public function setPlace($eventID,$placeID){
+        $this->updateByID(array(self::EID),array($eventID),array(self::PID),array($placeID));
+    }
+
     public function getData($eventID){
         return $this->getRow($this->selectByID(array(self::EID),array($eventID),self::$DB),0);
     }
 
     public function getIdByHash($hash){
-        return $this->getRow($this->selectByID(array(self::HASH),array($hash),array(self::EID)),0);
+        $data = $this->getRow($this->selectByID(array(self::HASH),array($hash),array(self::EID)),0);
+        if (count($data) === 0){
+            return 0;
+        }
+        else return Int::intValue($data[self::EID]);
     }
 
     public function updateAll($eventID,$eventName, $date, $infoLink,$registration,$registrationLink){

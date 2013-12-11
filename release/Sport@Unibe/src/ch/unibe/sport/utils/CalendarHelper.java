@@ -4,6 +4,12 @@ import java.util.Calendar;
 
 import android.util.MonthDisplayHelper;
 
+/**
+ * Helps to generate new dates.
+ * 
+ * @author Team 1
+ *
+ */
 public class CalendarHelper{
 	private Calendar calendar;
 	private Date date;

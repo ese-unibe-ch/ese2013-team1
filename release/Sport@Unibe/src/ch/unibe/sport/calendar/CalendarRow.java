@@ -24,7 +24,9 @@ public class CalendarRow extends LinearLayout {
 			return;
 		}
 		
-		/* making real copy of days array */
+		/**
+		 *  makes a real copy of days array
+		 */
 		this.days = new Day[days.length];
 		System.arraycopy(days, 0, this.days, 0, days.length);
 		

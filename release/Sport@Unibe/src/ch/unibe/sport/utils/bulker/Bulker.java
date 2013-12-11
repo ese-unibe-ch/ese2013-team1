@@ -193,7 +193,7 @@ public class Bulker {
 					if (j != 1) row += ", ";
 					row += insertMap.get(columns[j-1]).get(i);
 				}
-				Print.err("Not unique row at "+table.getTableName()+": "+row);
+				//Print.err("Not unique row at "+table.getTableName()+": "+row);
 			}
 		}
 	}

@@ -14,7 +14,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageView;
 import ch.unibe.sport.R;
+import ch.unibe.sport.guide.GuideFactory;
 import ch.unibe.sport.main.IMainTab;
+import ch.unibe.sport.utils.Print;
 import ch.unibe.sport.utils.Utils;
 
 import com.actionbarsherlock.view.Menu;
@@ -28,28 +30,27 @@ public class ActionBarSearchItem {
 	private final MenuItem item;
 	
 	public static final String TAG = "actionSearch";
-	
-	public ActionBarSearchItem(IMainTab tab, Menu menu, int id) {
+	private SearchAutoComplete searchEditText;
+	public ActionBarSearchItem(Context context,IMainTab tab, Menu menu, int id) {
 		this.tab = tab;
 		item = menu.add(0, id, 0, R.string.menu_search_title);
-		init();
+		init(context);
 	}
 	
 	/**
 	 * Hacks actionbar to create custom stylish searchview in actionview
 	 */
 	@SuppressLint({"InlinedApi","NewApi"}) @SuppressWarnings("deprecation")
-	private void init(){
+	private void init(final Context context){
 		item.setIcon(R.drawable.ic_action_action_search);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
 			item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM|MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		}
-		
-		LayoutInflater inflater = (LayoutInflater) tab.getView().getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		final ViewGroup searchActionView = (ViewGroup) inflater.inflate(R.layout.search_icon_actionview, null);
 		final SearchView searchView = (SearchView) searchActionView.findViewById(R.id.search);
 	    
-		SearchAutoComplete searchEditText = searchView.getQueryTextView();
+		searchEditText = searchView.getQueryTextView();
 		searchEditText.setTextColor(Color.WHITE);
 		searchEditText.setTag(TAG);
 		
@@ -68,21 +69,25 @@ public class ActionBarSearchItem {
 			public void onClick(View view) {
 				searchView.setFocusable(false);
 			    searchView.setFocusableInTouchMode(false);
-				AdvancedSearchDialog.show(tab.getView().getContext(), view);
+				AdvancedSearchDialog.show(context, view);
 			}
 	    });
+	    GuideFactory.showSearchGuide(context, more);
 
-		SearchManager searchManager = (SearchManager) tab.getView().getContext().getSystemService(Context.SEARCH_SERVICE);
+		SearchManager searchManager = (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
 		if (null != searchView) {
-			searchView.setSearchableInfo(searchManager.getSearchableInfo(((Activity)tab.getView().getContext()).getComponentName()));
+			searchView.setSearchableInfo(searchManager.getSearchableInfo(((Activity)context).getComponentName()));
 			searchView.setIconifiedByDefault(false);
 		}
 		searchView.setOnQueryTextListener(new SearchQueryTextListener());
+		if (tab != null)tab.filter("");
 		ViewTreeObserver vto = searchActionView.getViewTreeObserver();
 		vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 			@Override
 			public void onGlobalLayout() {
 				ViewGroup parent = (ViewGroup)searchActionView.getParent();
+				ViewGroup.LayoutParams lp = searchView.getLayoutParams();
+				Print.log("searchVew: "+lp.getClass().getName());
 				for (int i = 0; i < parent.getChildCount();i++){
 					if (parent.getChildAt(i) instanceof ViewGroup){
 						for (int j = 0; j < ((ViewGroup)parent.getChildAt(i)).getChildCount();j++){
@@ -105,6 +110,11 @@ public class ActionBarSearchItem {
 		item.setActionView(searchActionView);
 	}
 	
+	public void clear(){
+		searchEditText.setText("");
+		item.collapseActionView();
+	}
+	
 	public static void onItemSelected(IMainTab tab,MenuItem item){
 		SearchView searchView = (SearchView) item.getActionView().findViewById(R.id.search);
 		searchView.setFocusable(true);
@@ -120,13 +130,13 @@ public class ActionBarSearchItem {
 	private class SearchQueryTextListener implements SearchView.OnQueryTextListener{
 		@Override
 		public boolean onQueryTextChange(String query) {
-			tab.filter(query.trim());
+			if (tab != null)tab.filter(query.trim());
 			return true;
 		}
 
 		@Override
 		public boolean onQueryTextSubmit(String query) {
-			tab.filter(query.trim());
+			if (tab!=null)tab.filter(query.trim());
 			return true;
 		}
 	}

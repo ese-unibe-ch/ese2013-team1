@@ -39,6 +39,18 @@ class Parser {
             }
             $index++;
         }
+        $links = $dom->select('div[id=contentDienste] > p > a.linkliste');
+        foreach($links as $sportLinkAnchor){
+            $sportLink = trim($sportLinkAnchor->href);
+            $linkArray = parse_url($sportLink);
+            if (!Arrays::isKeyExists('host',$linkArray)){
+                $sportLink = self::ROOT_URL.$sportLink;
+            }
+            $sportName = trim($sportLinkAnchor->getPlainText());
+
+            $link = AngebotLink::create($sportName,$sportLink);
+            $angebotLinks->add($link);
+        }
         return $angebotLinks;
 
     }
@@ -93,7 +105,7 @@ class Parser {
              * Setting sport header description
              */
 
-            $sport->setSportDescriptionHeader($descriptions[0]->html());
+            $sport->setSportDescriptionHeader($descriptions[0]->htmlUTF8());
         }
 
         $matchedTables = $html->select('div.largebox > table');
@@ -169,8 +181,8 @@ class Parser {
             $event = new Event();
             $event->setInterval($interval);
             if ($placeArray->size() > 0){
-                if ($placeArray->size() > $index) $event->setPlace(Place::fromPlace($placeArray->get($index)));
-                else $event->setPlace(Place::fromPlace($placeArray->get($placeArray->size()-1)));
+                if ($placeArray->size() > $index) $event->setPlace($placeArray->get($index));
+                else $event->setPlace($placeArray->get($placeArray->size()-1));
             }
 
             if ($periodParser->isDate()) {

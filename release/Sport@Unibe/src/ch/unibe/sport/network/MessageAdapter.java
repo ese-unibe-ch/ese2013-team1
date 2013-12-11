@@ -1,5 +1,6 @@
 package ch.unibe.sport.network;
 
+import ch.unibe.sport.core.User;
 import ch.unibe.sport.utils.Date;
 
 public class MessageAdapter {
@@ -8,6 +9,12 @@ public class MessageAdapter {
 	
 	public MessageAdapter(Message message){
 		this.message = message;
+	}
+	
+	public boolean isSentAddFriend(){
+		if (!this.message.containsKey(Message.ACTION)) return false;
+		if (!this.message.get(Message.ACTION).equals(MessageBuilder.START_SENT_ADD_FRIEND)) return false;
+		return true;
 	}
 	
 	public boolean isContinueLoading(){
@@ -60,6 +67,12 @@ public class MessageAdapter {
 		String param = MessageBuilder.COURSE_ATTENDED;
 		if (!isCourseAttendedUpdate()) throw new ParamNotFoundException(param);
 		return (Boolean)this.message.get(param);
+	}
+	
+	public User getUser() throws ParamNotFoundException {
+		String param = MessageBuilder.USER;
+		if (!isSentAddFriend()) throw new ParamNotFoundException(param);
+		return (User)this.message.get(param);
 	}
 	
 	public int getCourseRatedUpdate() throws ParamNotFoundException {

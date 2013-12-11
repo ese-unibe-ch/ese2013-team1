@@ -1,6 +1,7 @@
 package ch.unibe.sport.main;
 
 import ch.unibe.sport.R;
+import ch.unibe.sport.DBAdapter.restApi.UnisportSpiceService;
 import ch.unibe.sport.config.Config;
 import ch.unibe.sport.main.favorites.FavoritesListView;
 import ch.unibe.sport.main.friends.FriendsTabView;
@@ -13,12 +14,14 @@ import ch.unibe.sport.network.MessageBuilder;
 import ch.unibe.sport.network.ParamNotFoundException;
 import ch.unibe.sport.network.ProxySherlockFragmentActivity;
 import ch.unibe.sport.utils.AssociativeList;
+import ch.unibe.sport.utils.Print;
 import ch.unibe.sport.utils.Timer;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.octo.android.robospice.SpiceManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -41,6 +44,8 @@ import android.widget.Toast;
 public class MainActivity extends ProxySherlockFragmentActivity {
 	public static final String TAG = MainActivity.class.getName();
 
+	private final SpiceManager spiceManager = new SpiceManager(UnisportSpiceService.class);
+	
 	private Context context;
 	private ViewPager pager;
 	private MainActivityPagerAdapter adapter;
@@ -48,7 +53,7 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 	private PagerSlidingTabStrip tabs;
 	private SlidingMenu slidingMenu;
 
-	private static Menu mMenu;
+	private Menu mMenu;
 	
 	private int backCounter = 0;
 	private Timer backTimer;
@@ -61,6 +66,8 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.context = this;
+		//initSlidingMenu();
+		setContentView(R.layout.main_layout);
 		// checking start configuration and launching actual app loading
 		initReadyToRunCheck();
 	}
@@ -118,7 +125,9 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 	 */
 	private void initReadyToRunCheck() {
 		if (Config.INST.readyToStart()) initView();
-		else InitializationActivity.show(this);
+		else {
+			InitializationActivity.show(this);
+		}
 	}
 
 	/**
@@ -155,9 +164,6 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 	}
 	
 	private void initView(){
-		initSlidingMenu();
-		//pullToRefreshAttacher = PullToRefreshAttacher.get(this);
-		setContentView(R.layout.main_layout);
 
 		tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 		pager = (ViewPager) findViewById(R.id.pager);
@@ -168,11 +174,12 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 		
 		FavoritesListView favoritesList = new FavoritesListView(this);
 		favoritesList.initialize();
-		favoritesList.connect(this);
+		favoritesList.connect(this);	// connect after initialization
 		
 		FriendsTabView friendsTab = new FriendsTabView(this);
+		friendsTab.setSpiceManager(spiceManager);
 		friendsTab.initialize();
-		friendsTab.connect(this);
+		friendsTab.connect(this);		// connect after initialization
 		
 		tabViews.add(sportList,SportsListView.TAG);
 		tabViews.add(favoritesList,FavoritesListView.TAG);
@@ -196,12 +203,14 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 			}
 		});
 		
-		this.setCurrentPage(SportsListView.TAG, true);
+		this.setCurrentPage(FavoritesListView.TAG, true);
 	}
 	
 	private void onPageSwitched(int page) {
-		if (page == 0) slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		else slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		if (slidingMenu != null) {
+			if (page == 0) slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+			else slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		}
 		IMainTab tab = tabViews.getAt(page);
 		if (tab != null) {
 			notifySlidingMenuSwitchTab(tab.getClass().getName());
@@ -222,7 +231,7 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 		int index = tabViews.indexOfKey(tag);
 		if (index < 0 || index > adapter.getCount()) return;
 		// switching page in pager
-		if (index == 0) slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		if (index == 0 && slidingMenu != null) slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		pager.setCurrentItem(index,smooth);
 		// notifying sliding menu, that page was changed
 		notifySlidingMenuSwitchTab(tag);
@@ -281,7 +290,7 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
-			if (slidingMenu.isShown()){
+			if (slidingMenu != null && slidingMenu.isShown()){
 				if (slidingMenu.isMenuShowing()) slidingMenu.showContent(true);
 				else slidingMenu.showMenu(true);
 			}
@@ -325,8 +334,10 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		mMenu = menu;
 		super.onCreateOptionsMenu(menu);
+		menu.clear();
+		new ActionBarSearchItem(this, null, menu, R.id.menu_search);
 		IMainTab tab = this.getCurrentPage();
-		if (tab != null)tab.initMenu(menu);
+		if (tab != null) tab.initMenu(menu);
 		return true;
 	}
 	
@@ -338,11 +349,32 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (getCurrentPage().onOptionsItemSelected(item)) return true;
+		if (getCurrentPage() != null && getCurrentPage().onOptionsItemSelected(item)) return true;
 		return super.onOptionsItemSelected(item);
 	}
 
 	public PagerSlidingTabStrip getTabs() {
 		return tabs;
 	}
+	
+	@Override
+	protected void onResume(){
+		Print.log("On resume");
+		if (mMenu != null) this.getCurrentPage().collapseActionBar();
+		IMainTab tab = this.getCurrentPage();
+		if (tab != null) tab.initMenu(mMenu);
+		super.onResume();
+	}
+	
+	@Override
+    protected void onStart() {
+        super.onStart();
+        spiceManager.start(this);
+    }
+
+    @Override
+    protected void onStop() {
+        spiceManager.shouldStop();
+        super.onStop();
+    }
 }

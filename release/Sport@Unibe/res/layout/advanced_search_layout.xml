@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+	android:focusableInTouchMode="true" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -181,6 +183,37 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/menu_search_advanced_course_text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#99222222"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_vertical"
+            android:hint="course"
+            android:maxLines="1"
+            android:textColor="#ff222222"
+            android:textColorHint="#66222222"
+            android:textStyle="bold"
+            android:inputType="textFilter"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp" >
+        </EditText>
+        
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -188,19 +221,19 @@
             android:layout_marginRight="0dp"
             android:background="#22222222" />
 
-        <LinearLayout
+       <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/clear"
+                android:id="@+id/close"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/course_info_link_bg"
                 android:fontFamily="sans-serif-light"
-                android:text="@string/menu_search_advanced_clear_text"
+                android:text="@string/menu_search_advanced_close_text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#99222222"
                 android:textSize="18sp"
@@ -225,35 +258,9 @@
                 android:text="@string/menu_search_advanced_search_text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#99222222"
-                android:textSize="18sp"
-                android:visibility="gone" />
+                android:textSize="18sp" />
 
-            <LinearLayout
-                android:id="@+id/progess_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
-                android:layout_weight="1" >
 
-                <ProgressBar
-                    android:id="@+id/waiting"
-                    style="?android:attr/progressBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="right" />
-
-                <TextView
-                    android:id="@+id/progress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:gravity="right"
-                    android:textColor="#99222222"
-                    android:textSize="16sp" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
