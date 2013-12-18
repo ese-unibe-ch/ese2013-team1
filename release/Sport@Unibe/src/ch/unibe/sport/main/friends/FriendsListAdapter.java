@@ -445,7 +445,7 @@ public class FriendsListAdapter extends SeparatedListAdapter implements OnNotify
 		if (user.getMyFriendRequests().length > 0){
 			myFriendRequestsAdapter = new MyFriendRequestsAdapter(user.getMyFriendRequests());
 			myFriendRequestsAdapter.setOnNotifyDataSetChangedListener(this);
-			this.addSection(myFriendRequestsAdapter.getSectionName(), myFriendRequestsAdapter);
+			//this.addSection(myFriendRequestsAdapter.getSectionName(), myFriendRequestsAdapter);
 		}
 	}
 
@@ -540,11 +540,11 @@ public class FriendsListAdapter extends SeparatedListAdapter implements OnNotify
 			myFriendRequestsAdapter = new MyFriendRequestsAdapter(new User[]{user});
 			myFriendRequestsAdapter.setOnCanceledClickListener(mOnMyRequestCanceledListener);
 			myFriendRequestsAdapter.setOnNotifyDataSetChangedListener(this);
-			this.addSection(myFriendRequestsAdapter.getSectionName(), myFriendRequestsAdapter);
-			notifyDataSetChanged();
+			//this.addSection(myFriendRequestsAdapter.getSectionName(), myFriendRequestsAdapter);
+			//notifyDataSetChanged();
 		}
 		else {
-			myFriendRequestsAdapter.addMyFriendRequest(user);
+			//myFriendRequestsAdapter.addMyFriendRequest(user);
 		}
 	}
 

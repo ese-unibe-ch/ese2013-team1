@@ -36,7 +36,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 /**
- * Main activity - holds all tabs and controls their switching
+ * Main activity - that holds all tabs and controlls their switching
  * @author Team 1 2013
  *
  */
@@ -221,9 +221,9 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 	}
 
 	/**
-	 * Switches current tab in pager. 
+	 * Switchs current tab in pager. 
 	 * @param tag - page's tag.
-	 * @param smooth - true if animation is required, otherwise false
+	 * @param smooth - true if animation is requared, otherwise false
 	 */
 	private void setCurrentPage(String tag, boolean smooth){
 		if (tag == null || tag.length() == 0) return;
@@ -249,7 +249,7 @@ public class MainActivity extends ProxySherlockFragmentActivity {
 	}
 	
 	/**
-	 * Sends message to sliding menu, that current page was changed
+	 * Sends message to sliding menu, that current pae was changed
 	 * @param tag
 	 */
 	private void notifySlidingMenuSwitchTab(String tag) {
